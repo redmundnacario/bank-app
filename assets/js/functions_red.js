@@ -1,4 +1,4 @@
-function User(first_name, last_name, balance) {
+function AccountUser(first_name, last_name, balance) {
    this.first_name =  first_name
    this.last_name = last_name
    this.account_name = this.first_name + " " + this.last_name
@@ -37,7 +37,7 @@ export function Application() {
             throw Error("Cannot create new user: first or last name should not starts with number.");
             
         } else {
-            let user = new User(first_name, last_name, balance);
+            let user = new AccountUser(first_name, last_name, balance);
             this.state.users[user.account_name] = user;
             this.updateLocalStorage();
         }

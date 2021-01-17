@@ -1,4 +1,4 @@
-import { Application } from './functions.js'
+import { Application } from './functions_red.js'
 
 const App = new Application();
 let result;
