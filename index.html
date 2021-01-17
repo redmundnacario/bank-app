@@ -5,7 +5,9 @@
     <meta name="author" content="Redmund Nacario, & Jaycee Ferrer">
     <title>Bank-app</title>
     <!-- css -->
-    <link rel="stylesheet" href="./assets/css/styles.css">
+    <!-- <link rel="stylesheet" href="./assets/css/styles.css"> -->
+    <!-- app css -->
+    <link rel="stylesheet" href="./assets/css/app.css" type="text/css">
     <!-- js -->
     <script type="module" src="./assets/js/index_jc.js" defer></script>
     <script type="module" src="./assets/js/index_red.js" defer></script>
@@ -28,8 +30,101 @@
 
         <!-- App page -->
         <section>
+            <!-- greet the owner -->
+            <div>
+                <h1>Welcome back!</h1>
+                <h3>At a glance summary of your account. Have fun!</h3>
+            </div>
+            <div class="sub-navbar-container">
 
-            <!-- modal -->
+                <div class="action-buttons-container">
+                    <!-- Butons //add symbols -->
+                    <!-- <button class="action-button" id = "depositBtnId">
+                        Add Funds
+                    </button>
+                    <button class="action-button" id = "withdrawBtnId">
+                        Withdraw
+                    </button> -->
+                    <button class="action-button" id = "tranferFundsBtnId">
+                        Transfer Funds
+                    </button>
+                    <button class="action-button" id="settingsBtnId">
+                        Settings
+                    </button>
+                </div>
+
+            </div>
+            <div class="overview-container">
+                <div class="total-accounts-overview">
+                    <h2>Overview</h2>
+                    <div class="accounts-overview">
+                        <div>
+                            <h4>Total Account Balance</h4>
+                            <p>0.00 php</p>
+                        </div>
+                        <div class="a-o-figures">
+                            <div>
+                                <h4>Wallets</h4>
+                                <p>1</p>
+                            </div>
+                            <div>
+                                <h4>Transactions</h4>
+                                <p>1</p>
+                            </div>
+                        </div>
+                        <p>Last activity: datetime</p>
+                    </div>
+                </div>
+                <div class="per-accounts-overview">
+                    <h2>Money Wallet Accounts</h2>
+                    <div class="account-box">
+                        <h4>Account name 1</h4>
+                        <p>0.00 php</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- history //accordion -->
+            <div class="table-container">
+                <table class="history-table">
+                    <thead class="accordion">
+                        <tr>
+                            <th colspan="4">
+                                <h2>Recent Transactions</h2>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="panel">
+                        <tr>
+                            <th>Action</th>
+                            <th>Date</th>
+                            <th>Value</th>
+                            <th>Status</th>
+                        </tr>
+                        <tr>
+                            <th>Deposit</th>
+                            <td>Sample datetime</td>
+                            <td>100Php</td>
+                            <td>Completed</td>
+                        </tr>
+                        <tr>
+                            <th>Withdraw</th>
+                            <td>Sample datetime</td>
+                            <td>50Php</td>
+                            <td>Completed</td>
+                        </tr>
+                        <tr>
+                            <th>Transfer to user</th>
+                            <td>Sample datetime</td>
+                            <td>20Php</td>
+                            <td>Completed</td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+            </div>
+
+        <!-- modal -->
         </section>
     </main>
 </body>

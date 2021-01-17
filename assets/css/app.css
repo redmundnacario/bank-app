@@ -1,0 +1,193 @@
+body {
+    margin: 0;
+    box-sizing: border-box;
+    min-height: 100vh;
+}
+h4{
+    margin:0 0 1vh 0;
+}
+p {
+    /* margin: 2vh 0 0 0; */
+    margin: 0;
+}
+
+
+section:first-of-type{
+    display: none;
+}
+section>div {
+    margin-bottom: 2vh;
+}
+
+main{
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+}
+
+section {
+    min-height: 100vh;
+    width: 60%;
+
+    padding-top: 5vh;
+}
+
+.sub-navbar-container {
+    width: 100%;
+
+    display: flex;
+    justify-content: flex-end;
+
+}
+
+.action-buttons-container {
+    align-self: center;
+    /* display: flex; */
+}
+
+.action-button {
+    all:unset;
+    cursor: pointer;
+    padding:1.5vh 2vh;
+    margin-left:1vh;
+
+    border: 0.1vh solid #7f85e0;
+    border-radius: 0.5vh;
+
+    transition: 0.4s;
+}
+
+.action-button:active, .action-button:hover {
+    background-color:  #7f85e0;
+    color: #fff;
+    border: #7f85e0 solid 0.5vh;
+    /* height:5.6vh; */
+}
+
+/* Overview or Dashboard */
+.overview-container{
+    display: grid;
+    grid-template-columns: 30% 70%;
+    gap:3vh;
+}
+
+.accounts-overview {
+    background-color:  #9198ff;
+    padding:3vh;
+    color: #fff;
+
+    border-radius: 1vh;
+}
+
+.accounts-overview div:first-child{
+    margin-bottom: 2vh;
+}
+
+.a-o-figures{
+    display:flex;
+}
+.a-o-figures div{
+    width: 50%;
+    /* margin-bottom: 2vh; */
+}
+
+.account-box{
+    background-color:  #d4d6fb;
+    width:30%;
+    padding:1.5vh;
+    color:#000;
+
+    border-radius: 1vh;
+}
+
+.table-container {
+    border-radius:1vh;
+    border: 0.1vh solid #f1f2ff;
+}
+/* Style the accordion panel. Note: hidden by default */
+table {
+    width: 100%;
+    transition: 100s;
+}
+thead{
+    border-collapse:collapse;
+    /* border-radius: 2vh; */
+}
+
+thead th:first-child {
+    border-radius: 1vh; 
+    /* background-color: #ececec; */
+}
+
+/* curves the last tableData in the last row */
+
+tbody tr:last-child td:last-child{
+    border-radius: 0 0 1vh 0; 
+}
+tbody tr:last-child th:first-child{
+    border-radius: 0 0 0 1vh; 
+}
+
+
+tbody {
+    /* height: 0; */
+    /* visibility: hidden; */
+    display: none;
+    /* max-height: 0; */
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+
+table, th, td {
+    /* border-bottom: 1px solid #959595; */
+    border-collapse: collapse;
+}
+th, td {
+    padding: 2vh;
+    text-align: left;
+}
+/* td{
+    text-align: center;
+} */
+.history-table tr:nth-child(even) {
+    background-color: #fff;
+}
+.history-table tr:nth-child(odd) {
+    background-color: #f1f2ff;
+}
+
+/* Style the buttons that are used to open and close the accordion panel */
+.accordion {
+    /* background-color: #f9f9f9 !important; */
+    cursor: pointer;
+    transition: 0.4s;
+}
+
+.accordion h2{
+    margin:0;
+} 
+  
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+/* .accordion:hover {
+    background-color: #ececec;
+} */
+/* .accordion-active {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    background-color: #ececec;
+} */
+.accordion-active th:first-child  {
+    border-radius: 1vh 1vh 0 0 !important;
+    background-color: #fff;
+}
+
+.accordion h2:after {
+    content: '\02795'; /* Unicode character for "plus" sign (+) */
+    font-size: 13px;
+    float: right;
+    margin-left: 5px;
+}
+
+.accordion-active h2:after {
+    content: "\2796"; /* Unicode character for "minus" sign (-) */
+}
