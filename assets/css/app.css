@@ -45,7 +45,7 @@ th {
     font: 700 1.2vh 'Roboto', sans-serif;
     /* text-transform: uppercase; */
 }
-p, td, span, input, label {
+p, td, input, label {
     font: 400 1.2vh 'Roboto', sans-serif;
     margin: 0;
 }
@@ -55,8 +55,10 @@ p, td, span, input, label {
 */
 
 section:first-of-type{
-    display: none;
+    width: 90%;
+    height: 100vh;
 }
+
 section>div {
     margin-bottom: 2vh;
 }
@@ -65,14 +67,137 @@ main{
     min-height: 100vh;
     display: flex;
     justify-content: center;
+    position: relative
 }
 
-section {
+section[id="app"] {
     min-height: 100vh;
     width: 50%;
 
-    padding-top: 5vh;
+    padding-top: 10vh;
 }
+
+/* 
+    SVG
+*/
+
+#svgBground, #svgBground2 {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: auto;
+}
+#svgBground2{
+    z-index: -2;
+}
+
+/* 
+    Navbar landing page
+*/
+nav {
+    position: fixed;
+    top:0;
+
+    background-color: #fff;
+    height: 10vh;
+    width:100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+nav>div{
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* #logoSvgId {
+    height: 5vh;
+} */
+
+.appName-navbar{
+    height: 4vh;
+    margin: 0;
+    color:#343434;
+}
+.appName-navbar span {
+    color: #3e34ff;
+}
+
+.nav-buttons{
+    all:unset;
+    padding: 1vh 2vh;
+    margin-left: 2vh;
+    border-radius: 0.5vh;
+
+    cursor: pointer;
+    border: 0.1vh solid #3e34ff;
+    border-radius: 0.5vh;
+
+    transition: 0.4s;
+}
+ 
+.nav-buttons:focus, 
+.nav-buttons:hover,
+.nav-buttons.active {
+    background-color:  #3e34ff;
+    color: #fff;
+    border: #3e34ff solid 0.5vh;
+}
+
+.nav-buttons > h2 {
+    margin: 0;
+    font-size: 1.5vh;
+}
+
+
+/* 
+    Landing page left and right parts of the page
+*/
+
+.landing-page-container{
+    padding:10vh 0;
+    height: 80vh;
+    
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.left-landing-page,
+.right-landing-page {
+    width: 40%;
+    height:100%;
+    /* margin: 0; */
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    position: relative;
+    
+}
+
+#homeContainerId{
+    position: absolute;
+    top:40vh;
+}
+
+#landingPageImgId{
+    margin-top:10vh;
+    width:30vw;
+    height: auto;
+}
+
+.appName{
+    font-size: 8vh;
+    color:#343434;
+}
+.appName span {
+    color: #3e34ff;
+}
+
 
 /* 
     sub navbar buttons Actions

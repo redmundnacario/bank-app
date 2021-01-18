@@ -17,102 +17,133 @@
 </head>
 <body>
     <main>
+        <!-- Svg Wavy background -->
+        <svg id="svgBground" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+            <path fill="#3e34ff" fill-opacity="0.8" d="M0,224L80,192C160,160,320,96,480,112C640,128,800,224,960,261.3C1120,299,1280,277,1360,266.7L1440,256L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"></path>
+        </svg>
+        <svg id="svgBground2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+            <path fill="#5000ca" fill-opacity="0.8" d="M0,224L80,208C160,192,320,160,480,170.7C640,181,800,235,960,250.7C1120,267,1280,245,1360,234.7L1440,224L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"></path>
+        </svg>
+       
+
         <!-- Navbar -->
         <nav>
-            <img src="./assets/images/bankk.svg">
-            <ul class="nav-options">
-                <li class="active-nav" data-view="home">Home</li>
-                <li data-view="register">Register</li>
-                <li data-view="login">Login</li>
-            </ul>
+            <div>
+                <div>
+                    <h1 class="appName-navbar">
+                        <span>e</span>Bank<span>o</span>
+                    </h1>
+                </div>
+                <div>
+                    <button id="homeBtnId" class="nav-buttons active"><h2>Home</h2></button>
+                    <button id="registerBtnId" class="nav-buttons"><h2>Register</h2></button>
+                    <button id="loginBtnId" class="nav-buttons"><h2>Login</h2></button>
+                </div>
+            </div>
         </nav>
 
         <!-- section pages -->
         <section>
-            <!-- login page -->
-            <!-- register page -->
-            <!-- home page -->
-            <div>
-                <article class="view_initial_img">
-                    <h1>
-                        FreeCash<span>.</span>
-                    </h1>
-                    <p>Find a way to browse money!</p>
-                    <img src="./assets/images/wallet.svg" alt="Wallet" />
-                </article>
-                <article class="view_initial_nav">
-                    <div class="view_initial_nav_dynamic">
-                        <div id="dynamic_home" data-view="home">
-                            <p>
-                                Store your money with us and invest with a low interest!
-                            </p>
-                            <p>
-                                FreeCash is a local bank that help you to browse money. Your security is your ability to connect with the 
-                                cosmic power that creates all things.
-                            </p>
 
-                            <p>
-                                Don't have an account? <b>Register now!</b>
-                            </p>
-                        </div>
-                        <div id="dynamic_register" data-view="register" style="display: none;">
-                            <form id="form_register">
-                                <div class="input-group">
-                                    <label>Full Name</label>
-                                    <input type='text' name="reg_fullname" id="reg_fullname" autocomplete="off" />
-                                </div>
-                                <div class="input-group">
-                                    <label>Password</label>
-                                    <input type='password' name="reg_password" id="reg_password" autocomplete="off"
-                                        minlength="8" />
-                                </div>
-                                <div class="input-group">
-                                    <label>Confirm Password</label>
-                                    <input type='password' name="reg_password_confirm" id="reg_password_confirm"
-                                        autocomplete="off" minlength="8" />
-                                </div>
-                                <div class="input-group">
-                                    <button>
-                                        <i class="ion-android-checkmark-circle"></i>
-                                        &nbsp;
-                                        Register
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                        <div id="dynamic_login" data-view="login" style="display: none;">
-                            <form id="form_login">
-                                <div class="input-group">
-                                    <label>Full Name</label>
-                                    <input type='text' name="log_fullname" id="log_fullname" autocomplete="off" />
-                                </div>
-                                <div class="input-group">
-                                    <label>Password</label>
-                                    <input type='password' name="log_password" id="log_password" autocomplete="off"
-                                        minlength="8" />
-                                </div>
-                                <div class="input-group">
-                                    <button>
-                                        <i class="ion-android-checkmark-circle"></i>
-                                        &nbsp;
-                                        Login
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
+            <div class="landing-page-container">
+                <!-- Left side -->
+                <article class="left-landing-page">
+                    <h1 class="appName">
+                        <span>e</span>Bank<span>o</span>
+                    </h1>
+                    <h2>Save your money with us and enjoy fast bank transactions!</h2>
+                    <img id="landingPageImgId"src="./assets/images/wallet.svg" alt="Wallet" />
+                </article>
+
+                <article class="right-landing-page">
+
+                    <!-- Home -->
+                    <div id="homeContainerId" >
+                        
+                        <h2>
+                            eBanko is an online bank that will help you to:
+                        </h2>
+                        <h2>
+                            ✅  Save funds and earn higher than normal bank interests.
+                        </h2>
+                        <h2>
+                            ✅  Transfer funds with free of charge.
+                        </h2>
+                        <h2>
+                            ✅  Create multiple accounts.
+                        </h2>
+                        <h4>
+                            New to eBanko? <a>Register now!</a>
+                        </h4>
                     </div>
+
+                    <!-- Register -->
+                    <div id="registerContainerId" class="hidden">
+                        <form id="formRegisterId">
+                            <div class="login-reg-input-group">
+                                <label for = "reg-fullname">First Name</label>
+                                <input type='text' name="reg-fullname" id="reg-fullname" autocomplete="off" />
+                            </div>
+                            <div class="login-reg-input-group">
+                                <label for = "reg-fullname">Last Name</label>
+                                <input type='text' name="reg-fullname" id="reg-fullname" autocomplete="off" />
+                            </div>
+                            <div class="login-reg-input-group">
+                                <label >Password</label>
+                                <input type='password' name="reg_password" id="reg_password" autocomplete="off"
+                                    minlength="8" />
+                            </div>
+                            <div class="login-reg-input-group">
+                                <label>Confirm Password</label>
+                                <input type='password' name="reg_password_confirm" id="reg_password_confirm"
+                                    autocomplete="off" minlength="8" />
+                            </div>
+                            <div class="login-reg-input-group">
+                                <button>
+                                    <i class="ion-android-checkmark-circle"></i>
+                                    &nbsp;
+                                    Register
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <!-- Login -->
+                    <div id="loginContainerId" class="hidden">
+                        <form id="form_login">
+                            <div class="login-reg-input-group">
+                                <label>Full Name</label>
+                                <input type='text' name="log_fullname" id="log_fullname" autocomplete="off" />
+                            </div>
+                            <div class="login-reg-input-group">
+                                <label>Password</label>
+                                <input type='password' name="log_password" id="log_password" autocomplete="off"
+                                    minlength="8" />
+                            </div>
+                            <div class="login-reg-input-group">
+                                <button>
+                                    <i class="ion-android-checkmark-circle"></i>
+                                    &nbsp;
+                                    Login
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                
                 </article>
             </div>
 
         </section>
 
         <!-- App page -->
-        <section>
+        <section id="app" class="hidden">
             <!-- greet the owner -->
             <div>
                 <h1>Welcome back!</h1>
                 <h3>At a glance summary of your account. Have fun!</h3>
             </div>
+            <!-- Action buttons -->
             <div class="sub-navbar-container">
 
                 <div class="action-buttons-container">
@@ -138,8 +169,9 @@
                         </p>
                     </button>
                 </div>
-
             </div>
+
+            <!-- Overview -->
             <div class="overview-container">
                 <div class="total-accounts-overview">
                     <h2>Overview</h2>
@@ -237,6 +269,7 @@
                 </div>
             </div>
         </div>
+        
     </main>
 </body>
 </html>
