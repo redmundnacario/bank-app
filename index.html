@@ -39,17 +39,25 @@
 
                 <div class="action-buttons-container">
                     <!-- Butons //add symbols -->
-                    <!-- <button class="action-button" id = "depositBtnId">
-                        Add Funds
+                    <button class="action-button" id = "depositBtnId">
+                        <p>
+                            Add Funds
+                        </p>
                     </button>
                     <button class="action-button" id = "withdrawBtnId">
-                        Withdraw
-                    </button> -->
+                        <p>
+                            Withdraw
+                        </p>
+                    </button>
                     <button class="action-button" id = "tranferFundsBtnId">
-                        Transfer Funds
+                        <p>
+                            Transfer Funds
+                        </p>
                     </button>
                     <button class="action-button" id="settingsBtnId">
-                        Settings
+                        <p>
+                            Settings
+                        </p>
                     </button>
                 </div>
 
@@ -59,17 +67,17 @@
                     <h2>Overview</h2>
                     <div class="accounts-overview">
                         <div>
-                            <h4>Total Account Balance</h4>
-                            <p>0.00 php</p>
+                            <h4>Total Balance</h4>
+                            <h5>&#8369; 0.00</h5>
                         </div>
                         <div class="a-o-figures">
                             <div>
                                 <h4>Wallets</h4>
-                                <p>1</p>
+                                <h5>1</h5>
                             </div>
                             <div>
                                 <h4>Transactions</h4>
-                                <p>1</p>
+                                <h6>0</h6>
                             </div>
                         </div>
                         <p>Last activity: datetime</p>
@@ -78,8 +86,8 @@
                 <div class="per-accounts-overview">
                     <h2>Money Wallet Accounts</h2>
                     <div class="account-box">
-                        <h4>Account name 1</h4>
-                        <p>0.00 php</p>
+                        <h4>Account #1</h4>
+                        <h5>&#8369; 0.00</h5>
                     </div>
                 </div>
             </div>
@@ -89,7 +97,7 @@
                 <table class="history-table">
                     <thead class="accordion">
                         <tr>
-                            <th colspan="4">
+                            <th colspan="5">
                                 <h2>Recent Transactions</h2>
                             </th>
                         </tr>
@@ -98,12 +106,14 @@
                         <tr>
                             <th>Action</th>
                             <th>Date</th>
-                            <th>Value</th>
+                            <th>Amount</th>
+                            <th>Balance</th>
                             <th>Status</th>
                         </tr>
                         <tr>
                             <th>Deposit</th>
                             <td>Sample datetime</td>
+                            <td>100Php</td>
                             <td>100Php</td>
                             <td>Completed</td>
                         </tr>
@@ -111,11 +121,13 @@
                             <th>Withdraw</th>
                             <td>Sample datetime</td>
                             <td>50Php</td>
+                            <td>50Php</td>
                             <td>Completed</td>
                         </tr>
                         <tr>
                             <th>Transfer to user</th>
                             <td>Sample datetime</td>
+                            <td>20Php</td>
                             <td>20Php</td>
                             <td>Completed</td>
                         </tr>
@@ -123,9 +135,34 @@
                     </tbody>
                 </table>
             </div>
+        </section>
 
         <!-- modal -->
-        </section>
+        <div id="ModalId" class="modal">
+            <!-- Modal content -->
+            <div id="ModalContentId" class="modal-content">
+
+                <div class="card">
+                    <h1 id="ActionNameId">Action type</h1>
+                    <h2 id="ActionPurposeId">Where is the meta tag only found?</h2>
+                    <form id="ActionFormId">
+                        <div>
+                            <input type="radio" value="0" id="0" name="choices">'
+                            <label for="0">Sample radio input</label>
+                        </div>
+                    </form>
+                    <div class="card-bottom">
+                        <div class="">
+                            <input id="CancelButtonId" type="button" value="Cancel">
+                            <input id="SubmitButtonId" type="button" value="Submit">
+                        </div>
+                        <div class="">
+                            <p>error message</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 </body>
 </html>

@@ -1,16 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;700;900&family=Roboto:wght@400;700&display=swap');
+/* wght@700 */
 body {
     margin: 0;
     box-sizing: border-box;
     min-height: 100vh;
+
+    /* font-family: 'Poppins', sans-serif; */
+    /* font-family: 'Roboto', sans-serif; */
 }
-h4{
+/* 
+    FONTS
+*/
+
+h1{
+    font: 700 3vh/1.2 "Poppins", sans-serif;
+}
+
+h2 {
+    font: 400 2vh/1.2 "Poppins", sans-serif;
+}
+
+h3 {
+    font: 700 1.5vh/1.2 "Poppins", sans-serif;
+    color: #cecdcd;
+}
+
+h4 {
+    font: 700 1.2vh/1.2 "Poppins", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.1vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
     margin:0 0 1vh 0;
 }
-p {
-    /* margin: 2vh 0 0 0; */
+h5 {
+    font:100 3vh/1.2 'Poppins', sans-serif;
+    text-transform: uppercase;
+}
+h6 {
+    font: 100 2vh/1.2 'Poppins', sans-serif;
+}
+th{
+    font: 700 1.2vh 'Roboto', sans-serif;
+    /* text-transform: uppercase; */
+}
+p, td, span, .bold-paragraph, .italicized-paragraph {
+    font: 400 1.2vh 'Roboto', sans-serif;
     margin: 0;
 }
 
+.bold-paragraph {
+    font: 700 1vh 'Roboto', sans-serif; 
+}
+
+/* 
+    SECTIONS
+*/
 
 section:first-of-type{
     display: none;
@@ -27,10 +73,14 @@ main{
 
 section {
     min-height: 100vh;
-    width: 60%;
+    width: 50%;
 
     padding-top: 5vh;
 }
+
+/* 
+    sub navbar buttons Actions
+*/
 
 .sub-navbar-container {
     width: 100%;
@@ -42,32 +92,37 @@ section {
 
 .action-buttons-container {
     align-self: center;
-    /* display: flex; */
+    display: flex;
+    align-items: center;
+
+    height: 4vh;
 }
 
 .action-button {
     all:unset;
     cursor: pointer;
-    padding:1.5vh 2vh;
+    padding:1vh 2vh;
     margin-left:1vh;
 
-    border: 0.1vh solid #7f85e0;
+    border: 0.1vh solid #3e34ff;
     border-radius: 0.5vh;
 
     transition: 0.4s;
 }
 
 .action-button:active, .action-button:hover {
-    background-color:  #7f85e0;
+    background-color:  #3e34ff;
     color: #fff;
-    border: #7f85e0 solid 0.5vh;
-    /* height:5.6vh; */
+    border: #3e34ff solid 0.5vh;
 }
 
-/* Overview or Dashboard */
+
+/* 
+    Overview or Dashboard 
+*/
 .overview-container{
     display: grid;
-    grid-template-columns: 30% 70%;
+    grid-template-columns: 40% 60%;
     gap:3vh;
 }
 
@@ -80,7 +135,7 @@ section {
 }
 
 .accounts-overview div:first-child{
-    margin-bottom: 2vh;
+    /* margin-bottom: 2vh; */
 }
 
 .a-o-figures{
@@ -100,9 +155,16 @@ section {
     border-radius: 1vh;
 }
 
+
+/* 
+    Table for History of transactions
+*/
+
 .table-container {
     border-radius:1vh;
     border: 0.1vh solid #f1f2ff;
+    background-color: #f1f2ff;
+    overflow: hidden;
 }
 /* Style the accordion panel. Note: hidden by default */
 table {
@@ -115,8 +177,12 @@ thead{
 }
 
 thead th:first-child {
-    border-radius: 1vh; 
+    border-radius: 1vh;
+    position: relative;
     /* background-color: #ececec; */
+}
+thead th:first-child:hover {
+    background-color: #fff;
 }
 
 /* curves the last tableData in the last row */
@@ -130,16 +196,19 @@ tbody tr:last-child th:first-child{
 
 
 tbody {
-    /* height: 0; */
-    /* visibility: hidden; */
     display: none;
-    /* max-height: 0; */
     overflow: hidden;
     transition: max-height 0.2s ease-out;
+
+    background-color : #fff;
+}
+tbody tr:first-child th{
+    padding:1vh 2vh;
+    color:#b3b3b3;
 }
 
 table, th, td {
-    /* border-bottom: 1px solid #959595; */
+    border-bottom: 0.2vh solid #f1f2ff;
     border-collapse: collapse;
 }
 th, td {
@@ -149,18 +218,20 @@ th, td {
 /* td{
     text-align: center;
 } */
-.history-table tr:nth-child(even) {
+
+/* .history-table tr:nth-child(even) {
     background-color: #fff;
 }
 .history-table tr:nth-child(odd) {
     background-color: #f1f2ff;
-}
+} */
 
 /* Style the buttons that are used to open and close the accordion panel */
 .accordion {
     /* background-color: #f9f9f9 !important; */
     cursor: pointer;
     transition: 0.4s;
+    
 }
 
 .accordion h2{
@@ -185,9 +256,72 @@ th, td {
     content: '\02795'; /* Unicode character for "plus" sign (+) */
     font-size: 13px;
     float: right;
-    margin-left: 5px;
+    position: absolute;
+    top:2.5vh;
+    right:2vh;
+    /* padding: 2vh; */
 }
 
 .accordion-active h2:after {
     content: "\2796"; /* Unicode character for "minus" sign (-) */
+}
+
+
+/* 
+    The Modal (background)
+*/
+
+.modal {
+    visibility: hidden;
+
+    display: flex; /* block by default */
+    justify-content: center;
+    align-items: center;
+
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    /* padding-top: 100px; Location of the box */
+    left: 0;
+    top: 0;
+
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur( 2px );
+    /* background-color: rgba(0,0,0,0.4); Black w/ opacity */
+
+  }
+
+/* Modal Content */
+.modal-content {
+    background-color: #fff;
+    margin: auto;
+    padding: 2vh;
+
+    width: 50vh;
+    /* height:50vh; */
+
+
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur( 10px );
+    box-shadow: 0 1vh 2vh 0 rgba(33, 31, 138, 0.37);
+    border-radius: 1vh;
+    border: 0.1vh solid rgba( 255, 255, 255, 0.25);
+}
+  
+/* The Close Button */
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+  
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
 }
