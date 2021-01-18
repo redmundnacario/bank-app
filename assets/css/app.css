@@ -41,17 +41,13 @@ h5 {
 h6 {
     font: 100 2vh/1.2 'Poppins', sans-serif;
 }
-th{
+th {
     font: 700 1.2vh 'Roboto', sans-serif;
     /* text-transform: uppercase; */
 }
-p, td, span, .bold-paragraph, .italicized-paragraph {
+p, td, span, input, label {
     font: 400 1.2vh 'Roboto', sans-serif;
     margin: 0;
-}
-
-.bold-paragraph {
-    font: 700 1vh 'Roboto', sans-serif; 
 }
 
 /* 
@@ -110,7 +106,9 @@ section {
     transition: 0.4s;
 }
 
-.action-button:active, .action-button:hover {
+.action-button:active, 
+.action-button:focus, 
+.action-button:hover {
     background-color:  #3e34ff;
     color: #fff;
     border: #3e34ff solid 0.5vh;
@@ -312,7 +310,7 @@ th, td {
 }
   
 /* The Close Button */
-.close {
+/* .close {
     color: #aaaaaa;
     float: right;
     font-size: 28px;
@@ -324,4 +322,92 @@ th, td {
     color: #000;
     text-decoration: none;
     cursor: pointer;
+} */
+
+/* 
+    Modal Contents
+*/
+
+#formId{
+    margin-top: 2vh;
+}
+.hidden{
+    display: none;
+}
+
+.input-container {
+    display: flex;
+    justify-content:  space-between;
+    align-items: center;
+    margin-bottom : 2vh;
+}
+
+.input-container input {
+    width :70%;
+}
+
+.input-group-h2 {
+    margin-bottom: 2vh;
+}
+
+label {
+    font-size: 1.5vh;
+}
+
+/* input, select and text area */
+input {
+    height: 4vh;
+    border: 2px solid #d1d3d4;
+    width: 100%;
+    padding: 12px;
+    font-family: "Poppins";
+    border-radius: 0.5vh;
+    color: #111;
+    background: #fff;
+}
+
+
+input:focus,
+input:active{
+    outline: none;
+    border-radius: 0.5vh;
+    border-color:  #3e34ff;
+}
+
+input[type=button]{
+    width:20%;
+    margin-left:2vh;
+}
+
+.card-bottom-buttons{
+    display: flex;
+    justify-content: flex-end;
+}
+
+input[value="Cancel"] {
+    background-color: rgb(255, 0, 0, 0.5);
+    color:#fff;
+    border-color: rgb(255, 0, 0, 0.5);
+}
+
+input[value="Cancel"]:hover,
+input[value="Cancel"]:focus,
+input[value="Cancel"]:active {
+    background-color: #fff;
+    color: rgb(255, 0, 0);
+    border-color:  rgb(255, 0, 0);
+}
+
+input[value="Submit"] {
+    background-color: rgb(144, 238, 144, 0.3);
+    color:#000;
+    border-color: rgb(144, 238, 144);
+}
+
+input[value="Submit"]:hover,
+input[value="Submit"]:focus,
+input[value="Submit"]:active {
+    background-color: #fff;
+    color: rgb(144, 238, 144);
+    border-color:   rgb(144, 238, 144);
 }

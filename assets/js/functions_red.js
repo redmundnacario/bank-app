@@ -1,8 +1,10 @@
-function AccountUser(first_name, last_name, balance) {
+function AccountUser(first_name, last_name, balance, account_id) {
    this.first_name =  first_name
    this.last_name = last_name
    this.account_name = this.first_name + " " + this.last_name
    this.balance = balance
+   this.accounts = {}
+   this.history = {}
 }
 
 export function Application() {
