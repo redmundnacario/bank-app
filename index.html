@@ -4,8 +4,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Redmund Nacario, & Jaycee Ferrer">
     <title>Bank-app</title>
+    <!-- FAV ICON-->
+    <link rel="shortcut icon" href="./assets/images/bank1.svg" type="image/png">
     <!-- css -->
-    <!-- <link rel="stylesheet" href="./assets/css/styles.css"> -->
+    <!-- <link rel="stylesheet" href="./assets/css/style.css"> -->
     <!-- app css -->
     <link rel="stylesheet" href="./assets/css/app.css" type="text/css">
     <!-- js -->
@@ -17,7 +19,12 @@
     <main>
         <!-- Navbar -->
         <nav>
-
+            <img src="./assets/images/bankk.svg">
+            <ul class="nav-options">
+                <li class="active-nav" data-view="home">Home</li>
+                <li data-view="register">Register</li>
+                <li data-view="login">Login</li>
+            </ul>
         </nav>
 
         <!-- section pages -->
@@ -25,6 +32,77 @@
             <!-- login page -->
             <!-- register page -->
             <!-- home page -->
+            <div>
+                <article class="view_initial_img">
+                    <h1>
+                        FreeCash<span>.</span>
+                    </h1>
+                    <p>Find a way to browse money!</p>
+                    <img src="./assets/images/wallet.svg" alt="Wallet" />
+                </article>
+                <article class="view_initial_nav">
+                    <div class="view_initial_nav_dynamic">
+                        <div id="dynamic_home" data-view="home">
+                            <p>
+                                Store your money with us and invest with a low interest!
+                            </p>
+                            <p>
+                                FreeCash is a local bank that help you to browse money. Your security is your ability to connect with the 
+                                cosmic power that creates all things.
+                            </p>
+
+                            <p>
+                                Don't have an account? <b>Register now!</b>
+                            </p>
+                        </div>
+                        <div id="dynamic_register" data-view="register" style="display: none;">
+                            <form id="form_register">
+                                <div class="input-group">
+                                    <label>Full Name</label>
+                                    <input type='text' name="reg_fullname" id="reg_fullname" autocomplete="off" />
+                                </div>
+                                <div class="input-group">
+                                    <label>Password</label>
+                                    <input type='password' name="reg_password" id="reg_password" autocomplete="off"
+                                        minlength="8" />
+                                </div>
+                                <div class="input-group">
+                                    <label>Confirm Password</label>
+                                    <input type='password' name="reg_password_confirm" id="reg_password_confirm"
+                                        autocomplete="off" minlength="8" />
+                                </div>
+                                <div class="input-group">
+                                    <button>
+                                        <i class="ion-android-checkmark-circle"></i>
+                                        &nbsp;
+                                        Register
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <div id="dynamic_login" data-view="login" style="display: none;">
+                            <form id="form_login">
+                                <div class="input-group">
+                                    <label>Full Name</label>
+                                    <input type='text' name="log_fullname" id="log_fullname" autocomplete="off" />
+                                </div>
+                                <div class="input-group">
+                                    <label>Password</label>
+                                    <input type='password' name="log_password" id="log_password" autocomplete="off"
+                                        minlength="8" />
+                                </div>
+                                <div class="input-group">
+                                    <button>
+                                        <i class="ion-android-checkmark-circle"></i>
+                                        &nbsp;
+                                        Login
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </article>
+            </div>
 
         </section>
 
