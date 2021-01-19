@@ -5,14 +5,11 @@
     <meta name="author" content="Redmund Nacario, & Jaycee Ferrer">
     <title>Bank-app</title>
     <!-- FAV ICON-->
-    <link rel="shortcut icon" href="./assets/images/bank1.svg" type="image/png">
+    <link rel="shortcut icon" href="./assets/img/bank1.svg" type="image/png">
     <!-- css -->
-    <!-- <link rel="stylesheet" href="./assets/css/style.css"> -->
-    <!-- app css -->
-    <link rel="stylesheet" href="./assets/css/app.css" type="text/css">
+    <link rel="stylesheet" href="./assets/css/style.css" type="text/css">
     <!-- js -->
-    <script type="module" src="./assets/js/index_jc.js" defer></script>
-    <script type="module" src="./assets/js/index_red.js" defer></script>
+    <script type="module" src="./assets/js/index.js" defer></script>
     <!-- <script type="module" src="./assets/js/index.js" defer></script> -->
 </head>
 <body>
@@ -34,7 +31,7 @@
                         <span>e</span>Bank<span>o</span>
                     </h1>
                 </div>
-                <div>
+                <div class="landing-nav-buttons">
                     <button id="homeBtnId" class="nav-buttons active"><h2>Home</h2></button>
                     <button id="registerBtnId" class="nav-buttons"><h2>Register</h2></button>
                     <button id="loginBtnId" class="nav-buttons"><h2>Login</h2></button>
@@ -43,7 +40,7 @@
         </nav>
 
         <!-- section pages -->
-        <section>
+        <section class="hidden">
 
             <div class="landing-page-container">
                 <!-- Left side -->
@@ -52,7 +49,7 @@
                         <span>e</span>Bank<span>o</span>
                     </h1>
                     <h2>Save your money with us and enjoy fast bank transactions!</h2>
-                    <img id="landingPageImgId"src="./assets/images/wallet.svg" alt="Wallet" />
+                    <img id="landingPageImgId"src="./assets/img/wallet.svg" alt="Wallet" />
                 </article>
 
                 <article class="right-landing-page">
@@ -63,6 +60,7 @@
                         <h2>
                             eBanko is an online bank that will help you to:
                         </h2>
+                        <br>
                         <h2>
                             ✅  Save funds and earn higher than normal bank interests.
                         </h2>
@@ -72,6 +70,7 @@
                         <h2>
                             ✅  Create multiple accounts.
                         </h2>
+                        <br>
                         <h4>
                             New to eBanko? <a>Register now!</a>
                         </h4>
@@ -137,7 +136,7 @@
         </section>
 
         <!-- App page -->
-        <section id="app" class="hidden">
+        <section id="app">
             <!-- greet the owner -->
             <div>
                 <h1>Welcome back!</h1>

@@ -1,5 +1,6 @@
-import { Application } from './functions_red.js'
+import { Application } from './functions.js'
 
+// Should initialize when
 const App = new Application();
 let result;
 
