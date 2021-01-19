@@ -1,3 +1,6 @@
+import { extractFormData } from './utility.js'
+
+// User Constructor - Creates new instance of User
 const User = function(first_name, last_name, password, user_level = "basic") {
     this.first_name =  first_name;
     this.last_name = last_name;
@@ -6,6 +9,8 @@ const User = function(first_name, last_name, password, user_level = "basic") {
     this.user_level = user_level;
 }
 
+
+// Authenticate Constructor
 export const Authenticate = function() {
 
     // Global variables
@@ -14,16 +19,20 @@ export const Authenticate = function() {
 
     // Dom elements
 
-    this.registerBtn = document.getElementById("registerBtnId")
-    this.loginBtn = document.getElementById("loginBtnId")
+    this.registerBtn = document.getElementById("registerToAppId")
+    this.loginBtn = document.getElementById("loginToAppId")
 
     this.registerForm = document.getElementById("formRegisterId")
     this.loginForm = document.getElementById("formLoginId")
+
+    // ADD event listeners
+    this.registerBtn.onclick = (event) => this.registerUserOnclick(event);
 
 
     /*
         LOCAL STORAGE
     */
+
     // initialize local storage. do this only once , can be used to load initial sample data
     this.initializeLocalStorage = function() {
         let state = {
@@ -59,6 +68,8 @@ export const Authenticate = function() {
     /*
         METHODS
     */ 
+
+    // initialize Auth
     this.initialize = function() {
         this.getLocalStorage()
     }
@@ -85,7 +96,10 @@ export const Authenticate = function() {
                 return "Username or password are incorrect."
             }
 
-            this.currentUser = existingUser.user_name;
+            this.currentUser = { 
+                user_name : existingUser.user_name,
+                user_level : existingUser.user_level
+            };
             // console.log(this.currentUser)
             return "Successfully logged in."
         };
@@ -130,4 +144,30 @@ export const Authenticate = function() {
         // console.log(this.currentUser)
         return "Successfully logged out."
     }
+
+    // get data from register form
+    this.registerUserOnclick = function(event) {
+        // event.preventDefault();
+        // console.log(event.currentTarget)
+        let registerForm = document.forms.formRegisterId;
+        const form_data = new FormData(registerForm)
+        let result = extractFormData(form_data);
+        console.log(result)
+
+        // const form_array_data = Array.from(form_data.entries())
+        
+        // if (form_array_data.length === 0) {
+        //     // Set alert that there is no answer given
+        //     console.log("No Answer Submitted.")
+        //     alert("No Answer Submitted. Please choose from the choices and then submit")
+        //     this.submitBtn.disabled = false;
+        // } else {
+        //     //display answer and tell if right or wrong
+        //     // console.log(form_array_data[0])
+        //     this.answer = parseInt(form_array_data[0][1]) + 1;
+        //     this.verifyAnswer()
+        // }
+
+    }
 }
+

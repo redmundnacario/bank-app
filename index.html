@@ -3,7 +3,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Redmund Nacario, & Jaycee Ferrer">
-    <title>Bank-app</title>
+    <title>eBanko</title>
     <!-- FAV ICON-->
     <!-- <link rel="shortcut icon" href="./assets/img/bank1.svg" type="image/png"> -->
     <!-- css -->
@@ -32,19 +32,22 @@
                         <span>e</span>Bank<span>o</span>
                     </h1>
                 </div>
-                <div class="landing-nav-buttons">
-                    <button id="homeBtnId" class="nav-buttons active"><h2>Home</h2></button>
+                <div class="landing-nav-buttons" data-view="logoutBtnId">
+                    <button id="homeBtnId" class="nav-buttons"><h2>Home</h2></button>
                     <button id="registerBtnId" class="nav-buttons"><h2>Register</h2></button>
                     <button id="loginBtnId" class="nav-buttons"><h2>Login</h2></button>
+                </div>
+                <div class="landing-nav-buttons hidden" data-view="loginToAppId">
+                    <!-- add profile picture here -->
                     <button id="logoutBtnId" class="nav-buttons"><h2>Logout</h2></button>
                 </div>
             </div>
         </nav>
 
         <!-- section pages -->
-        <section >
+        <section id="homeIdDiv" class="hidden" data-view="logoutBtnId">
 
-            <div class="landing-page-container">
+            <div class="landing-page-container" >
                 <!-- Left side -->
                 <article class="left-landing-page" >
                     <h1 class="appName">
@@ -57,7 +60,7 @@
                 <article class="right-landing-page">
 
                     <!-- Home -->
-                    <div id="homeContainerId" class ="hidden">
+                    <div id="homeContainerId" class="hidden" data-view="homeBtnId">
                         
                         <h2>
                             eBanko is an online bank that will help you to:
@@ -79,46 +82,48 @@
                     </div>
 
                     <!-- Register -->
-                    <div id="registerContainerId" >
+                    <div id="registerContainerId" class="hidden" data-view="registerBtnId" >
                         <form id="formRegisterId">
+                            <h1>Register</h1>
                             <div class="login-reg-input-group">
                                 <label for="reg-fullname">First Name</label>
-                                <input type='text' name="reg-fullname" id="reg-fullname" autocomplete="off" />
+                                <input type='text' name="reg-fullname" id="reg-fullname" autocomplete="off" required />
                             </div>
                             <div class="login-reg-input-group">
                                 <label for="reg-lastname">Last Name</label>
-                                <input type='text' name="reg-lastname" id="reg-lastname" autocomplete="off" />
+                                <input type='text' name="reg-lastname" id="reg-lastname" autocomplete="off" required />
                             </div>
                             <div class="login-reg-input-group">
                                 <label for="reg-password">Password</label>
                                 <input type='password' name="reg-password" id="reg-password" autocomplete="off"
-                                    minlength="8" />
+                                    minlength="8" required />
                             </div>
                             <div class="login-reg-input-group">
                                 <label for="reg-confirm-password">Confirm Password</label>
                                 <input type='password' name="reg-confirm-password" id="reg-confirm-password"
-                                    autocomplete="off" minlength="8" />
+                                    autocomplete="off" minlength="8" required />
                             </div>
-                            <div class="login-reg-input-group">
-                                <input type="button" value="Register">
+                            <div class="login-reg-input-group-btn">
+                                <input id="registerToAppId" type="submit" value="Register">
                             </div>
                         </form>
                     </div>
                     
                     <!-- Login -->
-                    <div id="loginContainerId" class="hidden">
+                    <div id="loginContainerId" class="hidden" data-view="loginBtnId">
                         <form id="formLoginId">
+                            <h1>Login</h1>
                             <div class="login-reg-input-group">
                                 <label for="log-fullname">Full Name</label>
-                                <input type='text' name="log-fullname" id="log-fullname" autocomplete="off" />
+                                <input type='text' name="log-fullname" id="log-fullname" autocomplete="off" required />
                             </div>
                             <div class="login-reg-input-group">
                                 <label for="log-password">Password</label>
                                 <input type='password' name="log-password" id="log-password" autocomplete="off"
-                                    minlength="8" />
+                                    minlength="8" required />
                             </div>
-                            <div class="login-reg-input-group">
-                                <input type="button" value="Login">
+                            <div class="login-reg-input-group-btn">
+                                <input id="loginToAppId" type="submit" value="Login">
                             </div>
                         </form>
                     </div>
@@ -130,7 +135,7 @@
         </section>
 
         <!-- App page -->
-        <section id="app" class="hidden">
+        <section id="app" class="hidden" data-view="loginToAppId">
             <!-- greet the owner -->
             <div>
                 <h1>Welcome back!</h1>
@@ -253,8 +258,8 @@
                 </div>
                 <div class="card-bottom">
                     <div class="card-bottom-buttons">
-                        <input id="CancelButtonId" type="button" value="Cancel">
-                        <input id="SubmitButtonId" type="button" value="Submit">
+                        <input id="CancelButtonId" type="submit" value="Cancel">
+                        <input id="SubmitButtonId" type="submit" value="Submit">
                     </div>
                     <div class="">
                         <p></p>

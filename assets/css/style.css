@@ -75,7 +75,7 @@ main{
 
 section[id="app"] {
     min-height:90vh;
-    width: 50%;
+    width: 70%;
 
     /* padding-top: 10vh; */
 }
@@ -164,7 +164,7 @@ nav>div{
 
 .landing-page-container{
     /* padding:10vh 0; */
-    height: 80vh;
+    height: 90vh;
     
     display: flex;
     justify-content: space-around;
@@ -202,6 +202,58 @@ nav>div{
     color: #3e34ff;
 }
 
+/* 
+    Login and register input group
+*/
+
+form {
+    margin:0;
+}
+#registerContainerId,
+#loginContainerId {
+    align-self: center;
+
+    background-color: #fff;
+    padding:2vh;
+
+    width:40vh;
+    border: 0.2vh solid #f1f2ff;
+    border-radius: 1vh;
+
+    box-shadow:  9px 9px 18px #d9d9d9,
+                -9px -9px 18px #ffffff;
+}
+.login-reg-input-group label{
+    margin-bottom:1vh;
+    display: block;
+}
+#registerContainerId div,
+#loginContainerId div {
+    margin-top: 2vh;
+}
+
+.login-reg-input-group-btn {
+    display: flex;
+    justify-content: flex-end;
+}
+.login-reg-input-group-btn input[type=submit] {
+    color: #fff;
+    width: 30%;
+    background-color:  #3e34ff;
+    border-color:  #3e34ff;
+    
+    line-height: 0;
+    margin-top: 1vh;
+
+}
+
+.login-reg-input-group-btn input[type=submit]:hover, 
+.login-reg-input-group-btn input[type=submit]:focus {
+    color: #3e34ff;
+    width: 30%;
+    background-color:  #fff;
+    border-color:  #3e34ff;
+}
 
 /* 
     sub navbar buttons Actions
@@ -300,7 +352,7 @@ nav>div{
 }
 /* Style the accordion panel. Note: hidden by default */
 table {
-    width: 101%;
+    width: 100%;
     transition: 100s;
 }
 thead{
@@ -481,7 +533,7 @@ th, td {
     display: flex;
     justify-content:  space-between;
     align-items: center;
-    margin-bottom : 2vh;
+    margin-bottom : 3vh;
 }
 
 .input-container input {
@@ -489,7 +541,8 @@ th, td {
 }
 
 .input-group-h2 {
-    margin-bottom: 2vh;
+    margin-bottom: 1vh;
+    margin-top: 3vh;
 }
 
 label {
@@ -499,7 +552,7 @@ label {
 /* input, select and text area */
 input {
     height: 4vh;
-    border: 2px solid #d1d3d4;
+    border: 0.1vh solid #d1d3d4;
     width: 100%;
     padding: 12px;
     font-family: "Poppins";
@@ -516,10 +569,6 @@ input:active{
     border-color:  #3e34ff;
 }
 
-input[type=button]{
-    width:20%;
-    margin-left:2vh;
-}
 
 .card-bottom-buttons{
     display: flex;
@@ -530,6 +579,11 @@ input[value="Cancel"] {
     background-color: rgb(255, 0, 0, 0.5);
     color:#fff;
     border-color: rgb(255, 0, 0, 0.5);
+
+    line-height: 0;
+
+    width:20%;
+    margin-left:2vh;
 }
 
 input[value="Cancel"]:hover,
@@ -544,6 +598,11 @@ input[value="Submit"] {
     background-color: rgb(144, 238, 144, 0.3);
     color:#000;
     border-color: rgb(144, 238, 144);
+
+    line-height: 0;
+
+    width:20%;
+    margin-left:2vh;
 }
 
 input[value="Submit"]:hover,

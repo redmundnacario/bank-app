@@ -1,5 +1,7 @@
 // Constructors
+import { Authenticate } from './auth.js';
 import { Modal } from './components/modal.js'
+import { Navigation } from './components/navigation.js'
 // Functions
 import { accordion } from './components/accordion.js';
 
@@ -18,16 +20,30 @@ export function Application() {
 
     this.current_user;
     this.state;
-    this.modal;
+    this.Nav;
+    this.Modal;
+
+    // Dom elements
+
+    this.loginToAppBtn = document.getElementById("loginToAppId");
+
+    // Methods
 
     this.initialize = function() {
 
-        if (this.current_user){
+        this.Nav = new Navigation();
+        this.Auth = new Authenticate();
+
+        if (!this.current_user){
+
+            // change view to app
+            this.Nav.shiftPage(this.loginToAppBtn)
+
             // gets the local storage and updates the state
             this.getLocalStorage();
     
             // modal constructor is incharge od dynamic display of forms
-            this.modal = new Modal();
+            this.Modal = new Modal();
     
             // setup the simple accordion function
             accordion();
