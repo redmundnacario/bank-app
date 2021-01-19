@@ -58,7 +58,7 @@ p, td, input, label {
 
 section:first-of-type{
     width: 90%;
-    height: 100vh;
+    height: 90vh;
 }
 
 section>div {
@@ -74,10 +74,10 @@ main{
 }
 
 section[id="app"] {
-    min-height: 100vh;
+    min-height:90vh;
     width: 50%;
 
-    padding-top: 10vh;
+    /* padding-top: 10vh; */
 }
 
 /* 
@@ -89,6 +89,7 @@ section[id="app"] {
     bottom: 0;
     width: 100%;
     height: auto;
+    z-index: -1;
 }
 #svgBground2{
     z-index: -2;
@@ -162,7 +163,7 @@ nav>div{
 */
 
 .landing-page-container{
-    padding:10vh 0;
+    /* padding:10vh 0; */
     height: 80vh;
     
     display: flex;
@@ -287,14 +288,19 @@ nav>div{
 */
 
 .table-container {
+    width: 100%;
     border-radius:1vh;
-    border: 0.1vh solid #f1f2ff;
-    background-color: #f1f2ff;
+    border: 0.2vh solid #f1f2ff;
     overflow: hidden;
+
+    z-index:1;
+
+    background-color : rgba(255, 255, 255,0.9);
+    backdrop-filter: blur( 2px )
 }
 /* Style the accordion panel. Note: hidden by default */
 table {
-    width: 100%;
+    width: 101%;
     transition: 100s;
 }
 thead{
@@ -305,6 +311,7 @@ thead{
 thead th:first-child {
     border-radius: 1vh;
     position: relative;
+    border-bottom:0;
     /* background-color: #ececec; */
 }
 thead th:first-child:hover {
@@ -325,18 +332,24 @@ tbody {
     display: none;
     overflow: hidden;
     transition: max-height 0.2s ease-out;
-
-    background-color : #fff;
 }
 tbody tr:first-child th{
     padding:1vh 2vh;
-    color:#b3b3b3;
+    /* color:#b3b3b3; */
 }
-
-table, th, td {
-    border-bottom: 0.2vh solid #f1f2ff;
+table,tbody, th, td{
     border-collapse: collapse;
 }
+th, td {
+    border-bottom: 0.2vh solid #f1f2ff;
+}
+
+tbody tr:last-child,
+tbody tr:last-child th, 
+tbody tr:last-child td {
+    border-bottom: 0;
+}
+
 th, td {
     padding: 2vh;
     text-align: left;
@@ -376,6 +389,7 @@ th, td {
 .accordion-active th:first-child  {
     border-radius: 1vh 1vh 0 0 !important;
     background-color: #fff;
+    border-bottom: 0.2vh solid #f1f2ff;
 }
 
 .accordion h2:after {

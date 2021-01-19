@@ -5,12 +5,13 @@
     <meta name="author" content="Redmund Nacario, & Jaycee Ferrer">
     <title>Bank-app</title>
     <!-- FAV ICON-->
-    <link rel="shortcut icon" href="./assets/img/bank1.svg" type="image/png">
+    <!-- <link rel="shortcut icon" href="./assets/img/bank1.svg" type="image/png"> -->
     <!-- css -->
     <link rel="stylesheet" href="./assets/css/style.css" type="text/css">
     <!-- js -->
     <script type="module" src="./assets/js/index.js" defer></script>
-    <!-- <script type="module" src="./assets/js/index.js" defer></script> -->
+    <!-- <script type="module" src="./assets/js/test_auth.js" defer></script> -->
+    <!-- <script type="module" src="./assets/js/test_app.js" defer></script> -->
 </head>
 <body>
     <main>
@@ -35,16 +36,17 @@
                     <button id="homeBtnId" class="nav-buttons active"><h2>Home</h2></button>
                     <button id="registerBtnId" class="nav-buttons"><h2>Register</h2></button>
                     <button id="loginBtnId" class="nav-buttons"><h2>Login</h2></button>
+                    <button id="logoutBtnId" class="nav-buttons"><h2>Logout</h2></button>
                 </div>
             </div>
         </nav>
 
         <!-- section pages -->
-        <section class="hidden">
+        <section >
 
             <div class="landing-page-container">
                 <!-- Left side -->
-                <article class="left-landing-page">
+                <article class="left-landing-page" >
                     <h1 class="appName">
                         <span>e</span>Bank<span>o</span>
                     </h1>
@@ -55,7 +57,7 @@
                 <article class="right-landing-page">
 
                     <!-- Home -->
-                    <div id="homeContainerId" >
+                    <div id="homeContainerId" class ="hidden">
                         
                         <h2>
                             eBanko is an online bank that will help you to:
@@ -77,54 +79,46 @@
                     </div>
 
                     <!-- Register -->
-                    <div id="registerContainerId" class="hidden">
+                    <div id="registerContainerId" >
                         <form id="formRegisterId">
                             <div class="login-reg-input-group">
-                                <label for = "reg-fullname">First Name</label>
+                                <label for="reg-fullname">First Name</label>
                                 <input type='text' name="reg-fullname" id="reg-fullname" autocomplete="off" />
                             </div>
                             <div class="login-reg-input-group">
-                                <label for = "reg-fullname">Last Name</label>
-                                <input type='text' name="reg-fullname" id="reg-fullname" autocomplete="off" />
+                                <label for="reg-lastname">Last Name</label>
+                                <input type='text' name="reg-lastname" id="reg-lastname" autocomplete="off" />
                             </div>
                             <div class="login-reg-input-group">
-                                <label >Password</label>
-                                <input type='password' name="reg_password" id="reg_password" autocomplete="off"
+                                <label for="reg-password">Password</label>
+                                <input type='password' name="reg-password" id="reg-password" autocomplete="off"
                                     minlength="8" />
                             </div>
                             <div class="login-reg-input-group">
-                                <label>Confirm Password</label>
-                                <input type='password' name="reg_password_confirm" id="reg_password_confirm"
+                                <label for="reg-confirm-password">Confirm Password</label>
+                                <input type='password' name="reg-confirm-password" id="reg-confirm-password"
                                     autocomplete="off" minlength="8" />
                             </div>
                             <div class="login-reg-input-group">
-                                <button>
-                                    <i class="ion-android-checkmark-circle"></i>
-                                    &nbsp;
-                                    Register
-                                </button>
+                                <input type="button" value="Register">
                             </div>
                         </form>
                     </div>
                     
                     <!-- Login -->
                     <div id="loginContainerId" class="hidden">
-                        <form id="form_login">
+                        <form id="formLoginId">
                             <div class="login-reg-input-group">
-                                <label>Full Name</label>
-                                <input type='text' name="log_fullname" id="log_fullname" autocomplete="off" />
+                                <label for="log-fullname">Full Name</label>
+                                <input type='text' name="log-fullname" id="log-fullname" autocomplete="off" />
                             </div>
                             <div class="login-reg-input-group">
-                                <label>Password</label>
-                                <input type='password' name="log_password" id="log_password" autocomplete="off"
+                                <label for="log-password">Password</label>
+                                <input type='password' name="log-password" id="log-password" autocomplete="off"
                                     minlength="8" />
                             </div>
                             <div class="login-reg-input-group">
-                                <button>
-                                    <i class="ion-android-checkmark-circle"></i>
-                                    &nbsp;
-                                    Login
-                                </button>
+                                <input type="button" value="Login">
                             </div>
                         </form>
                     </div>
@@ -136,7 +130,7 @@
         </section>
 
         <!-- App page -->
-        <section id="app">
+        <section id="app" class="hidden">
             <!-- greet the owner -->
             <div>
                 <h1>Welcome back!</h1>

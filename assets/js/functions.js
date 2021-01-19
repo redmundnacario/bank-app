@@ -1,4 +1,6 @@
+// Constructors
 import { Modal } from './components/modal.js'
+// Functions
 import { accordion } from './components/accordion.js';
 
 
@@ -14,31 +16,29 @@ function AccountUser(first_name, last_name, balance, account_id) {
 
 export function Application() {
 
-
+    this.current_user;
     this.state;
     this.modal;
 
-    this.initializeApp = function() {
+    this.initialize = function() {
 
-        // gets the local storage and updates the state
-        this.getLocalStorage();
-
-        //get the user Auth constructor
-
-        // modal constructor is incharge od dynamic display of forms
-        this.modal = new Modal();
-
-        // setup the simple accordion function
-        accordion();
-
+        if (this.current_user){
+            // gets the local storage and updates the state
+            this.getLocalStorage();
     
+            // modal constructor is incharge od dynamic display of forms
+            this.modal = new Modal();
+    
+            // setup the simple accordion function
+            accordion();
+        }
     }
 
 
     // initialize local storage. do this only once
     this.initializeLocalStorage = function() {
         let state = {
-            name : "FreeCash",
+            name : "Ebanko",
             users : {},
             currency : "Php"
         }
