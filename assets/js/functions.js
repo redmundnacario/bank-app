@@ -4,6 +4,8 @@ import { Modal } from './components/modal.js'
 import { Navigation } from './components/navigation.js'
 // Functions
 import { accordion } from './components/accordion.js';
+import { detectCharacterStringOnly } from './utility.js'
+import { connectFormData } from './utility.js'
 
 
 
@@ -17,24 +19,58 @@ function AccountUser(first_name, last_name, balance, account_id) {
 }
 
 export function Application() {
+    this.variable1;
+    this.variable2;
 
-    this.current_user;
+    this.currentUser;
     this.state;
     this.Nav;
     this.Modal;
 
     // Dom elements
 
-    this.loginToAppBtn = document.getElementById("loginToAppId");
+    this.registerBtn = document.getElementById("registerToAppId")
+    this.loginToAppBtn = document.getElementById("loginToAppId")
+
+    this.loginToAppBtn.onclick = (event) => this.main_function(event);
 
     // Methods
+    this.main_function = async function(event){
+        event.preventDefault();
+        const promiseRace = Promise.race([
+            
+            new Promise(resolve => {
+                connectFormData(
+                    event,
+                    this.Auth.loginUser.bind(this.Auth),                                    
+                    "formLoginId",
+                    document.getElementById("logAlert"),
+                    document.getElementById("logErrorMessageId"),
+                    document.getElementById("logSuccessMessageId")
+                )
+                resolve('resolved');
+            }),
+            new Promise(resolve => {
+                
+                this.currentUser = this.Auth.currentUser
+                console.log(this.currentUser)
+                this.loginInitialize()
+                resolve('resolved'); 
+            }),
+
+        ]);
+
+        await promiseRace;
+    }
 
     this.initialize = function() {
 
         this.Nav = new Navigation();
         this.Auth = new Authenticate();
+    }
 
-        if (!this.current_user){
+    this.loginInitialize = function(){
+        if (this.currentUser){
 
             // change view to app
             this.Nav.shiftPage(this.loginToAppBtn)
@@ -49,7 +85,6 @@ export function Application() {
             accordion();
         }
     }
-
 
     // initialize local storage. do this only once
     this.initializeLocalStorage = function() {
@@ -71,8 +106,8 @@ export function Application() {
 
     this.create_user = function(first_name, last_name, balance){
         // filter
-        if (!this.detectCharacterStringOnly(first_name)|| 
-            !this.detectCharacterStringOnly(last_name)) {
+        if (!detectCharacterStringOnly(first_name)|| 
+            !detectCharacterStringOnly(last_name)) {
             
             throw Error("Cannot create new user: first or last name should not starts with number.");
             
@@ -132,14 +167,4 @@ export function Application() {
 
     // utility functions
 
-    // Function to check letters and numbers
-    this.detectCharacterStringOnly = function(inputtxt){
-        var letterNumber = /^[a-zA-Z]+$/;
-        
-        if(inputtxt.match(letterNumber)) {
-            return true; // if character string
-        } else { 
-            return false; // if caharacter number
-        }
-    }
 }

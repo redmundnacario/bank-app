@@ -3,7 +3,6 @@ export const Navigation = function(){
     this.activeSectionPage;
     this.activeId;
 
-
     this.activeView;
     this.activeBtn;
 

@@ -1,4 +1,8 @@
-import { extractFormData } from './utility.js'
+import { connectFormData } from './utility.js'
+import { strictAllInputValidator } from './utility.js'
+import { passwordLengthInputValidator } from './utility.js'
+import { passwordValueInputValidator } from './utility.js'
+
 
 // User Constructor - Creates new instance of User
 const User = function(first_name, last_name, password, user_level = "basic") {
@@ -22,12 +26,6 @@ export const Authenticate = function() {
     this.registerBtn = document.getElementById("registerToAppId")
     this.loginBtn = document.getElementById("loginToAppId")
 
-    this.registerForm = document.getElementById("formRegisterId")
-    this.loginForm = document.getElementById("formLoginId")
-
-    // ADD event listeners
-    this.registerBtn.onclick = (event) => this.registerUserOnclick(event);
-
 
     /*
         LOCAL STORAGE
@@ -49,7 +47,7 @@ export const Authenticate = function() {
                     first_name : "John",
                     last_name : "Doe",
                     user_name : "John Doe",
-                    password: "123",
+                    password: "johndoe1",
                     user_level : "basic",
                 }
             },
@@ -76,15 +74,15 @@ export const Authenticate = function() {
 
 
     // login the existing user
-    this.loginUser = function(user_name, password) {
+    this.loginUser = function(inputObj) {
 
         if (this.currentUser){
             throw Error("Current session is still active.");
             // return "Current session is still active."
         }
 
-        user_name = String(user_name);
-        password = String(password);
+        let user_name = String(inputObj["log-username"]);
+        let password = String(inputObj["log-password"]);
 
         // check if user name exist, check ifpoassword is correct , then login, return success
         if (Object.keys(this.state.users).includes(user_name)) {
@@ -92,8 +90,8 @@ export const Authenticate = function() {
             let existingUser = this.state.users[user_name];
 
             if (String(existingUser.password) !== password){
-                // throw Error("Username or password are incorrect.");
-                return "Username or password are incorrect."
+                throw Error("Username or password are incorrect.");
+                // return "Username or password are incorrect."
             }
 
             this.currentUser = { 
@@ -103,40 +101,58 @@ export const Authenticate = function() {
             // console.log(this.currentUser)
             return "Successfully logged in."
         };
-        // throw Error("Username or password are incorrect.");
-        return "Username or password are incorrect."
+        throw Error("Username or password are incorrect.");
+        // return "Username or password are incorrect."
     }
 
     // create new user
-    this.registerUser = function(first_name, last_name, password, confirm_password) {
+    this.registerUser = function(inputObj) {
 
-        first_name = String(first_name);
-        last_name = String(last_name);
-        password = String(password);
-        confirm_password = String(password);
+        // Check if one of the requirements is empty
+        strictAllInputValidator(inputObj,
+            "Registration cannot proceed if all requirements are not complete.")
+
+        //check if password or confirm password is missing
+        passwordValueInputValidator(inputObj["reg-password"],
+            `"Password" is required in order to proceed.`)
+
+        passwordValueInputValidator(inputObj["reg-confirm-password"],
+            `"Confirm Password" is required in order to proceed.`)
+
+        //Check if password is <8
+        passwordLengthInputValidator(inputObj["reg-password"], 8,
+            `"Password" length must not be less than 8 characters.`)
+
+
+        let first_name = String(inputObj["reg-firstname"]);
+        let last_name = String(inputObj["reg-lastname"]);
+        let password = String(inputObj["reg-password"]);
+        let confirm_password = String(inputObj["reg-confirm-password"]);
 
         // else create new user..
         let newUser = new User(first_name, last_name, password);
 
-        // check if user exist and compare password ... return err message
-        if (Object.keys(this.state.users).includes(newUser.user_name)) {
-            // throw Error(`User already exists!`);
-            return "User already exists!";
-        };
-
         if (password === confirm_password){
-            // update state
+
+            // check if user exist and compare password ... return err message
+            if (Object.keys(this.state.users).includes(newUser.user_name)) {
+                throw Error(`User already exists!`);
+                // return "User already exists!";
+            };
+
+            // update this.state
             this.state.users[newUser.user_name] = newUser;
             // update localstorage
             this.updateLocalStorage();
             // return success
-            return `Successfully registered with username: "${newUser.user_name}".`;
+            return `Successfully registered with user name: "${newUser.user_name}".`;
         } else {
-            // throw Error(`Passwords does not match!`);
-            return `Passwords does not match!`;
+            throw Error(`Passwords do not match!`);
+            // return `Passwords does not match!`;
         };
 
     }
+
 
     // logout user
     this.logoutUser = function() {
@@ -145,29 +161,33 @@ export const Authenticate = function() {
         return "Successfully logged out."
     }
 
-    // get data from register form
-    this.registerUserOnclick = function(event) {
-        // event.preventDefault();
-        // console.log(event.currentTarget)
-        let registerForm = document.forms.formRegisterId;
-        const form_data = new FormData(registerForm)
-        let result = extractFormData(form_data);
-        console.log(result)
+    // for testing
+    // this.initializeLocalStorage();
 
-        // const form_array_data = Array.from(form_data.entries())
-        
-        // if (form_array_data.length === 0) {
-        //     // Set alert that there is no answer given
-        //     console.log("No Answer Submitted.")
-        //     alert("No Answer Submitted. Please choose from the choices and then submit")
-        //     this.submitBtn.disabled = false;
-        // } else {
-        //     //display answer and tell if right or wrong
-        //     // console.log(form_array_data[0])
-        //     this.answer = parseInt(form_array_data[0][1]) + 1;
-        //     this.verifyAnswer()
-        // }
+    // initialize the contents when this constructor is called
+    this.initialize();
 
-    }
+    // ADD event listeners
+    // this.registerBtn.onclick = (event) => {
+    //     connectFormData(
+    //         event,
+    //         this.registerUser.bind(this),                                    
+    //         "formRegisterId",
+    //         document.getElementById("regAlert"),
+    //         document.getElementById("regErrorMessageId"),
+    //         document.getElementById("regSuccessMessageId")
+    //     )
+    // };
+
+    // this.loginBtn.onclick = (event) => {
+    //     connectFormData(
+    //         event,
+    //         this.loginUser.bind(this),                                    
+    //         "formLoginId",
+    //         document.getElementById("logAlert"),
+    //         document.getElementById("logErrorMessageId"),
+    //         document.getElementById("logSuccessMessageId")
+    //     )
+    // };
 }
 

@@ -34,8 +34,8 @@
                 </div>
                 <div class="landing-nav-buttons" data-view="logoutBtnId">
                     <button id="homeBtnId" class="nav-buttons"><h2>Home</h2></button>
-                    <button id="registerBtnId" class="nav-buttons"><h2>Register</h2></button>
-                    <button id="loginBtnId" class="nav-buttons"><h2>Login</h2></button>
+                    <button id="registerBtnId" class="nav-buttons"><h2>Sign Up</h2></button>
+                    <button id="loginBtnId" class="nav-buttons"><h2>Sign In</h2></button>
                 </div>
                 <div class="landing-nav-buttons hidden" data-view="loginToAppId">
                     <!-- add profile picture here -->
@@ -83,25 +83,29 @@
 
                     <!-- Register -->
                     <div id="registerContainerId" class="hidden" data-view="registerBtnId" >
-                        <form id="formRegisterId">
-                            <h1>Register</h1>
+                        <form id="formRegisterId" method="POST">
+                            <h1>Sign Up</h1>
                             <div class="login-reg-input-group">
-                                <label for="reg-fullname">First Name</label>
-                                <input type='text' name="reg-fullname" id="reg-fullname" autocomplete="off" required />
+                                <label for="reg-firstname">First Name</label>
+                                <input type='text' name="reg-firstname" id="reg-firstname" autocomplete="off" />
                             </div>
                             <div class="login-reg-input-group">
                                 <label for="reg-lastname">Last Name</label>
-                                <input type='text' name="reg-lastname" id="reg-lastname" autocomplete="off" required />
+                                <input type='text' name="reg-lastname" id="reg-lastname" autocomplete="off" />
                             </div>
                             <div class="login-reg-input-group">
                                 <label for="reg-password">Password</label>
                                 <input type='password' name="reg-password" id="reg-password" autocomplete="off"
-                                    minlength="8" required />
+                                    minlength="8" />
                             </div>
                             <div class="login-reg-input-group">
                                 <label for="reg-confirm-password">Confirm Password</label>
                                 <input type='password' name="reg-confirm-password" id="reg-confirm-password"
-                                    autocomplete="off" minlength="8" required />
+                                    autocomplete="off" minlength="8" />
+                            </div>
+                            <div id="regAlert" class="alert-text hidden">
+                                <p id="regSuccessMessageId" class="alert-text-success"></p>
+                                <p id="regErrorMessageId" class="alert-text-warning"></p>
                             </div>
                             <div class="login-reg-input-group-btn">
                                 <input id="registerToAppId" type="submit" value="Register">
@@ -111,16 +115,20 @@
                     
                     <!-- Login -->
                     <div id="loginContainerId" class="hidden" data-view="loginBtnId">
-                        <form id="formLoginId">
-                            <h1>Login</h1>
+                        <form id="formLoginId" method="POST">
+                            <h1>Sign In</h1>
                             <div class="login-reg-input-group">
-                                <label for="log-fullname">Full Name</label>
-                                <input type='text' name="log-fullname" id="log-fullname" autocomplete="off" required />
+                                <label for="log-username">User Name</label>
+                                <input type='text' name="log-username" id="log-username" autocomplete="off" required />
                             </div>
                             <div class="login-reg-input-group">
                                 <label for="log-password">Password</label>
                                 <input type='password' name="log-password" id="log-password" autocomplete="off"
                                     minlength="8" required />
+                            </div>
+                            <div id="logAlert" class="alert-text hidden">
+                                <p id="logSuccessMessageId" class="alert-text-success" ></p>
+                                <p id="logErrorMessageId" class="alert-text-warning" ></p>
                             </div>
                             <div class="login-reg-input-group-btn">
                                 <input id="loginToAppId" type="submit" value="Login">
