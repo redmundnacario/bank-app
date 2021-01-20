@@ -1,5 +1,5 @@
 export const Navigation = function(){
-
+    // main data
     this.activeSectionPage;
     this.activeId;
 
@@ -10,20 +10,17 @@ export const Navigation = function(){
     this.homeBtn = document.getElementById("homeBtnId")
     this.loginBtn = document.getElementById("registerBtnId")
     this.registerBtn = document.getElementById("loginBtnId")
-    this.logoutBtn = document.getElementById("logoutBtnId")
+    // this.logoutBtn = document.getElementById("logoutBtnId")
 
     this.homeLandingPage = document.getElementById("homeContainerId");
     this.homeSectionPage = document.getElementById("homeIdDiv");
 
     // this.loginToAppBtn = document.getElementById("loginToAppId");
 
-    // Add event listeners
-    this.homeBtn.onclick = (event) => this.shiftView(event);
-    this.loginBtn.onclick = (event) => this.shiftView(event);
-    this.registerBtn.onclick = (event) => this.shiftView(event);
 
-    // this.loginToAppBtn.onclick = (event) => this.shiftPage(event);
-    this.logoutBtn.onclick = (event) => this.shiftPage(event.currentTarget);
+     /*
+        Methods
+    */
 
     // Methods
     this.initialize = function(){
@@ -54,6 +51,7 @@ export const Navigation = function(){
     }
 
     this.shiftPage = function(eventCurrentTarget){
+        
 
         let targetElementsShow = document.querySelectorAll(`[data-view=${eventCurrentTarget.id}]`);
 
@@ -70,6 +68,18 @@ export const Navigation = function(){
         this.activeId = eventCurrentTarget.id
     }
 
+    /*
+        SCRIPT
+    */ 
+
     // initialize
     this.initialize();
+
+    // Add event listeners
+    this.homeBtn.onclick = (event) => this.shiftView(event);
+    this.loginBtn.onclick = (event) => this.shiftView(event);
+    this.registerBtn.onclick = (event) => this.shiftView(event);
+
+    // this.loginToAppBtn.onclick = (event) => this.shiftPage(event);
+    // this.logoutBtn.onclick = (event) => this.shiftPage(event.currentTarget);
 }

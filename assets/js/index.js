@@ -1,4 +1,4 @@
-import { Application } from './functions.js';
+import { Application } from './app.js';
 
 const App = new Application();
 

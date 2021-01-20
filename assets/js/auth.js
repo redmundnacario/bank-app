@@ -1,17 +1,12 @@
-import { connectFormData } from './utility.js'
+// Constructor
+import { UserAuthData, UserAuth } from './database/user_auth_table.js';
+
+// Functions
 import { strictAllInputValidator } from './utility.js'
 import { passwordLengthInputValidator } from './utility.js'
 import { passwordValueInputValidator } from './utility.js'
+import { create_user } from './functions.js'
 
-
-// User Constructor - Creates new instance of User
-const User = function(first_name, last_name, password, user_level = "basic") {
-    this.first_name =  first_name;
-    this.last_name = last_name;
-    this.user_name = this.first_name + " " + this.last_name;
-    this.password = password;
-    this.user_level = user_level;
-}
 
 
 // Authenticate Constructor
@@ -19,62 +14,36 @@ export const Authenticate = function() {
 
     // Global variables
     this.currentUser = null;
+    this.newUser = null;
+
     this.state;
-
-    // Dom elements
-
-    this.registerBtn = document.getElementById("registerToAppId")
-    this.loginBtn = document.getElementById("loginToAppId")
 
 
     /*
-        LOCAL STORAGE
-    */
+        Local storage methods METHODS
+    */ 
 
-    // initialize local storage. do this only once , can be used to load initial sample data
-    this.initializeLocalStorage = function() {
-        let state = {
-            name : "eBanko User Auth Database",
-            users : {
-                "Redmund Nacario": {
-                    first_name : "Redmund",
-                    last_name : "Nacario",
-                    user_name : "Redmund Nacario",
-                    password: "admin123",
-                    user_level : "admin",
-                },
-                "John Doe": {
-                    first_name : "John",
-                    last_name : "Doe",
-                    user_name : "John Doe",
-                    password: "johndoe1",
-                    user_level : "basic",
-                }
-            },
-        }
-        localStorage.setItem("auth", JSON.stringify(state));
-    }
-    
-    this.getLocalStorage = function(){
-        this.state = JSON.parse(localStorage.getItem("auth"));
-    }
-
-    this.updateLocalStorage = function() {
-        localStorage.setItem("auth",JSON.stringify(this.state));
+    // initialize Auth
+    this.initialize = function() {
+        this.state = new UserAuthData();
+        this.state.getLocalStorage();
+        this.currentUser = this.state.userAuthData.current_user;
     }
 
     /*
         METHODS
     */ 
 
-    // initialize Auth
-    this.initialize = function() {
-        this.getLocalStorage()
-    }
-
-
     // login the existing user
     this.loginUser = function(inputObj) {
+
+        // Check if one of the requirements is empty
+        strictAllInputValidator(inputObj,
+            "Logging-in cannot proceed if all requirements are not complete.")
+        
+         //check if password or confirm password is missing
+        passwordValueInputValidator(inputObj["log-password"],
+            `"Password" is required in order to proceed.`)
 
         if (this.currentUser){
             throw Error("Current session is still active.");
@@ -85,9 +54,9 @@ export const Authenticate = function() {
         let password = String(inputObj["log-password"]);
 
         // check if user name exist, check ifpoassword is correct , then login, return success
-        if (Object.keys(this.state.users).includes(user_name)) {
+        if (Object.keys(this.state.userAuthData.users).includes(user_name)) {
 
-            let existingUser = this.state.users[user_name];
+            let existingUser = this.state.userAuthData.users[user_name];
 
             if (String(existingUser.password) !== password){
                 throw Error("Username or password are incorrect.");
@@ -98,6 +67,10 @@ export const Authenticate = function() {
                 user_name : existingUser.user_name,
                 user_level : existingUser.user_level
             };
+
+            this.state.userAuthData.current_user = this.currentUser;
+            this.state.updateLocalStorage()
+
             // console.log(this.currentUser)
             return "Successfully logged in."
         };
@@ -130,20 +103,30 @@ export const Authenticate = function() {
         let confirm_password = String(inputObj["reg-confirm-password"]);
 
         // else create new user..
-        let newUser = new User(first_name, last_name, password);
+        let newUser = new UserAuth(first_name, last_name, password);
 
         if (password === confirm_password){
 
             // check if user exist and compare password ... return err message
-            if (Object.keys(this.state.users).includes(newUser.user_name)) {
+            if (Object.keys(this.state.userAuthData.users).includes(newUser.user_name)) {
                 throw Error(`User already exists!`);
                 // return "User already exists!";
             };
 
             // update this.state
-            this.state.users[newUser.user_name] = newUser;
+            this.state.userAuthData.users[newUser.user_name] = newUser;
+
+            // update this.newUser
+            this.newUser = {
+                first_name : newUser.first_name,
+                last_name : newUser.last_name,
+                date_created : newUser.date_created,
+            }
+
+            this.createUserAccountThroughRegistration()
+
             // update localstorage
-            this.updateLocalStorage();
+            this.state.updateLocalStorage();
             // return success
             return `Successfully registered with user name: "${newUser.user_name}".`;
         } else {
@@ -153,41 +136,27 @@ export const Authenticate = function() {
 
     }
 
+    this.createUserAccountThroughRegistration = function(
+                                                         balance = 0,
+                                                         account_id = "account_1" 
+                                                        ) {
+        let { first_name, last_name, date_created } = this.newUser;
+
+        create_user(first_name, last_name, 
+                    balance, account_id, date_created )
+    }
 
     // logout user
     this.logoutUser = function() {
         this.currentUser = null;
-        // console.log(this.currentUser)
-        return "Successfully logged out."
-    }
+        this.state.userAuthData.current_user = this.currentUser;
+        this.state.updateLocalStorage()
 
-    // for testing
-    // this.initializeLocalStorage();
+        // return "Successfully logged out."
+    }
 
     // initialize the contents when this constructor is called
     this.initialize();
 
-    // ADD event listeners
-    // this.registerBtn.onclick = (event) => {
-    //     connectFormData(
-    //         event,
-    //         this.registerUser.bind(this),                                    
-    //         "formRegisterId",
-    //         document.getElementById("regAlert"),
-    //         document.getElementById("regErrorMessageId"),
-    //         document.getElementById("regSuccessMessageId")
-    //     )
-    // };
-
-    // this.loginBtn.onclick = (event) => {
-    //     connectFormData(
-    //         event,
-    //         this.loginUser.bind(this),                                    
-    //         "formLoginId",
-    //         document.getElementById("logAlert"),
-    //         document.getElementById("logErrorMessageId"),
-    //         document.getElementById("logSuccessMessageId")
-    //     )
-    // };
 }
 

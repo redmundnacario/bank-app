@@ -1,170 +1,117 @@
-// Constructors
-import { Authenticate } from './auth.js';
-import { Modal } from './components/modal.js'
-import { Navigation } from './components/navigation.js'
+// Constructor
+import { AccountUser, AccountUserData } from './database/user_accounts_table.js';
+import { BankData } from './database/bank_table.js';
 // Functions
-import { accordion } from './components/accordion.js';
 import { detectCharacterStringOnly } from './utility.js'
-import { connectFormData } from './utility.js'
 
+// Creates user
+export function create_user(first_name, last_name,
+                            balance, account_id, date_created){
+    // filter
+    if (!detectCharacterStringOnly(first_name)|| 
+        !detectCharacterStringOnly(last_name)) {
 
+        throw Error("Cannot create new user: first or last name should not starts with number.");
 
-function AccountUser(first_name, last_name, balance, account_id) {
-   this.first_name =  first_name
-   this.last_name = last_name
-   this.account_name = this.first_name + " " + this.last_name
-   this.balance = balance
-   this.accounts = {}
-   this.history = {}
+    } else {
+        let user = new AccountUser(first_name, last_name,
+                                    balance, account_id, date_created);
+        let bank = new BankData();
+
+        // update local storage
+        let accountUser = new AccountUserData(user.account_name)
+        accountUser.accountUserData = user;
+        accountUser.updateLocalStorage(); 
+
+        bank.bankData.users[user.account_name] = user;
+        bank.updateLocalStorage(); 
+    }
 }
 
-export function Application() {
-    this.variable1;
-    this.variable2;
+// Deposit
+export function deposit(user_name, account_id, amount){
 
-    this.currentUser;
-    this.state;
-    this.Nav;
-    this.Modal;
+    // access data in local storage
+    let accountUser = new AccountUserData(user_name)
+    accountUser.initialize()
+    let bank = new BankData();
 
-    // Dom elements
+    accountUser.accounts[account_id].balance += amount;
 
-    this.registerBtn = document.getElementById("registerToAppId")
-    this.loginToAppBtn = document.getElementById("loginToAppId")
+    // update localstorage
+    accountUser.updateLocalStorage();
 
-    this.loginToAppBtn.onclick = (event) => this.main_function(event);
-
-    // Methods
-    this.main_function = async function(event){
-        event.preventDefault();
-        const promiseRace = Promise.race([
-            
-            new Promise(resolve => {
-                connectFormData(
-                    event,
-                    this.Auth.loginUser.bind(this.Auth),                                    
-                    "formLoginId",
-                    document.getElementById("logAlert"),
-                    document.getElementById("logErrorMessageId"),
-                    document.getElementById("logSuccessMessageId")
-                )
-                resolve('resolved');
-            }),
-            new Promise(resolve => {
-                
-                this.currentUser = this.Auth.currentUser
-                console.log(this.currentUser)
-                this.loginInitialize()
-                resolve('resolved'); 
-            }),
-
-        ]);
-
-        await promiseRace;
-    }
-
-    this.initialize = function() {
-
-        this.Nav = new Navigation();
-        this.Auth = new Authenticate();
-    }
-
-    this.loginInitialize = function(){
-        if (this.currentUser){
-
-            // change view to app
-            this.Nav.shiftPage(this.loginToAppBtn)
-
-            // gets the local storage and updates the state
-            this.getLocalStorage();
+    bank.bankData.users[user_name] = accountUser.accountUserData
+    bank.updateLocalStorage(); 
     
-            // modal constructor is incharge od dynamic display of forms
-            this.Modal = new Modal();
-    
-            // setup the simple accordion function
-            accordion();
-        }
+}
+
+// Withdraw
+export function withdraw(user_name, account_id, amount){
+    //filter
+    let accountUser = new AccountUserData(user_name)
+    accountUser.initialize()
+    let bank = new BankData();
+
+    if (accountUser.accounts[account_id].balance < amount ) {
+        throw Error("Cannot proceed withdrawal: Requested amount is greater than current balance.");
+
+    } else{
+        accountUser.accounts[account_id].balance -= amount;
+
+        // update local storage
+        accountUser.updateLocalStorage();
+
+        bank.bankData.users[user_name] = accountUser.accountUserData
+        bank.updateLocalStorage(); 
+        
     }
 
-    // initialize local storage. do this only once
-    this.initializeLocalStorage = function() {
-        let state = {
-            name : "Ebanko",
-            users : {},
-            currency : "Php"
-        }
-        localStorage.setItem("state", JSON.stringify(state));
+}
+
+// Fund Transfer
+export function send(from_user, from_user_account_id ,
+                     to_user, to_user_account_id,
+                     amount){
+
+    let fromAccountUser = new AccountUserData(from_user)
+    fromAccountUser.initialize()
+
+    let ToAccountUser = new AccountUserData(to_user)
+    ToAccountUser.initialize()
+
+    let bank = new BankData();
+
+    //filter
+    if (fromAccountUser.accounts[account_id].balance < amount ) {
+        throw Error("Cannot proceed fund transfer: Requested amount is greater than current balance.");
+
+    } else{
+        fromAccountUser.accounts[account_id].balance -= amount;
+        ToAccountUser.accounts[account_id].balance += amount;
+
+        fromAccountUser.updateLocalStorage();
+        bank.bankData.users[from_user] = fromAccountUser.accountUserData
+        bank.updateLocalStorage(); 
+
+
+        ToAccountUser.updateLocalStorage();
+        bank.bankData.users[to_user] = ToAccountUser.accountUserData
+        bank.updateLocalStorage(); 
     }
-    
-    this.getLocalStorage = function(){
-        this.state = JSON.parse(localStorage.getItem("state"));
-    }
+}
 
-    this.updateLocalStorage = function() {
-        localStorage.setItem("state",JSON.stringify(this.state));
-    }
+export function get_balance(user_name, account_id){
+    let accountUser = new AccountUserData(user_name)
+    accountUser.initialize()
 
-    this.create_user = function(first_name, last_name, balance){
-        // filter
-        if (!detectCharacterStringOnly(first_name)|| 
-            !detectCharacterStringOnly(last_name)) {
-            
-            throw Error("Cannot create new user: first or last name should not starts with number.");
-            
-        } else {
-            let user = new AccountUser(first_name, last_name, balance);
-            this.state.users[user.account_name] = user;
-            this.updateLocalStorage();
-        }
-    }
+    let bank = new BankData();
 
-    // Deposit
-    this.deposit = function(user, amount){
-        this.state.users[user].balance += amount;
-        this.updateLocalStorage();
-        return this.get_balance(user)
-    }
+    return bank.currency +" "+ accountUser.accounts[account_id].balance
+}
 
-    // Withdraw
-    this.withdraw = function(user, amount){
-        //filter
-        if (this.state.users[user].balance < amount ) {
-            throw Error("Cannot proceed withdrawal: Requested amount is greater than current balance.");
-
-        } else{
-            this.state.users[user].balance -= amount;
-            this.updateLocalStorage();
-            return this.get_balance(user)
-        }
-
-    }
-
-    // Fund Transfer
-    this.send = function(from_user, to_user, amount){
-        //filter
-        if (this.state.users[from_user].balance < amount ) {
-            throw Error("Cannot proceed fund transfer: Requested amount is greater than current balance.");
-
-        } else{
-            this.state.users[from_user].balance -= amount;
-            this.state.users[to_user].balance += amount;
-            this.updateLocalStorage();
-
-            return {
-                        from_user : this.get_balance(from_user), 
-                        to_user : this.get_balance(from_user)
-                    }
-        }
-    }
-
-    this.get_balance = function(user){
-        return this.state.currency +" "+this.state.users[user].balance
-    }
-
-    this.list_users = function(){
-        return this.state.users;
-    }
-
-    // utility functions
-
+// Get list of users
+export function list_users(){
+    let bank = new BankData();
+    return bank.users;
 }
