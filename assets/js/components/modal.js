@@ -21,6 +21,7 @@ export function Modal(){
 
     // Window
     this.window = window;
+    this.btnPressed;
     
     // Get the modal
     this.modal = document.getElementById("ModalId");// initial is undefined
@@ -36,7 +37,7 @@ export function Modal(){
     this.btnCancel = document.getElementById("CancelButtonId");
 
     // Get the submit button in the form inside the modal
-    this.btnSubmit = document.getElementById("SubmitButtonId");
+    // this.btnSubmit = document.getElementById("SubmitButtonId");
 
     // put event listener in our action buttons to return the action
     this.btnD.onclick  = (event) => this.modalCallback(event);
@@ -61,8 +62,8 @@ export function Modal(){
 
     // When the user clicks the button, open the modal and load depends on Id
     this.modalCallback = function(event) {
-        let btnId = event.currentTarget.id;
-        this.actionButtonFx(btnId);
+        this.btnPressed = event.currentTarget.id;
+        this.actionButtonFx(this.btnPressed);
         this.modal.style.visibility = "visible";
     }
     
@@ -97,7 +98,7 @@ export function Modal(){
                                 "account_name", 
                                 "Account Name"))
 
-                this.form.appendChild(this.createInputText("number", 
+                this.form.appendChild(this.createInputText("text", 
                                 "account_id", 
                                 "Account Id"))
                 this.form.appendChild(this.createInputText("number", 
@@ -110,7 +111,7 @@ export function Modal(){
                                 "sender_account_name", 
                                 "Account Name",
                                 "Sender"))
-                this.form.appendChild(this.createInputText("number", 
+                this.form.appendChild(this.createInputText("text", 
                                 "sender_account_id", 
                                 "Account Id"))
 
@@ -118,7 +119,7 @@ export function Modal(){
                                 "recipient_account_name", 
                                 "Account Name",
                                 "Recipient"))
-                this.form.appendChild(this.createInputText("number", 
+                this.form.appendChild(this.createInputText("text", 
                                 "recipient_account_id", 
                                 "Account Id"))
 

@@ -51,19 +51,43 @@ export function AccountUserData(user_name) {
     this.initialize = function() {
         let bankData = JSON.parse(localStorage.getItem("bank"));
 
-        if (Object.keys(bankData.users).includes(this.current_user)){
-            this.getLocalStorage(bankData)
+        if (Array.isArray(this.current_user)){
+            this.current_user.forEach(value => {
+                if (Object.keys(bankData.users).includes(value)){
+                    // do nothing
+                } else {
+                    throw Error (this.current_user+ " Ebanko account does not exist.")
+                }
+                this.getLocalStorage(bankData)
+            })
         } else {
-            throw Error (this.current_user+ " does not exist in the database.")
+            if (Object.keys(bankData.users).includes(this.current_user)){
+                this.getLocalStorage(bankData)
+            } else {
+                throw Error (this.current_user+ " Ebanko account does not exist.")
+            }
         }
     }
 
     this.getLocalStorage = function(bankData){
-        this.accountUserData  = bankData.users[this.current_user]
+        if (Array.isArray(this.current_user)){
+            this.accountUserData = {};
+            this.current_user.forEach(value => {
+                this.accountUserData[value] = bankData.users[value]
+            })
+        } else {
+            this.accountUserData  = bankData.users[this.current_user]
+        }
     }
 
     this.updateLocalStorage = function(bankData) {
-        bankData.users[this.current_user] = this.accountUserData
+        if (Array.isArray(this.current_user)){
+            this.current_user.forEach(value => {
+                bankData.users[value] = this.accountUserData[value]
+            })
+        } else {
+            bankData.users[this.current_user] = this.accountUserData
+        }
 
         localStorage.setItem("bank", 
             JSON.stringify(bankData));

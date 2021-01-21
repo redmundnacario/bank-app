@@ -5,6 +5,8 @@ import { Navigation } from './components/navigation.js'
 import { Authenticate } from './auth.js'
 import { AccountUserData } from './database/user_accounts_table.js'
 
+
+import { Forms } from './components/forms.js'
 // Functions
 import { accordion } from './components/accordion.js';
 import { connectFormData } from './utility.js'
@@ -31,6 +33,19 @@ export function Application() {
                                          location.reload(), 
                                          this.Nav.shiftPage(
                                             event.currentTarget)];
+    // Action buttons
+    this.btnD = document.getElementById("depositBtnId");
+    this.btnW = document.getElementById("withdrawBtnId");
+    this.btnT = document.getElementById("tranferFundsBtnId");
+    this.btnS = document.getElementById("settingsBtnId");
+
+    this.btnD.addEventListener("click", (event) => this.getButtonId(event));
+    this.btnW.addEventListener("click", (event) => this.getButtonId(event));
+    this.btnT.addEventListener("click", (event) => this.getButtonId(event));
+    this.btnS.addEventListener("click", (event) => this.getButtonId(event));
+
+    this.getButtonId = (e) => this.Forms.btnPressed = e.currentTarget.id;
+    
 
     // other dom elements
     this.greetingsH1 = document.getElementById("greetingsH1Id")
@@ -170,7 +185,8 @@ export function Application() {
 
                 // modal constructor is incharge od dynamic display of forms
                 this.Modal = new Modal();
-        
+                this.Forms = new Forms();
+                
                 // setup the simple accordion function
                 accordion();
             }

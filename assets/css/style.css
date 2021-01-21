@@ -648,3 +648,7 @@ input[value="Submit"]:active {
     color: rgb(144, 238, 144);
     border-color:   rgb(144, 238, 144);
 }
+
+#formAlert{
+    margin-bottom: 2vh;
+}

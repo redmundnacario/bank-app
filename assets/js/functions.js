@@ -46,22 +46,30 @@ export function addAccount(user_name, balance = 0){
         ], 
         date_created : date_created
     }
-    
-    accountUser.updateLocalStorage();
+    let bank = new BankData(); 
+    accountUser.updateLocalStorage(bank.bankData);
 }
 
 
 // Deposit
-export function deposit(user_name, account_id, amount){
+export function deposit(inputObject){
+    let user_name = inputObject["account_name"]
+    let account_id = inputObject["account_id"]
+    let amount = inputObject["amount"]
 
     // access data in local storage
     let accountUser = new AccountUserData(user_name)
-
-    accountUser.accountUserData.accounts[account_id].balance += amount;
-
+    let bank = new BankData(); 
+    //filter
+    if (Object.keys(accountUser.accountUserData.accounts).includes(account_id) == false){
+        throw Error(`The wallet with id "${account_id}" does not exist.`)
+    } 
+    
+    accountUser.accountUserData.accounts[account_id].balance += parseFloat(amount);
+    
     let inputObj = {
         action : "Online Deposit",
-        amount : amount,
+        amount : parseFloat(amount),
         remaining_balance : accountUser.accountUserData.accounts[account_id].balance,
         status : "Completed"
     }
@@ -70,25 +78,34 @@ export function deposit(user_name, account_id, amount){
         new Transaction(inputObj)
     )
     // update localstorage
-    accountUser.updateLocalStorage();
+    accountUser.updateLocalStorage(bank.bankData);
     
+    return `Tansaction succeed!`
 }
 
 // Withdraw
-export function withdraw(user_name, account_id, amount){
-    //filter
-    let accountUser = new AccountUserData(user_name)
+export function withdraw(inputObject){
+    let user_name = inputObject["account_name"]
+    let account_id = inputObject["account_id"]
+    let amount = inputObject["amount"]
     
+    let accountUser = new AccountUserData(user_name)
+    let bank = new BankData(); 
 
-    if (accountUser.accountUserData.accounts[account_id].balance < amount ) {
+    //filter
+    if (Object.keys(accountUser.accountUserData.accounts).includes(account_id) == false){
+        throw Error(`The wallet with id "${account_id}" does not exist.`)
+    } 
+
+    if (accountUser.accountUserData.accounts[account_id].balance < parseFloat(amount)) {
         throw Error("Cannot proceed withdrawal: Requested amount is greater than current balance.");
 
     } else{
-        accountUser.accountUserData.accounts[account_id].balance -= amount;
+        accountUser.accountUserData.accounts[account_id].balance -= parseFloat(amount);
 
         let inputObj = {
             action : "Online Withdraw",
-            amount : "-"+amount,
+            amount : parseFloat("-"+amount),
             remaining_balance : accountUser.accountUserData.accounts[account_id].balance,
             status : "Completed"
         }
@@ -97,62 +114,83 @@ export function withdraw(user_name, account_id, amount){
             new Transaction(inputObj)
         )
 
-
         // update local storage
-        accountUser.updateLocalStorage();
+        accountUser.updateLocalStorage(bank.bankData);
         
     }
-
+    return `Tansaction succeed!`
 }
 
 // Fund Transfer
-export function send(from_user, from_user_account_id ,
-                     to_user, to_user_account_id,
-                     amount){
+export function send(inputObject){
 
-    let fromAccountUser = new AccountUserData(from_user)
-    let ToAccountUser = new AccountUserData(to_user)
+    let from_user = inputObject["sender_account_name"]
+    let from_user_account_id = inputObject["sender_account_id"]
+    let to_user = inputObject["recipient_account_name"]
+    let to_user_account_id = inputObject["recipient_account_id"]
+    let amount = inputObject["amount"]
 
+    let userIdGroup = [from_user_account_id, to_user_account_id]
+    let AccountUsers = new AccountUserData([from_user,to_user])
+    console.log(AccountUsers)
+    // let ToAccountUser = new AccountUserData(to_user)
+    let bank = new BankData(); 
+
+    
     //filter
-    if (fromAccountUser.accountUserData.accounts[from_user_account_id].balance < amount ) {
+    let ctr = 0;
+    for (const value in AccountUsers.accountUserData) {
+        if (Object.keys(AccountUsers.accountUserData[value].accounts).includes(userIdGroup[ctr]) == false){
+            throw Error(`The wallet with id "${userIdGroup[ctr]}" does not exist.`)
+        }
+        ctr++
+    }
+
+    if (AccountUsers.accountUserData[from_user].accounts[from_user_account_id].balance < parseFloat(amount) ) {
         throw Error("Cannot proceed fund transfer: Requested amount is greater than current balance.");
 
     } else{
-        fromAccountUser.accountUserData.accounts[from_user_account_id].balance -= amount;
+        
+        AccountUsers.accountUserData[from_user].accounts[from_user_account_id].balance -= parseFloat(amount);
         let inputObj = {
             action : "Online Fund Transfer",
-            amount : "-" + amount,
-            remaining_balance : fromAccountUser.accountUserData.accounts[from_user_account_id].balance,
+            amount : parseFloat("-" + amount),
+            remaining_balance : AccountUsers.accountUserData[from_user].accounts[from_user_account_id].balance,
             status : "Completed",
-            sender : fromAccountUser.account_name, 
+            sender : from_user, 
             sender_account : from_user_account_id,
-            receiver : ToAccountUser.account_name,
+            receiver : to_user,
             receiver_account : to_user_account_id
         }
         
-        fromAccountUser.accountUserData.accounts[from_user_account_id].history.push(
+        AccountUsers.accountUserData[from_user].accounts[from_user_account_id].history.push(
             new Transaction(inputObj)
         )
-        fromAccountUser.updateLocalStorage();
+    
 
 
-        ToAccountUser.accountUserData.accounts[to_user_account_id].balance += amount;
+        AccountUsers.accountUserData[to_user].accounts[to_user_account_id].balance += parseFloat(amount);
         let inputObj2 = {
             action : "Online Fund Transfer",
-            amount : amount,
-            remaining_balance : ToAccountUser.accountUserData.accounts[to_user_account_id].balance,
+            amount : parseFloat(amount),
+            remaining_balance : AccountUsers.accountUserData[to_user].accounts[to_user_account_id].balance,
             status : "Completed",
-            sender : fromAccountUser.account_name, 
+            sender : from_user, 
             sender_account : from_user_account_id,
-            receiver : ToAccountUser.account_name,
+            receiver : to_user,
             receiver_account : to_user_account_id
         }
         
-        ToAccountUser.accountUserData.accounts[to_user_account_id].history.push(
+        AccountUsers.accountUserData[to_user].accounts[to_user_account_id].history.push(
             new Transaction(inputObj2)
         )
-        ToAccountUser.updateLocalStorage(); 
+
+
+        AccountUsers.updateLocalStorage(bank.bankData); 
     }
+    
+    
+    return `Tansaction succeed!`
 }
 
 // Get the balance

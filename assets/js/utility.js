@@ -50,11 +50,11 @@ export function connectFormData(
     const form_data = new FormData(form)
     let result = extractFormData(form_data);
 
-    // console.log(result)
+    console.log(result)
 
     try {
         let success_msg = actionFunction(result)
-        // console.log(success_msg)
+        console.log(success_msg)
 
         if (alertBox) { alertBox.classList.remove("hidden")};
         if (alertSuccessText) { alertSuccessText.innerText = success_msg};
