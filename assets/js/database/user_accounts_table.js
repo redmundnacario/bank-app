@@ -7,12 +7,36 @@ export function AccountUser(first_name, last_name, balance, account_id, date_cre
 
     this.accounts = {
             [ account_id ] : {
-                balance : balance
+                balance : balance,
+                history :  [
+                    new Transaction(
+                        {
+                            action : `Account Creation (${account_id})`,
+                            amount : balance,
+                            remaining_balance : balance,
+                            status : "Completed"
+                        }
+                    )
+                ],
+                date_created : date_created
             }
     }
-    this.history = [] // Use array
     this.date_created = date_created
 }
+
+// Transaction constructor
+export function Transaction(inputObj){
+    this.action = inputObj["action"];
+    this.date = new Date().toISOString();
+    this.amount = inputObj["amount"];
+    this.remaining_balance = inputObj["remaining_balance"];
+    this.status = inputObj["status"];
+
+    this.sender = inputObj["sender"];
+    this.sender_account = inputObj["sender_account"]
+    this.receiver = inputObj["receiver"];
+    this.receiver_account = inputObj["receiver_account"];
+} 
 
 
 export function AccountUserData(user_name) {
@@ -25,27 +49,26 @@ export function AccountUserData(user_name) {
     this.accountUserData;
 
     this.initialize = function() {
-        if (Object.keys(localStorage).includes(this.current_user)){
-            this.getLocalStorage()
+        let bankData = JSON.parse(localStorage.getItem("bank"));
+
+        if (Object.keys(bankData.users).includes(this.current_user)){
+            this.getLocalStorage(bankData)
         } else {
             throw Error (this.current_user+ " does not exist in the database.")
         }
     }
 
-    this.initializeLocalStorage = function(){
-        localStorage.setItem(this.current_user,
-            JSON.stringify(this.accountUserData));
+    this.getLocalStorage = function(bankData){
+        this.accountUserData  = bankData.users[this.current_user]
     }
 
-    this.getLocalStorage = function(){
-        this.accountUserData = JSON.parse(localStorage.getItem(this.current_user));
+    this.updateLocalStorage = function(bankData) {
+        bankData.users[this.current_user] = this.accountUserData
+
+        localStorage.setItem("bank", 
+            JSON.stringify(bankData));
     }
 
-    this.updateLocalStorage = function() {
-        localStorage.setItem(this.current_user, 
-            JSON.stringify(this.accountUserData));
-    }
-
-    // this.initialize()
+    this.initialize()
 
 }

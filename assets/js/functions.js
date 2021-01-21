@@ -1,5 +1,5 @@
 // Constructor
-import { AccountUser, AccountUserData } from './database/user_accounts_table.js';
+import { AccountUser, AccountUserData, Transaction } from './database/user_accounts_table.js';
 import { BankData } from './database/bank_table.js';
 // Functions
 import { detectCharacterStringOnly } from './utility.js'
@@ -16,33 +16,61 @@ export function create_user(first_name, last_name,
     } else {
         let user = new AccountUser(first_name, last_name,
                                     balance, account_id, date_created);
-        let bank = new BankData();
-
-        // update local storage
-        let accountUser = new AccountUserData(user.account_name)
-        accountUser.accountUserData = user;
-        accountUser.updateLocalStorage(); 
+        let bank = new BankData(); 
 
         bank.bankData.users[user.account_name] = user;
         bank.updateLocalStorage(); 
     }
 }
 
+// create account (add)
+
+export function addAccount(user_name, balance = 0){
+    let accountUser = new AccountUserData(user_name)
+
+    let accountsObj = accountUser.accountUserData.accounts
+    let accountArray = Object.entries(accountsObj)
+    let newAccountName = "Account_" + (accountArray.length + 1);
+    
+    let inputObj = {
+        action : `Account Creation (${newAccountName})`,
+        amount : balance,
+        remaining_balance : balance,
+        status : "Completed"
+    }
+
+    accountsObj[newAccountName] = {
+        balance : balance,
+        history : [
+            new Transaction(inputObj)
+        ], 
+        date_created : date_created
+    }
+    
+    accountUser.updateLocalStorage();
+}
+
+
 // Deposit
 export function deposit(user_name, account_id, amount){
 
     // access data in local storage
     let accountUser = new AccountUserData(user_name)
-    accountUser.initialize()
-    let bank = new BankData();
 
-    accountUser.accounts[account_id].balance += amount;
+    accountUser.accountUserData.accounts[account_id].balance += amount;
 
+    let inputObj = {
+        action : "Online Deposit",
+        amount : amount,
+        remaining_balance : accountUser.accountUserData.accounts[account_id].balance,
+        status : "Completed"
+    }
+
+    accountUser.accountUserData.accounts[account_id].history.push(
+        new Transaction(inputObj)
+    )
     // update localstorage
     accountUser.updateLocalStorage();
-
-    bank.bankData.users[user_name] = accountUser.accountUserData
-    bank.updateLocalStorage(); 
     
 }
 
@@ -50,20 +78,28 @@ export function deposit(user_name, account_id, amount){
 export function withdraw(user_name, account_id, amount){
     //filter
     let accountUser = new AccountUserData(user_name)
-    accountUser.initialize()
-    let bank = new BankData();
+    
 
-    if (accountUser.accounts[account_id].balance < amount ) {
+    if (accountUser.accountUserData.accounts[account_id].balance < amount ) {
         throw Error("Cannot proceed withdrawal: Requested amount is greater than current balance.");
 
     } else{
-        accountUser.accounts[account_id].balance -= amount;
+        accountUser.accountUserData.accounts[account_id].balance -= amount;
+
+        let inputObj = {
+            action : "Online Withdraw",
+            amount : "-"+amount,
+            remaining_balance : accountUser.accountUserData.accounts[account_id].balance,
+            status : "Completed"
+        }
+        
+        accountUser.accountUserData.accounts[account_id].history.push(
+            new Transaction(inputObj)
+        )
+
 
         // update local storage
         accountUser.updateLocalStorage();
-
-        bank.bankData.users[user_name] = accountUser.accountUserData
-        bank.updateLocalStorage(); 
         
     }
 
@@ -75,39 +111,57 @@ export function send(from_user, from_user_account_id ,
                      amount){
 
     let fromAccountUser = new AccountUserData(from_user)
-    fromAccountUser.initialize()
-
     let ToAccountUser = new AccountUserData(to_user)
-    ToAccountUser.initialize()
-
-    let bank = new BankData();
 
     //filter
-    if (fromAccountUser.accounts[account_id].balance < amount ) {
+    if (fromAccountUser.accountUserData.accounts[from_user_account_id].balance < amount ) {
         throw Error("Cannot proceed fund transfer: Requested amount is greater than current balance.");
 
     } else{
-        fromAccountUser.accounts[account_id].balance -= amount;
-        ToAccountUser.accounts[account_id].balance += amount;
-
+        fromAccountUser.accountUserData.accounts[from_user_account_id].balance -= amount;
+        let inputObj = {
+            action : "Online Fund Transfer",
+            amount : "-" + amount,
+            remaining_balance : fromAccountUser.accountUserData.accounts[from_user_account_id].balance,
+            status : "Completed",
+            sender : fromAccountUser.account_name, 
+            sender_account : from_user_account_id,
+            receiver : ToAccountUser.account_name,
+            receiver_account : to_user_account_id
+        }
+        
+        fromAccountUser.accountUserData.accounts[from_user_account_id].history.push(
+            new Transaction(inputObj)
+        )
         fromAccountUser.updateLocalStorage();
-        bank.bankData.users[from_user] = fromAccountUser.accountUserData
-        bank.updateLocalStorage(); 
 
 
-        ToAccountUser.updateLocalStorage();
-        bank.bankData.users[to_user] = ToAccountUser.accountUserData
-        bank.updateLocalStorage(); 
+        ToAccountUser.accountUserData.accounts[to_user_account_id].balance += amount;
+        let inputObj2 = {
+            action : "Online Fund Transfer",
+            amount : amount,
+            remaining_balance : ToAccountUser.accountUserData.accounts[to_user_account_id].balance,
+            status : "Completed",
+            sender : fromAccountUser.account_name, 
+            sender_account : from_user_account_id,
+            receiver : ToAccountUser.account_name,
+            receiver_account : to_user_account_id
+        }
+        
+        ToAccountUser.accountUserData.accounts[to_user_account_id].history.push(
+            new Transaction(inputObj2)
+        )
+        ToAccountUser.updateLocalStorage(); 
     }
 }
 
+// Get the balance
 export function get_balance(user_name, account_id){
     let accountUser = new AccountUserData(user_name)
-    accountUser.initialize()
 
     let bank = new BankData();
 
-    return bank.currency +" "+ accountUser.accounts[account_id].balance
+    return bank.currency +" "+ accountUser.accountUserData.accounts[account_id].balance
 }
 
 // Get list of users

@@ -137,8 +137,8 @@ export const Authenticate = function() {
     }
 
     this.createUserAccountThroughRegistration = function(
-                                                         balance = 0,
-                                                         account_id = "account_1" 
+                                                         balance = 0.00,
+                                                         account_id = "Account_1" 
                                                         ) {
         let { first_name, last_name, date_created } = this.newUser;
 
@@ -148,10 +148,10 @@ export const Authenticate = function() {
 
     // logout user
     this.logoutUser = function() {
+
         this.currentUser = null;
         this.state.userAuthData.current_user = this.currentUser;
         this.state.updateLocalStorage()
-
         // return "Successfully logged out."
     }
 

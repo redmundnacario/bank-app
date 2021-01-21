@@ -66,6 +66,7 @@ export const Navigation = function(){
 
         this.activeSectionPage = targetElementsShow[1];
         this.activeId = eventCurrentTarget.id
+
     }
 
     /*

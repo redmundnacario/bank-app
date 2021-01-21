@@ -58,6 +58,9 @@ export function connectFormData(
 
         if (alertBox) { alertBox.classList.remove("hidden")};
         if (alertSuccessText) { alertSuccessText.innerText = success_msg};
+
+        // removes values in the inputs
+        form.reset()
     }
         catch (error) {
         // console.log(error)

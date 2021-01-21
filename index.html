@@ -40,6 +40,12 @@
                 <div class="landing-nav-buttons hidden" data-view="loginToAppId">
                     <!-- add profile picture here -->
                     <button id="logoutBtnId" class="nav-buttons"><h2>Logout</h2></button>
+                    <button class="nav-buttons" id="settingsBtnId">
+                        <div>
+                            <img id="settingsLogoId" src="/assets/img/settings.gif"/>
+
+                        </div>
+                    </button>
                 </div>
             </div>
         </nav>
@@ -146,7 +152,10 @@
         <section id="app" class="hidden" data-view="loginToAppId">
             <!-- greet the owner -->
             <div>
-                <h1>Welcome back!</h1>
+                <img src="./assets/img" alt="">
+            </div>
+            <div>
+                <h1 id="greetingsH1Id">Welcome back!</h1>
                 <h3>At a glance summary of your account. Have fun!</h3>
             </div>
             <!-- Action buttons -->
@@ -169,11 +178,6 @@
                             Transfer Funds
                         </p>
                     </button>
-                    <button class="action-button" id="settingsBtnId">
-                        <p>
-                            Settings
-                        </p>
-                    </button>
                 </div>
             </div>
 
@@ -184,27 +188,30 @@
                     <div class="accounts-overview">
                         <div>
                             <h4>Total Balance</h4>
-                            <h5>&#8369; 0.00</h5>
+                            <h5 id="totalBalanceId"><span>&#8369;</span> 0.00</h5>
                         </div>
                         <div class="a-o-figures">
                             <div>
                                 <h4>Wallets</h4>
-                                <h5>1</h5>
+                                <h5 id="totalUniqueAccountsId">1</h5>
                             </div>
                             <div>
                                 <h4>Transactions</h4>
-                                <h6>0</h6>
+                                <h6 id="totalTransactionsId" >0</h6>
                             </div>
                         </div>
                         <p>Last activity: datetime</p>
                     </div>
                 </div>
-                <div class="per-accounts-overview">
+                <div>
                     <h2>Money Wallet Accounts</h2>
-                    <div class="account-box">
+                    <div class="per-accounts-overview">
+
+                    </div>
+                    <!-- <div class="account-box">
                         <h4>Account #1</h4>
                         <h5>&#8369; 0.00</h5>
-                    </div>
+                    </div> -->
                 </div>
             </div>
 
@@ -226,7 +233,7 @@
                             <th>Balance</th>
                             <th>Status</th>
                         </tr>
-                        <tr>
+                        <!-- <tr>
                             <th>Deposit</th>
                             <td>Sample datetime</td>
                             <td>100Php</td>
@@ -246,7 +253,7 @@
                             <td>20Php</td>
                             <td>20Php</td>
                             <td>Completed</td>
-                        </tr>
+                        </tr> -->
                         
                     </tbody>
                 </table>
