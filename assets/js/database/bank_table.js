@@ -1,3 +1,5 @@
+import { sample_bank_users_data } from '../sample_data/sample_bank_users_data.js'
+
 
 export function Bank() {
     this.bank_name =  "Ebanko"
@@ -23,6 +25,7 @@ export function BankData() {
     // Run this once to set the data in the localStorage
     this.initializeLocalStorage = function() {
         let bankData = new Bank()
+        bankData.users = sample_bank_users_data
         localStorage.setItem("bank", JSON.stringify(bankData));
     }
 
@@ -41,7 +44,9 @@ export function BankData() {
     */ 
 
     // for testing, run this once
-    // this.initializeLocalStorage()
+    if(Object.keys(localStorage).includes("bank") == false) {
+        this.initializeLocalStorage();
+    }
 
     this.initialize()
 }

@@ -155,7 +155,6 @@ export function Application() {
 
         this.Auth = new Authenticate();
         this.currentUser = this.Auth.currentUser
-        
         this.Nav = new Navigation();
 
         this.loginInitialize();
@@ -164,8 +163,9 @@ export function Application() {
     // After successfull loggin in, go to app page and initialize accordion and
     // the modal
     this.loginInitialize = function(){
+
         if (this.currentUser){
-            
+            // this.Auth.logoutUser()
             if (this.currentUser.user_level === "basic"){
 
                 // Get user data
@@ -185,6 +185,7 @@ export function Application() {
 
                 // modal constructor is incharge od dynamic display of forms
                 this.Modal = new Modal();
+                this.Modal.currentUser = this.currentUser.user_name;
                 this.Forms = new Forms();
                 
                 // setup the simple accordion function

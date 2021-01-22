@@ -605,6 +605,13 @@ input:active{
     border-color:  #3e34ff;
 }
 
+#FormId input[type="text"]:disabled{
+    border: 0;
+    background : inherit;
+    /* background: rgba(255, 255, 255, 0.8) !important;
+    backdrop-filter: blur( 10px ); */
+}
+
 
 .card-bottom-buttons{
     display: flex;

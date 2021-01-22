@@ -1,5 +1,7 @@
 export function Modal(){
 
+    this.currentUser;
+
     this.action_requirements = {
         depositBtnId : {
             ActionNameId : "Add Funds",
@@ -96,7 +98,10 @@ export function Modal(){
             case "withdrawBtnId":
                 this.form.appendChild(this.createInputText("text", 
                                 "account_name", 
-                                "Account Name"))
+                                "Account Name",
+                                null,
+                                true,
+                                this.currentUser))
 
                 this.form.appendChild(this.createInputText("text", 
                                 "account_id", 
@@ -110,7 +115,9 @@ export function Modal(){
                 this.form.appendChild(this.createInputText("text", 
                                 "sender_account_name", 
                                 "Account Name",
-                                "Sender"))
+                                "Sender",
+                                true,
+                                this.currentUser))
                 this.form.appendChild(this.createInputText("text", 
                                 "sender_account_id", 
                                 "Account Id"))
@@ -150,9 +157,12 @@ export function Modal(){
         this.modalContent.appendChild(this.form)
     }
 
-    this.createInputText= function(inputType, inputId, labelText,
+    this.createInputText= function(inputType,
+                                   inputId,
+                                   labelText,
                                    sectionLabelText,
-                                   required = true) {
+                                   required = true,
+                                   value) {
         let inputElement = document.createElement("input");
         if (inputType == "img"){
             inputElement.type = "file";
@@ -164,6 +174,11 @@ export function Modal(){
             inputElement.type = inputType;
             inputElement.id = inputId;
             inputElement.name= inputId;
+            if (value) {
+                inputElement.value = value;
+                inputElement.disabled = true;
+            }
+
         }
         
         if (required){
