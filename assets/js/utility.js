@@ -1,6 +1,7 @@
 /* 
     STRING OPERATIONS
 */ 
+
 // Function to check letters and numbers
 export function detectCharacterStringOnly(inputtxt){
     var letterNumber = /^[a-zA-Z]+$/;
@@ -11,6 +12,7 @@ export function detectCharacterStringOnly(inputtxt){
         return false; // if caharacter number
     }
 }
+
 //
 export function convertFloatNumberToString(inputNumber){
     return String(inputNumber).replace(/^\d+/,
@@ -38,6 +40,7 @@ export function extractFormData(formData) {
 
     return result;
 }
+
 //
 export function connectFormData(
                                 event, 
@@ -67,11 +70,11 @@ export function connectFormData(
     const form_data = new FormData(form)
     let result = extractFormData(form_data);
 
-    console.log(result)
+    // console.log(result)
 
     try {
         let success_msg = actionFunction(result)
-        console.log(success_msg)
+        // console.log(success_msg)
 
         if (alertBox) { alertBox.classList.remove("hidden")};
         if (alertSuccessText) { alertSuccessText.innerText = success_msg};
@@ -126,3 +129,6 @@ export function numMult100(num){
 export function numDiv100(num){
     return num / 100;
 }
+
+
+

@@ -6,6 +6,7 @@ import { strictAllInputValidator } from './utility.js'
 import { passwordLengthInputValidator } from './utility.js'
 import { passwordValueInputValidator } from './utility.js'
 import { create_user } from './functions.js'
+import { encrypt, decrypt } from './secure.js'
 
 
 
@@ -58,7 +59,9 @@ export const Authenticate = function() {
 
             let existingUser = this.state.userAuthData.users[user_name];
 
-            if (String(existingUser.password) !== password){
+            const newPassword = decrypt("ebanko", String(existingUser.password));
+
+            if (newPassword !== password){
                 throw Error("Username or password are incorrect.");
                 // return "Username or password are incorrect."
             }
@@ -102,10 +105,14 @@ export const Authenticate = function() {
         let password = String(inputObj["reg-password"]);
         let confirm_password = String(inputObj["reg-confirm-password"]);
 
-        // else create new user..
-        let newUser = new UserAuth(first_name, last_name, password);
 
         if (password === confirm_password){
+
+            // encrypt password
+            const newPassword = encrypt("ebanko", password);
+
+             // else create new user..
+            let newUser = new UserAuth(first_name, last_name, newPassword);
 
             // check if user exist and compare password ... return err message
             if (Object.keys(this.state.userAuthData.users).includes(newUser.user_name)) {
