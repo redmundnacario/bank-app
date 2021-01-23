@@ -25,7 +25,7 @@ export function BankData() {
     // Run this once to set the data in the localStorage
     this.initializeLocalStorage = function() {
         let bankData = new Bank()
-        bankData.users = sample_bank_users_data
+        // bankData.users = sample_bank_users_data
         localStorage.setItem("bank", JSON.stringify(bankData));
     }
 

@@ -7,6 +7,7 @@ export function Forms() {
 
     this.btnPressed;
     this.currentUser;
+    // this.updateAppDomData;
 
     //Dom Elements
     this.formId = "FormId"
@@ -15,7 +16,7 @@ export function Forms() {
 
     // Add event listeners =
     this.submitBtn.onclick = (event) => {
-
+        // console.log(this.currentUser)
         let actionFunction;
         switch(this.btnPressed){
             case ("depositBtnId"):
@@ -45,7 +46,12 @@ export function Forms() {
             document.getElementById("formSuccessMessageId")
         )
 
-        // location.reload()    
+        // Close modal
+        this.closeModal()
+
+        // Update contents in App dom
+        // this.updateAppDomData()
+        location.reload()    
     }
 
     

@@ -1,6 +1,6 @@
 import { modal_html, add_new_account_html } from '../components_html/modal.js';
 import { addAccount } from '../functions.js';
-
+import { Forms } from './forms.js'
 
 export function Modal(){
 
@@ -28,6 +28,7 @@ export function Modal(){
     // Window
     this.window = window;
     this.btnPressed;
+    this.updateAppDomData;
 
     // create modal
 
@@ -79,13 +80,26 @@ export function Modal(){
         this.modal.innerHTML = add_new_account_html;
         this.modalContent = document.getElementById("ModalContentId").children[0];
 
-        addAccount(this.currentUser)
         this.modal.style.visibility = "visible";
+
+        this.Forms = new Forms();
+        this.Forms.currentUser = this.currentUser;
+        this.Forms.btnPressed = this.btnPressed;
 
         // Get the button element that closes the modal
         this.btnCancel = document.getElementById("CancelButtonId");
         // When the user clicks on <span> (x), close the modal
         this.btnCancel.onclick = () => this.closeModal();
+
+        // Get the submit button element
+        this.btnSubmit = document.getElementById("SubmitButtonId");
+        // when submit button was clicked, do add account
+        this.btnSubmit.onclick = () =>  [ 
+                                         addAccount(this.currentUser),
+                                         this.closeModal(),
+                                         location.reload(),
+                                        ];
+    
     }
 
 
@@ -97,6 +111,13 @@ export function Modal(){
 
         this.actionButtonFx(this.btnPressed);
         this.modal.style.visibility = "visible";
+
+
+        this.Forms = new Forms();
+        this.Forms.currentUser = this.currentUser;
+        this.Forms.btnPressed = this.btnPressed;
+        this.Forms.closeModal = this.closeModal.bind(this);
+        // this.Forms.updateAppDomData = this.updateAppDomData.bind(this);
 
         // Get the button element that closes the modal
         this.btnCancel = document.getElementById("CancelButtonId");
@@ -122,7 +143,7 @@ export function Modal(){
 
     // Set the Modal Contents
     this.actionButtonFx = function(actionId) {
-
+        // console.log(actionId)
         this.modalContent.children["ActionNameId"].innerText = 
             this.action_requirements[actionId].ActionNameId;
 

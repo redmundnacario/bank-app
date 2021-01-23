@@ -30,7 +30,7 @@ export function UserAuthData() {
 
         let state = {
             name : "eBanko User Auth Database",
-            users : sample_auth_users_data,
+            users : {},
             current_user: null
         }
         localStorage.setItem("auth", JSON.stringify(state));

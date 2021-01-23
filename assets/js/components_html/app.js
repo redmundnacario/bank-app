@@ -1,0 +1,1 @@
+export const  add_new_account_btn_html = `<button id="addNewAccountBtnId"></button>`;
