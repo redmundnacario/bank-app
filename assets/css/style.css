@@ -368,9 +368,69 @@ form {
 
 .unique-account-amount{
     align-self: flex-end;
-    margin: 0;
+    margin: 1vh 0 0 0;
+}
+#addAccountId {
+    order: 1;
+    justify-self: start;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+#addAccountId button {
+    all:unset;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border:#f1f2ff solid 0.5vh;
+    border-radius: 1vh;
+    width:4vh;
+    height: 4vh;
+
+    font-size: 4vh;
+    /* text-align: center; */
+    /* line-height: 100%;  */
+    color:#f1f2ff;
+
+    cursor: pointer;
+    /* border: 0.1vh solid #3e34ff; */
+    transition: 0.4s;
+    position: relative;
+}
+#addAccountId button::before{
+    cursor: pointer;
+
+    content: '\FF0B';
+    color:#f1f2ff;
+    font-size: 4vh;
+
+    position: absolute;
+    transition: 0.4s;
 }
 
+#addAccountId button:focus::before,
+#addAccountId button:hover::before{
+    color:#9198ff;
+}
+#addAccountId button:focus,
+#addAccountId button:hover {
+    color:#9198ff;
+    border:#9198ff solid 0.5vh;
+}
+
+.php-sign{
+    font-size: 2vh;
+}
+.account-number-h5{
+    font-size:1.5vh;
+}
+#totalBalanceId{
+    margin-bottom:2vh;
+}
 /* 
     Table for History of transactions
 */
@@ -544,7 +604,7 @@ th, td {
     color: #aaaaaa;
     float: right;
     font-size: 28px;
-    font-weight: bold;
+    font-weight: 700;
 }
   
 .close:hover,
@@ -581,8 +641,11 @@ th, td {
     margin-top: 3vh;
 }
 
-label {
+#formId label, #formId input {
     font-size: 1.5vh;
+}
+#formId label {
+    font-weight: 700;
 }
 
 /* input, select and text area */
@@ -617,43 +680,62 @@ input:active{
     display: flex;
     justify-content: flex-end;
 }
+.card-bottom-buttons input:not(:first-child),
+.card-add-new-account button:not(:first-child) {
+    margin-left:2vh;
+}
 
-input[value="Cancel"] {
+.card-add-new-account{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+#CancelButtonId  {
+    outline:none;
+    height:4vh;
+    padding: 1vh 2vh;
+    border-radius: 0.5vh;
     background-color: rgb(255, 0, 0, 0.5);
-    color:#fff;
-    border-color: rgb(255, 0, 0, 0.5);
+    color: #fff;
+    border: 0.1vh solid rgb(255, 0, 0, 0.5);
 
     line-height: 0;
 
     width:20%;
-    margin-left:2vh;
+    cursor: pointer;
 }
 
-input[value="Cancel"]:hover,
-input[value="Cancel"]:focus,
-input[value="Cancel"]:active {
+#CancelButtonId:hover,
+#CancelButtonId:focus,
+#CancelButtonId:active {
     background-color: #fff;
     color: rgb(255, 0, 0);
-    border-color:  rgb(255, 0, 0);
+    border: 0.1vh solid rgb(255, 0, 0);
 }
 
-input[value="Submit"] {
+#SubmitButtonId{
+    outline:none;
+    height:4vh;
+    padding: 1vh 2vh;
+    border-radius: 0.5vh;
     background-color: rgb(144, 238, 144, 0.3);
     color:#000;
-    border-color: rgb(144, 238, 144);
+    border: 0.1vh solid rgb(144, 238, 144);
 
     line-height: 0;
 
     width:20%;
-    margin-left:2vh;
+    
+    cursor: pointer;
 }
 
-input[value="Submit"]:hover,
-input[value="Submit"]:focus,
-input[value="Submit"]:active {
+#SubmitButtonId:hover,
+#SubmitButtonId:focus,
+#SubmitButtonId:active {
     background-color: #fff;
     color: rgb(144, 238, 144);
-    border-color:   rgb(144, 238, 144);
+    border: 0.1vh solid rgb(144, 238, 144);
 }
 
 #formAlert{

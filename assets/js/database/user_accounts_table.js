@@ -1,3 +1,5 @@
+import { sample_bank_users_data } from '../sample_data/sample_bank_users_data.js';
+import { Bank } from './bank_table.js';
 
 export function AccountUser(first_name, last_name, balance, account_id, date_created){
 
@@ -48,6 +50,13 @@ export function AccountUserData(user_name) {
     this.current_user = user_name;
     this.accountUserData;
 
+    // Run this once to set the data in the localStorage
+    this.initializeLocalStorage = function() {
+        let bankData = new Bank()
+        bankData.users = sample_bank_users_data
+        localStorage.setItem("bank", JSON.stringify(bankData));
+    }
+
     this.initialize = function() {
         let bankData = JSON.parse(localStorage.getItem("bank"));
 
@@ -56,7 +65,7 @@ export function AccountUserData(user_name) {
                 if (Object.keys(bankData.users).includes(value)){
                     // do nothing
                 } else {
-                    throw Error (this.current_user+ " Ebanko account does not exist.")
+                    throw Error ("Ebanko account does not exist.")
                 }
                 this.getLocalStorage(bankData)
             })
@@ -64,7 +73,7 @@ export function AccountUserData(user_name) {
             if (Object.keys(bankData.users).includes(this.current_user)){
                 this.getLocalStorage(bankData)
             } else {
-                throw Error (this.current_user+ " Ebanko account does not exist.")
+                throw Error ("Ebanko account does not exist.")
             }
         }
     }
@@ -91,6 +100,15 @@ export function AccountUserData(user_name) {
 
         localStorage.setItem("bank", 
             JSON.stringify(bankData));
+    }
+
+    /*
+        SCRIPT
+    */ 
+
+    // for testing, run this once
+    if(Object.keys(localStorage).includes("bank") == false) {
+        this.initializeLocalStorage();
     }
 
     this.initialize()

@@ -1,3 +1,5 @@
+import { navigation_html } from '../components_html/navigation.js'
+
 export const Navigation = function(){
     // main data
     this.activeSectionPage;
@@ -5,6 +7,12 @@ export const Navigation = function(){
 
     this.activeView;
     this.activeBtn;
+
+    // Create navbar
+    this.navbar = document.querySelector("nav")
+    this.navbarDiv = document.createElement("div")
+    this.navbarDiv.innerHTML = navigation_html
+    this.navbar.appendChild(this.navbarDiv)
 
     // Dom Elements
     this.homeBtn = document.getElementById("homeBtnId")

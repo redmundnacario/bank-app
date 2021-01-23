@@ -1,12 +1,16 @@
 // Constructor
 import { AccountUser, AccountUserData, Transaction } from './database/user_accounts_table.js';
 import { BankData } from './database/bank_table.js';
+
 // Functions
 import { detectCharacterStringOnly } from './utility.js'
+import { numMult100 } from './utility.js'
+import { numDiv100 } from './utility.js'
+import { generate12DigitAccountNumber } from './utility.js'
 
 // Creates user
 export function create_user(first_name, last_name,
-                            balance, account_id, date_created){
+                            balance, date_created){
     // filter
     if (!detectCharacterStringOnly(first_name)|| 
         !detectCharacterStringOnly(last_name)) {
@@ -14,9 +18,13 @@ export function create_user(first_name, last_name,
         throw Error("Cannot create new user: first or last name should not starts with number.");
 
     } else {
+        let account_id = generate12DigitAccountNumber()
+
         let user = new AccountUser(first_name, last_name,
                                     balance, account_id, date_created);
         let bank = new BankData(); 
+        
+        // check if account number exist
 
         bank.bankData.users[user.account_name] = user;
         bank.updateLocalStorage(); 
@@ -26,34 +34,61 @@ export function create_user(first_name, last_name,
 // create account (add)
 
 export function addAccount(user_name, balance = 0){
-    let accountUser = new AccountUserData(user_name)
+    try{
+        let accountUser = new AccountUserData(user_name)
 
-    let accountsObj = accountUser.accountUserData.accounts
-    let accountArray = Object.entries(accountsObj)
-    let newAccountName = "Account_" + (accountArray.length + 1);
-    
-    let inputObj = {
-        action : `Account Creation (${newAccountName})`,
-        amount : balance,
-        remaining_balance : balance,
-        status : "Completed"
-    }
+        let accountsObj = accountUser.accountUserData.accounts
+        // let accountArray = Object.entries(accountsObj)
+        let newAccountName = generate12DigitAccountNumber();
+        
+        let inputObj = {
+            action : `Account Creation (${newAccountName})`,
+            amount : balance,
+            remaining_balance : balance,
+            status : "Completed"
+        }
 
-    accountsObj[newAccountName] = {
-        balance : balance,
-        history : [
-            new Transaction(inputObj)
-        ], 
-        date_created : date_created
+        accountsObj[newAccountName] = {
+            balance : balance,
+            history : [
+                new Transaction(inputObj)
+            ], 
+            date_created : new Date().toISOString()
+        }
+        let bank = new BankData(); 
+        accountUser.updateLocalStorage(bank.bankData);
     }
-    let bank = new BankData(); 
-    accountUser.updateLocalStorage(bank.bankData);
+    catch (error) {
+        console.log(error)
+    }
+}
+
+// Remove an account
+export function removeAccount(user_name, account_id){
+    try{
+        let accountUser = new AccountUserData(user_name)
+
+        delete accountUser.accountUserData.accounts[account_id]
+        
+        let bank = new BankData(); 
+        accountUser.updateLocalStorage(bank.bankData);
+    }
+    catch (error) {
+        console.log(error)
+    }
 }
 
 
 // Deposit
 export function deposit(inputObject){
-    let user_name = inputObject["account_name"]
+
+    let user_name;
+    if (this.currentUser){
+        user_name = this.currentUser 
+    } else {
+        user_name = inputObject["account_name"]
+    }
+
     let account_id = inputObject["account_id"]
     let amount = inputObject["amount"]
 
@@ -64,13 +99,21 @@ export function deposit(inputObject){
     if (Object.keys(accountUser.accountUserData.accounts).includes(account_id) == false){
         throw Error(`The wallet with id "${account_id}" does not exist.`)
     } 
+    if (amount <= 0){
+        throw Error(`Amount less than and equal to zero is not allowed.`)
+    }
+
+    let objectValholder = accountUser.accountUserData.accounts[account_id].balance
     
-    accountUser.accountUserData.accounts[account_id].balance += parseFloat(amount);
+    objectValholder = numMult100(objectValholder) + numMult100(parseFloat(amount));
+    objectValholder = numDiv100(objectValholder)
+
+    accountUser.accountUserData.accounts[account_id].balance = objectValholder
     
     let inputObj = {
         action : "Online Deposit",
         amount : parseFloat(amount),
-        remaining_balance : accountUser.accountUserData.accounts[account_id].balance,
+        remaining_balance : objectValholder,
         status : "Completed"
     }
 
@@ -85,7 +128,12 @@ export function deposit(inputObject){
 
 // Withdraw
 export function withdraw(inputObject){
-    let user_name = inputObject["account_name"]
+    let user_name;
+    if (this.currentUser){
+        user_name = this.currentUser 
+    } else {
+        user_name = inputObject["account_name"]
+    }
     let account_id = inputObject["account_id"]
     let amount = inputObject["amount"]
     
@@ -97,16 +145,26 @@ export function withdraw(inputObject){
         throw Error(`The wallet with id "${account_id}" does not exist.`)
     } 
 
-    if (accountUser.accountUserData.accounts[account_id].balance < parseFloat(amount)) {
+    if (amount <= 0){
+        throw Error(`Amount less than and equal to zero is not allowed.`)
+    }
+
+    let objectValholder = accountUser.accountUserData.accounts[account_id].balance
+
+    if (objectValholder < parseFloat(amount)) {
         throw Error("Cannot proceed withdrawal: Requested amount is greater than current balance.");
 
     } else{
-        accountUser.accountUserData.accounts[account_id].balance -= parseFloat(amount);
+
+        objectValholder = numMult100(objectValholder) - numMult100(parseFloat(amount));
+        objectValholder = numDiv100(objectValholder)
+
+        accountUser.accountUserData.accounts[account_id].balance = objectValholder
 
         let inputObj = {
             action : "Online Withdraw",
             amount : parseFloat("-"+amount),
-            remaining_balance : accountUser.accountUserData.accounts[account_id].balance,
+            remaining_balance : objectValholder,
             status : "Completed"
         }
         
@@ -124,7 +182,13 @@ export function withdraw(inputObject){
 // Fund Transfer
 export function send(inputObject){
 
-    let from_user = inputObject["sender_account_name"]
+    let from_user;
+    if (this.currentUser){
+        from_user = this.currentUser 
+    } else {
+        from_user = inputObject["sender_account_name"]
+    }
+
     let from_user_account_id = inputObject["sender_account_id"]
     let to_user = inputObject["recipient_account_name"]
     let to_user_account_id = inputObject["recipient_account_id"]
@@ -146,16 +210,31 @@ export function send(inputObject){
         ctr++
     }
 
-    if (AccountUsers.accountUserData[from_user].accounts[from_user_account_id].balance < parseFloat(amount) ) {
+    if (amount <= 0){
+        throw Error(`Amount less than and equal to zero is not allowed.`)
+    }
+
+    let objectValholder = AccountUsers.accountUserData[from_user].accounts[from_user_account_id].balance
+    let objectValholder2 = AccountUsers.accountUserData[to_user].accounts[to_user_account_id].balance
+    
+    // numMult100(objectValholder) += numMult100(parseFloat(amount));
+    // objectValholder = numDiv100(objectValholder)
+
+    // accountUser.accountUserData.accounts[account_id].balance = objectValholder
+
+    if (objectValholder < parseFloat(amount) ) {
         throw Error("Cannot proceed fund transfer: Requested amount is greater than current balance.");
 
     } else{
         
-        AccountUsers.accountUserData[from_user].accounts[from_user_account_id].balance -= parseFloat(amount);
+        objectValholder = numMult100(objectValholder) - numMult100(parseFloat(amount));
+        objectValholder = numDiv100(objectValholder);
+        AccountUsers.accountUserData[from_user].accounts[from_user_account_id].balance = objectValholder
+
         let inputObj = {
             action : "Online Fund Transfer",
             amount : parseFloat("-" + amount),
-            remaining_balance : AccountUsers.accountUserData[from_user].accounts[from_user_account_id].balance,
+            remaining_balance : objectValholder,
             status : "Completed",
             sender : from_user, 
             sender_account : from_user_account_id,
@@ -164,16 +243,16 @@ export function send(inputObject){
         }
         
         AccountUsers.accountUserData[from_user].accounts[from_user_account_id].history.push(
-            new Transaction(inputObj)
-        )
+            new Transaction(inputObj))
     
+        objectValholder2 = numMult100(objectValholder2) + numMult100(parseFloat(amount));
+        objectValholder2 = numDiv100(objectValholder2);
+        AccountUsers.accountUserData[to_user].accounts[to_user_account_id].balance = objectValholder2
 
-
-        AccountUsers.accountUserData[to_user].accounts[to_user_account_id].balance += parseFloat(amount);
         let inputObj2 = {
             action : "Online Fund Transfer",
             amount : parseFloat(amount),
-            remaining_balance : AccountUsers.accountUserData[to_user].accounts[to_user_account_id].balance,
+            remaining_balance : objectValholder2,
             status : "Completed",
             sender : from_user, 
             sender_account : from_user_account_id,
@@ -182,8 +261,7 @@ export function send(inputObject){
         }
         
         AccountUsers.accountUserData[to_user].accounts[to_user_account_id].history.push(
-            new Transaction(inputObj2)
-        )
+            new Transaction(inputObj2))
 
 
         AccountUsers.updateLocalStorage(bank.bankData); 

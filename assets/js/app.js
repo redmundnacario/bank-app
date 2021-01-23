@@ -1,15 +1,13 @@
 // Constructors
-import { Modal } from './components/modal.js'
 import { Navigation } from './components/navigation.js'
-
 import { Authenticate } from './auth.js'
 import { AccountUserData } from './database/user_accounts_table.js'
-
-
 import { Forms } from './components/forms.js'
-// Functions
-import { accordion } from './components/accordion.js';
-import { connectFormData } from './utility.js'
+import { Accordion } from './components/accordion.js';
+import { Modal } from './components/modal.js'
+// Function
+import { connectFormData, convertFloatNumberToString} from './utility.js'
+
 
 
 export function Application() {
@@ -20,8 +18,11 @@ export function Application() {
     /* 
         Dom elements
     */
+    // this.mainSection = document.querySelector("main")
+    // this.mainSection.appendChild(svg_background1)
 
     // Register, Login, and Logout
+    this.Nav = new Navigation();
     this.registerBtn = document.getElementById("registerToAppId")
     this.loginToAppBtn = document.getElementById("loginToAppId")
     this.logoutBtn = document.getElementById("logoutBtnId")
@@ -38,11 +39,13 @@ export function Application() {
     this.btnW = document.getElementById("withdrawBtnId");
     this.btnT = document.getElementById("tranferFundsBtnId");
     this.btnS = document.getElementById("settingsBtnId");
+    // this.btnA = document.getElementById("addNewAccount");
 
     this.btnD.addEventListener("click", (event) => this.getButtonId(event));
     this.btnW.addEventListener("click", (event) => this.getButtonId(event));
     this.btnT.addEventListener("click", (event) => this.getButtonId(event));
     this.btnS.addEventListener("click", (event) => this.getButtonId(event));
+    // this.btnA.addEventListener("click", (event) => this.getButtonId(event));
 
     this.getButtonId = (e) => this.Forms.btnPressed = e.currentTarget.id;
     
@@ -53,7 +56,8 @@ export function Application() {
     this.totalUniqueAccounts = document.getElementById("totalUniqueAccountsId")
     this.totalTransactions = document.getElementById("totalTransactionsId")
     this.perAccountsOverview = document.getElementsByClassName("per-accounts-overview")[0]
-    this.historyPanel = document.getElementsByClassName("panel")[0]
+
+
     
     /*
         GETTERS
@@ -74,7 +78,7 @@ export function Application() {
             .reduce((total, value) => {
                 return total + value[1].balance
         }, 0 )
-        return totalBalance
+        return convertFloatNumberToString(totalBalance.toFixed(2))
     }
 
     // get history All
@@ -92,35 +96,44 @@ export function Application() {
 
         this.greetingsH1.innerText = `Hello ${this.getCurrentUser()}!`
         // account boxes and balance per box
+        let ctr = 1;
         for (const value in uniqueAccounts) {
-            console.log(value)
             this.perAccountsOverview.appendChild(this.createUniqueAccountBox(
-                value, uniqueAccounts[value].balance
+                value, uniqueAccounts[value].balance, ctr
             ))
+            ctr++
         }
         this.createUniqueAccountBox
 
 
         // Overview - total balance, no of money accounts, no. transaction hisotry all
-        this.totalBalance.innerHTML = `<span>&#8369;  </span>` + this.getTotalbalance()
+        this.totalBalance.innerHTML = `<span class="php-sign">PHP </span>` + this.getTotalbalance()
         this.totalUniqueAccounts.innerText = Object.entries(uniqueAccounts).length
         this.totalTransactions.innerText = historyAll.length
 
         // history - must be based on the account number active/selected,
+        this.historyPanel = document.getElementsByClassName("panel")[0]
         for (const value of historyAll){
             this.historyPanel.appendChild(this.addTransactionInDom(value))
         }
         
     }
 
-    this.createUniqueAccountBox = function(account_name, balance){
+    this.createUniqueAccountBox = function(account_id, balance, index){
         let container = document.createElement("div")
         container.classList.add("account-box")
+        let h5_acc = document.createElement("h5")
+        h5_acc.className = "account-number-h5"
         let h4 = document.createElement("h4")
         let h5 = document.createElement("h5")
-        h4.innerText = account_name
-        h5.innerHTML = `<span>&#8369;  </span>` + balance
+        account_id = String(account_id)
+        account_id = "**** **** " + account_id.slice(8,12)
+
+        h5_acc.innerText = "Account#"+index
+        h4.innerText = account_id
+        h5.innerHTML = `<span class="php-sign">PHP </span>` + convertFloatNumberToString(balance.toFixed(2))
         h5.classList.add("unique-account-amount")
+        container.appendChild(h5_acc)
         container.appendChild(h4)
         container.appendChild(h5)
         return container
@@ -135,8 +148,8 @@ export function Application() {
         let td4 = document.createElement("td")
         th.innerText = inputObj["action"]
         td1.innerText = inputObj["date"]
-        td2.innerHTML = `<span>&#8369;  </span>` + inputObj["amount"]
-        td3.innerHTML = `<span>&#8369;  </span>` + inputObj["remaining_balance"]
+        td2.innerHTML = `<span class="php-sign-table">PHP </span>` + convertFloatNumberToString(inputObj["amount"].toFixed(2))
+        td3.innerHTML = `<span class="php-sign-table">PHP </span>` + convertFloatNumberToString(inputObj["remaining_balance"].toFixed(2))
         td4.innerText = inputObj["status"]
         containerTr.appendChild(th)
         containerTr.appendChild(td1)
@@ -155,12 +168,11 @@ export function Application() {
 
         this.Auth = new Authenticate();
         this.currentUser = this.Auth.currentUser
-        this.Nav = new Navigation();
 
         this.loginInitialize();
     }
 
-    // After successfull loggin in, go to app page and initialize accordion and
+    // After successfull loggin in, go to app page and initialize Accordion and
     // the modal
     this.loginInitialize = function(){
 
@@ -171,25 +183,27 @@ export function Application() {
                 // Get user data
                 this.userData = new AccountUserData(this.currentUser.user_name);
                 
-                console.log(this.userData.accountUserData) //access data
+                // console.log(this.userData.accountUserData) //access data
                 // console.log(this.getAccounts()) //access data
                 // console.log(Object.entries(this.getAccounts()))
                 // console.log( this.getTotalbalance())
-                console.log( this.getHistoryAll())
-
-                // update data in dom elements
-                this.updateAppDomData()
+                // console.log( this.getHistoryAll())
 
                 // change view to app
                 this.Nav.shiftPage(this.loginToAppBtn)
 
                 // modal constructor is incharge od dynamic display of forms
+            
                 this.Modal = new Modal();
                 this.Modal.currentUser = this.currentUser.user_name;
                 this.Forms = new Forms();
+                this.Forms.currentUser = this.currentUser.user_name;
                 
-                // setup the simple accordion function
-                accordion();
+                // setup the simple Accordion function
+                this.Accordion = new Accordion();
+
+                // update data in dom elements
+                this.updateAppDomData()
             }
         }
     }

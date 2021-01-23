@@ -137,13 +137,12 @@ export const Authenticate = function() {
     }
 
     this.createUserAccountThroughRegistration = function(
-                                                         balance = 0.00,
-                                                         account_id = "Account_1" 
+                                                         balance = 0.00
                                                         ) {
         let { first_name, last_name, date_created } = this.newUser;
 
         create_user(first_name, last_name, 
-                    balance, account_id, date_created )
+                    balance, date_created )
     }
 
     // logout user

@@ -15,40 +15,8 @@
 </head>
 <body>
     <main>
-        <!-- Svg Wavy background -->
-        <svg id="svgBground" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-            <path fill="#3e34ff" fill-opacity="0.8" d="M0,224L80,192C160,160,320,96,480,112C640,128,800,224,960,261.3C1120,299,1280,277,1360,266.7L1440,256L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"></path>
-        </svg>
-        <svg id="svgBground2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-            <path fill="#5000ca" fill-opacity="0.8" d="M0,224L80,208C160,192,320,160,480,170.7C640,181,800,235,960,250.7C1120,267,1280,245,1360,234.7L1440,224L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"></path>
-        </svg>
-       
-
         <!-- Navbar -->
-        <nav>
-            <div>
-                <div>
-                    <h1 class="appName-navbar">
-                        <span>e</span>Bank<span>o</span>
-                    </h1>
-                </div>
-                <div class="landing-nav-buttons" data-view="logoutBtnId">
-                    <button id="homeBtnId" class="nav-buttons"><h2>Home</h2></button>
-                    <button id="registerBtnId" class="nav-buttons"><h2>Sign Up</h2></button>
-                    <button id="loginBtnId" class="nav-buttons"><h2>Sign In</h2></button>
-                </div>
-                <div class="landing-nav-buttons hidden" data-view="loginToAppId">
-                    <!-- add profile picture here -->
-                    <button id="logoutBtnId" class="nav-buttons"><h2>Logout</h2></button>
-                    <button class="nav-buttons" id="settingsBtnId">
-                        <div>
-                            <img id="settingsLogoId" src="/assets/img/settings.gif"/>
-
-                        </div>
-                    </button>
-                </div>
-            </div>
-        </nav>
+        <nav></nav>
 
         <!-- section pages -->
         <section id="homeIdDiv" class="hidden" data-view="logoutBtnId">
@@ -200,13 +168,15 @@
                                 <h6 id="totalTransactionsId" >0</h6>
                             </div>
                         </div>
-                        <p>Last activity: datetime</p>
+                        <p>Last activity: <span id="lastActivityDateId">datetime</span></p>
                     </div>
                 </div>
                 <div>
                     <h2>Money Wallet Accounts</h2>
                     <div class="per-accounts-overview">
-
+                        <div id="addAccountId">
+                            <button id="addNewAccountBtnId"></button>
+                        </div>
                     </div>
                     <!-- <div class="account-box">
                         <h4>Account #1</h4>
@@ -214,76 +184,15 @@
                     </div> -->
                 </div>
             </div>
-
-            <!-- history //accordion -->
-            <div class="table-container">
-                <table class="history-table">
-                    <thead class="accordion">
-                        <tr>
-                            <th colspan="5">
-                                <h2>Recent Transactions</h2>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody class="panel">
-                        <tr>
-                            <th>Action</th>
-                            <th>Date</th>
-                            <th>Amount</th>
-                            <th>Balance</th>
-                            <th>Status</th>
-                        </tr>
-                        <!-- <tr>
-                            <th>Deposit</th>
-                            <td>Sample datetime</td>
-                            <td>100Php</td>
-                            <td>100Php</td>
-                            <td>Completed</td>
-                        </tr>
-                        <tr>
-                            <th>Withdraw</th>
-                            <td>Sample datetime</td>
-                            <td>50Php</td>
-                            <td>50Php</td>
-                            <td>Completed</td>
-                        </tr>
-                        <tr>
-                            <th>Transfer to user</th>
-                            <td>Sample datetime</td>
-                            <td>20Php</td>
-                            <td>20Php</td>
-                            <td>Completed</td>
-                        </tr> -->
-                        
-                    </tbody>
-                </table>
-            </div>
-        </section>
-
-        <!-- modal -->
-        <div id="ModalId" class="modal">
-            <!-- Modal content -->
-            <div id="ModalContentId" class="modal-content">
-
-                <div class="card">
-
-                    <h1 id="ActionNameId">Action type</h1>
-                    <h3 id="ActionPurposeId">Where is the meta tag only found?</h3>
-
-                </div>
-                <div class="card-bottom">
-                    <div id="formAlert" class="alert-text hidden">
-                        <p id="formSuccessMessageId" class="alert-text-success" ></p>
-                        <p id="formErrorMessageId" class="alert-text-warning" ></p>
-                    </div>
-                    <div class="card-bottom-buttons">
-                        <input id="CancelButtonId" type="submit" value="Cancel">
-                        <input id="SubmitButtonId" type="submit" value="Submit">
-                    </div>
-                </div>
-            </div>
-        </div>
-        
+           
+        </section>   
     </main>
+    <!-- Svg Wavy background -->
+    <svg id="svgBground" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        <path fill="#3e34ff" fill-opacity="0.8" d="M0,224L80,192C160,160,320,96,480,112C640,128,800,224,960,261.3C1120,299,1280,277,1360,266.7L1440,256L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"></path>
+    </svg>
+    <svg id="svgBground2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        <path fill="#5000ca" fill-opacity="0.8" d="M0,224L80,208C160,192,320,160,480,170.7C640,181,800,235,960,250.7C1120,267,1280,245,1360,234.7L1440,224L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"></path>
+    </svg>    
 </body>
 </html>

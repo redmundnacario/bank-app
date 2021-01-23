@@ -6,6 +6,7 @@ import { send } from '../functions.js';
 export function Forms() {
 
     this.btnPressed;
+    this.currentUser;
 
     //Dom Elements
     this.formId = "FormId"
@@ -18,13 +19,13 @@ export function Forms() {
         let actionFunction;
         switch(this.btnPressed){
             case ("depositBtnId"):
-                actionFunction = deposit
+                actionFunction = deposit.bind(this)
                 break
             case ("withdrawBtnId"):
-                actionFunction = withdraw
+                actionFunction = withdraw.bind(this)
                 break
             case ("tranferFundsBtnId"):
-                actionFunction = send
+                actionFunction = send.bind(this)
                 break
             case ("settingsBtnId"):
                 actionFunction = null;

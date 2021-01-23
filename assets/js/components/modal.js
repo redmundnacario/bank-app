@@ -1,3 +1,7 @@
+import { modal_html, add_new_account_html } from '../components_html/modal.js';
+import { addAccount } from '../functions.js';
+
+
 export function Modal(){
 
     this.currentUser;
@@ -24,10 +28,20 @@ export function Modal(){
     // Window
     this.window = window;
     this.btnPressed;
+
+    // create modal
+
+    this.mainSection = document.querySelector("main")
+    this.modal = document.createElement("section")
+    this.modal.id = "ModalId"
+    this.modal.classList.add("modal")
+    this.modal.innerHTML = modal_html
+    this.mainSection.appendChild(this.modal)
     
     // Get the modal
-    this.modal = document.getElementById("ModalId");// initial is undefined
-    this.modalContent = document.getElementById("ModalContentId").children[0];
+
+    // this.modal = document.getElementById("ModalId");// initial is undefined
+    // this.modalContent = document.getElementById("ModalContentId").children[0];
 
     // Get the button that opens the modal
     this.btnD = document.getElementById("depositBtnId");
@@ -35,8 +49,7 @@ export function Modal(){
     this.btnT = document.getElementById("tranferFundsBtnId");
     this.btnS = document.getElementById("settingsBtnId");
 
-    // Get the button element that closes the modal
-    this.btnCancel = document.getElementById("CancelButtonId");
+    this.btnA = document.getElementById("addNewAccountBtnId");
 
     // Get the submit button in the form inside the modal
     // this.btnSubmit = document.getElementById("SubmitButtonId");
@@ -47,37 +60,63 @@ export function Modal(){
     this.btnT.onclick  = (event) => this.modalCallback(event);
     this.btnS.onclick  = (event) => this.modalCallback(event);
 
+    this.btnA.onclick  = (event) => this.addNewAccountCB(event);
+
     //Action form;
     this.form;
 
-    // When the user clicks on <span> (x), close the modal
-    this.btnCancel.onclick = () => this.closeModal();
 
     //When the user clicks anywhere outside of the modal, close it
-    this.window.onclick = (event) => this.closeModalv2(event, 
-        this.modal, this.modalContent);
+    this.window.onclick = (event) => this.closeModalv2(event);
 
 
     /*
         METHODS
     */ 
+    // Add new Account
+    this.addNewAccountCB = function(event) {
+        this.btnPressed = event.currentTarget.id;
+        this.modal.innerHTML = add_new_account_html;
+        this.modalContent = document.getElementById("ModalContentId").children[0];
+
+        addAccount(this.currentUser)
+        this.modal.style.visibility = "visible";
+
+        // Get the button element that closes the modal
+        this.btnCancel = document.getElementById("CancelButtonId");
+        // When the user clicks on <span> (x), close the modal
+        this.btnCancel.onclick = () => this.closeModal();
+    }
+
 
     // When the user clicks the button, open the modal and load depends on Id
     this.modalCallback = function(event) {
         this.btnPressed = event.currentTarget.id;
+        this.modal.innerHTML = modal_html
+        this.modalContent = document.getElementById("ModalContentId").children[0];
+
         this.actionButtonFx(this.btnPressed);
         this.modal.style.visibility = "visible";
+
+        // Get the button element that closes the modal
+        this.btnCancel = document.getElementById("CancelButtonId");
+        // When the user clicks on <span> (x), close the modal
+        this.btnCancel.onclick = () => this.closeModal();
     }
     
     // Close the modal functions
     this.closeModal = function() {
+        this.modalContent = document.getElementById("ModalContentId").children[0];
         this.modal.style.visibility = "hidden";
-        this.modalContent.removeChild(this.form)
+        if (this.form){ this.modalContent.removeChild(this.form) }
+        this.form = null;
     }
-    this.closeModalv2 = function(event , modal, modalContent) {
-        if (event.target == modal) {
-            modal.style.visibility = "hidden";
-            modalContent.removeChild(this.form)
+    this.closeModalv2 = function(event) {
+        this.modalContent = document.getElementById("ModalContentId").children[0];
+        if (event.target == this.modal) {
+            this.modal.style.visibility = "hidden";
+            if (this.form){ this.modalContent.removeChild(this.form) }
+            this.form = null;
         }
     }
 

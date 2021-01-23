@@ -1,4 +1,6 @@
-
+/* 
+    STRING OPERATIONS
+*/ 
 // Function to check letters and numbers
 export function detectCharacterStringOnly(inputtxt){
     var letterNumber = /^[a-zA-Z]+$/;
@@ -8,6 +10,21 @@ export function detectCharacterStringOnly(inputtxt){
     } else { 
         return false; // if caharacter number
     }
+}
+//
+export function convertFloatNumberToString(inputNumber){
+    return String(inputNumber).replace(/^\d+/,
+        inputNumber => [...inputNumber].map(
+            (digit, index, digits) => (
+                !index || (digits.length - index) % 3 ? '' : ','
+            ) + digit
+        ).join('')
+    );
+}
+
+// Generate 12 digit account number
+export function generate12DigitAccountNumber(){
+    return Math.floor(Math.random() * 900000000000) + 100000000000;
 }
 
 
@@ -74,7 +91,8 @@ export function connectFormData(
 /*
     Input Validators
 */ 
-//
+
+// check if a variable is missing in the form except password
 export function strictAllInputValidator(inputObj, ErrorMessage) {
     Object.entries(inputObj).forEach(value => {
         if(value[1] === ""){
@@ -95,4 +113,16 @@ export function passwordValueInputValidator(inputObjValue, ErrorMessage) {
     if( inputObjValue === "") {
         throw Error(ErrorMessage)
     }
+}
+
+/*
+    Float Operations
+*/ 
+
+export function numMult100(num){
+    return num * 100;
+}
+
+export function numDiv100(num){
+    return num / 100;
 }
