@@ -55,6 +55,10 @@ export function Application() {
         return this.userData.accountUserData.accounts
     }
 
+    this.getAccountNumbers = function(){
+        return Object.keys(this.userData.accountUserData.accounts)
+    }
+
     // get total balance
     this.getTotalbalance = function(){
         let totalBalance = Object.entries(this.getAccounts())
@@ -64,25 +68,20 @@ export function Application() {
         return convertFloatNumberToString(totalBalance.toFixed(2))
     }
 
-    // get history All
-    this.getHistoryAll = function(){
-        let historyAll = Object.entries(this.getAccounts())
-            .reduce((total, value) => {
-                return total.concat(value[1].history)
-        }, [] )
-        return historyAll
-    }
-
     this.updateAppDomData = function(){
+        try {
+
         let uniqueAccounts = this.getAccounts()
-        let historyAll = this.getHistoryAll()
+
+        //ACCORDION get history
+        this.Accordion.accounts = uniqueAccounts
+        this.Accordion.getHistoryAll()
+        let historyAll = this.Accordion.historyAll
 
         this.greetingsH1.innerText = `Hello ${this.getCurrentUser()}!`
         // account boxes and balance per box
 
         //resets the list of accounts in the dom
-        console.log("trigger")
-        console.log(this.perAccountsOverview)
         this.perAccountsOverview.innerHTML = "";
         
         let ctr = 1;
@@ -97,17 +96,20 @@ export function Application() {
         addAccountBtn.id = "addAccountId"
         addAccountBtn.innerHTML = add_new_account_btn_html
         this.perAccountsOverview.appendChild(addAccountBtn)
-        console.log(this.perAccountsOverview)
+       
 
         // Overview - total balance, no of money accounts, no. transaction hisotry all
         this.totalBalance.innerHTML = `<span class="php-sign">PHP </span>` + this.getTotalbalance()
         this.totalUniqueAccounts.innerText = Object.entries(uniqueAccounts).length
         this.totalTransactions.innerText = historyAll.length
 
-        // history - must be based on the account number active/selected,
-        this.historyPanel = document.getElementsByClassName("panel")[0]
-        for (const value of historyAll){
-            this.historyPanel.appendChild(this.addTransactionInDom(value))
+        // Accordion
+        this.Accordion.accountList = this.getAccountNumbers()
+        this.Accordion.accounts = uniqueAccounts
+        this.Accordion.updateAccountSelect()
+        }
+        catch (error) {
+            console.log(error)
         }
         
     }
@@ -130,26 +132,6 @@ export function Application() {
         container.appendChild(h4)
         container.appendChild(h5)
         return container
-    }
-    
-    this.addTransactionInDom = function(inputObj){
-        let containerTr = document.createElement("tr")
-        let th = document.createElement("th")
-        let td1 = document.createElement("td")
-        let td2 = document.createElement("td")
-        let td3 = document.createElement("td")
-        let td4 = document.createElement("td")
-        th.innerText = inputObj["action"]
-        td1.innerText = inputObj["date"]
-        td2.innerHTML = `<span class="php-sign-table">PHP </span>` + convertFloatNumberToString(inputObj["amount"].toFixed(2))
-        td3.innerHTML = `<span class="php-sign-table">PHP </span>` + convertFloatNumberToString(inputObj["remaining_balance"].toFixed(2))
-        td4.innerText = inputObj["status"]
-        containerTr.appendChild(th)
-        containerTr.appendChild(td1)
-        containerTr.appendChild(td2)
-        containerTr.appendChild(td3)
-        containerTr.appendChild(td4)
-        return containerTr
     }
     
     /*
@@ -181,6 +163,7 @@ export function Application() {
 
                 // setup the simple Accordion function
                 this.Accordion = new Accordion();
+
                 // update data in dom elements
                 this.updateAppDomData()
 

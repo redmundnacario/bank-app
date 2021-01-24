@@ -48,8 +48,9 @@ export function connectFormData(
                                 formId, 
                                 alertBox,
                                 alertWarningText, 
-                                alertSuccessText
-                                ){
+                                alertSuccessText,
+                                preventDefault = true,
+                                formReset = true){
     /*
     event : event
     actionFunction : External function
@@ -59,7 +60,9 @@ export function connectFormData(
     alertSuccessText : Dom element of alert success text
     */
 
-    event.preventDefault();
+    if (preventDefault) { 
+        event.preventDefault()
+    };
 
     // reset
     if (alertBox) { alertBox.classList.add("hidden")};
@@ -70,7 +73,7 @@ export function connectFormData(
     const form_data = new FormData(form)
     let result = extractFormData(form_data);
 
-    // console.log(result)
+    console.log(result)
 
     try {
         let success_msg = actionFunction(result)
@@ -80,7 +83,7 @@ export function connectFormData(
         if (alertSuccessText) { alertSuccessText.innerText = success_msg};
 
         // removes values in the inputs
-        form.reset()
+        if (formReset == true ) { form.reset() }
     }
         catch (error) {
         // console.log(error)
@@ -130,5 +133,17 @@ export function numDiv100(num){
     return num / 100;
 }
 
+/*
+    DATE OPERATIONS
+*/ 
 
+export function sortByDate(a, b) {
+    if (a.date < b.date) {
+        return 1;
+    }
+    if (a.date > b.date) {
+        return -1;
+    }
+    return 0;
+}
 

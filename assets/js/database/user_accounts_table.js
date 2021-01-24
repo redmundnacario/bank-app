@@ -1,5 +1,6 @@
 import { sample_bank_users_data } from '../sample_data/sample_bank_users_data.js';
 import { Bank } from './bank_table.js';
+import { Transaction } from './transaction_table.js';
 
 export function AccountUser(first_name, last_name, balance, account_id, date_created){
 
@@ -13,7 +14,8 @@ export function AccountUser(first_name, last_name, balance, account_id, date_cre
                 history :  [
                     new Transaction(
                         {
-                            action : `Account Creation (${account_id})`,
+                            action : `Created`,
+                            account_number : account_id,
                             amount : balance,
                             remaining_balance : balance,
                             status : "Completed"
@@ -25,20 +27,6 @@ export function AccountUser(first_name, last_name, balance, account_id, date_cre
     }
     this.date_created = date_created
 }
-
-// Transaction constructor
-export function Transaction(inputObj){
-    this.action = inputObj["action"];
-    this.date = new Date().toISOString();
-    this.amount = inputObj["amount"];
-    this.remaining_balance = inputObj["remaining_balance"];
-    this.status = inputObj["status"];
-
-    this.sender = inputObj["sender"];
-    this.sender_account = inputObj["sender_account"]
-    this.receiver = inputObj["receiver"];
-    this.receiver_account = inputObj["receiver_account"];
-} 
 
 
 export function AccountUserData(user_name) {

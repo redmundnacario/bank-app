@@ -189,7 +189,7 @@ nav>div{
     flex-flow: column;
     justify-content: center;
     position: relative;
-    
+    align-items: center;
 }
 
 #homeContainerId{
@@ -491,7 +491,9 @@ table,tbody, th, td{
 th, td {
     border-bottom: 0.2vh solid #f1f2ff;
 }
-
+.right-align {
+    text-align: right;
+}
 tbody tr:last-child,
 tbody tr:last-child th, 
 tbody tr:last-child td {
@@ -502,16 +504,6 @@ th, td {
     padding: 2vh;
     text-align: left;
 }
-/* td{
-    text-align: center;
-} */
-
-/* .history-table tr:nth-child(even) {
-    background-color: #fff;
-}
-.history-table tr:nth-child(odd) {
-    background-color: #f1f2ff;
-} */
 
 /* Style the buttons that are used to open and close the accordion panel */
 .accordion {
@@ -524,35 +516,64 @@ th, td {
 .accordion h2{
     margin:0;
 } 
-  
-/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
-/* .accordion:hover {
-    background-color: #ececec;
-} */
-/* .accordion-active {
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-    background-color: #ececec;
-} */
+
 .accordion-active th:first-child  {
     border-radius: 1vh 1vh 0 0 !important;
     background-color: #fff;
     border-bottom: 0.2vh solid #f1f2ff;
 }
+/* #historySettingsIdthead{
+    padding: 0;
+} */
+#accordionHeadingIdContainer{
+    width:50%;
+}
+#historySettingsId,
+#accordionFormId {
+    display: flex;
+    align-items: center;
+}
+#historySettingsId{
+    /* justify-content: space-between; */
+    /* width:90%; */
+}
+#accordionFormId{
+    width:45%;
+    /* justify-content: flex-end; */
+}
+/* #accordionFormId input[type=submit]{
+    width:5vh;
+} */
 
-.accordion h2:after {
-    content: '\02795'; /* Unicode character for "plus" sign (+) */
-    font-size: 13px;
-    float: right;
-    position: absolute;
-    top:2.5vh;
-    right:2vh;
-    /* padding: 2vh; */
+#accordionFormId h2{
+    color:#a8a8a8;
+}
+#accordionFormId h2:not(:first-child){
+    margin-left:2vh;
+}
+#accordionFormId h2,
+#accordionFormId select{
+    font-size: 1.5vh;
+    border :none;
+    outline: none;
+    margin-left:1vh;
+}
+#accordionFormId select{
+    width:25%;
+    color:#9198ff;
 }
 
-.accordion-active h2:after {
-    content: "\2796"; /* Unicode character for "minus" sign (-) */
+#accordionSymbol{
+    text-align: right;
+    width:5%;
+    font-size: 2vh;
+    color: #3e34ff
+    
 }
+
+/* .accordion-active h2:after {
+    content: "\2796";
+} */
 
 
 /* 

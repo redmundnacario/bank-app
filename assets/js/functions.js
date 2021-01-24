@@ -1,6 +1,7 @@
 // Constructor
-import { AccountUser, AccountUserData, Transaction } from './database/user_accounts_table.js';
+import { AccountUser, AccountUserData } from './database/user_accounts_table.js';
 import { BankData } from './database/bank_table.js';
+import { Transaction } from './database/transaction_table.js';
 
 // Functions
 import { detectCharacterStringOnly } from './utility.js'
@@ -42,7 +43,8 @@ export function addAccount(user_name, balance = 0){
         let newAccountName = generate12DigitAccountNumber();
         
         let inputObj = {
-            action : `Account Creation (${newAccountName})`,
+            action : `Created`,
+            account_number : newAccountName,
             amount : balance,
             remaining_balance : balance,
             status : "Completed"
@@ -111,7 +113,8 @@ export function deposit(inputObject){
     accountUser.accountUserData.accounts[account_id].balance = objectValholder
     
     let inputObj = {
-        action : "Online Deposit",
+        action : "Deposited",
+        account_number : account_id,
         amount : parseFloat(amount),
         remaining_balance : objectValholder,
         status : "Completed"
@@ -162,7 +165,8 @@ export function withdraw(inputObject){
         accountUser.accountUserData.accounts[account_id].balance = objectValholder
 
         let inputObj = {
-            action : "Online Withdraw",
+            action : "Withdrew",
+            account_number : account_id,
             amount : parseFloat("-"+amount),
             remaining_balance : objectValholder,
             status : "Completed"
@@ -232,7 +236,8 @@ export function send(inputObject){
         AccountUsers.accountUserData[from_user].accounts[from_user_account_id].balance = objectValholder
 
         let inputObj = {
-            action : "Online Fund Transfer",
+            action : "Sent",
+            account_number : from_user_account_id,
             amount : parseFloat("-" + amount),
             remaining_balance : objectValholder,
             status : "Completed",
@@ -250,7 +255,8 @@ export function send(inputObject){
         AccountUsers.accountUserData[to_user].accounts[to_user_account_id].balance = objectValholder2
 
         let inputObj2 = {
-            action : "Online Fund Transfer",
+            action : "Received",
+            account_number : to_user_account_id,
             amount : parseFloat(amount),
             remaining_balance : objectValholder2,
             status : "Completed",
