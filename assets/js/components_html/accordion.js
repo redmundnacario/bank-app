@@ -51,3 +51,10 @@ export const initial_tr_html =`
     <th>Status</th>
 </tr>
 `
+
+export const no_results_html =`
+<th colspan="6" id="noResultId">
+    <img id="noResultImgId" src="./assets/img/curious-animate.svg" alt="No results" />
+    <h1>No results found.</h1>
+</th>
+`

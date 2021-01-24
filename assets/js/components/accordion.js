@@ -1,4 +1,4 @@
-import { accordion_html, initial_tr_html } from '../components_html/accordion.js'
+import { accordion_html, initial_tr_html, no_results_html } from '../components_html/accordion.js'
 import { connectFormData } from '../utility.js'
 import { convertFloatNumberToString } from '../utility.js';
 import { sortByDate } from '../utility.js';
@@ -79,6 +79,11 @@ export function Accordion() {
             this.panel.innerHTML = initial_tr_html
             for (const value of historyAll){
                 this.panel.appendChild(this.addTransactionInDom(value))
+            }
+            if (historyAll.length === 0){
+                let no_results = document.createElement("tr");
+                no_results.innerHTML = no_results_html;
+                this.panel.appendChild(no_results)
             }
 
             //Assign value

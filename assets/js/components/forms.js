@@ -2,8 +2,10 @@ import { connectFormData } from '../utility.js';
 import { deposit } from '../functions.js';
 import { withdraw } from '../functions.js';
 import { send } from '../functions.js';
+import { Alert } from './alerts.js';
 
 export function Forms() {
+    this.Alert = new Alert;
 
     this.btnPressed;
     this.currentUser;
@@ -36,23 +38,22 @@ export function Forms() {
                 return
             
         }
-
-        connectFormData(
+        console.log(this.Alert)
+        let resultBool = connectFormData(
             event,
             actionFunction,                                    
             this.formId,
-            document.getElementById("formAlert"),
-            document.getElementById("formErrorMessageId"),
-            document.getElementById("formSuccessMessageId")
+            this.Alert.resetAlerts.bind(this.Alert),
+            this.Alert.showWarning.bind(this.Alert),
+            this.Alert.showSuccess.bind(this.Alert),
         )
 
-        // Close modal
-        this.closeModal()
-
-        // Update contents in App dom
-        // this.updateAppDomData()
-        location.reload()    
+        // Close modal , update dom thru refresh
+        if (resultBool){
+            this.closeModal()
+            setTimeout(() => {
+                location.reload()
+            }, 2000)
+        } 
     }
-
-    
 }

@@ -330,6 +330,7 @@ form {
     display: grid;
     grid-template-columns: 40% 60%;
     gap:3vh;
+    margin-bottom: 6vh;
 }
 
 .accounts-overview {
@@ -762,3 +763,56 @@ input:active{
 #formAlert{
     margin-bottom: 2vh;
 }
+
+
+/* 
+    ALert Section
+*/
+
+
+#alertMessageId{
+    text-align: center;
+    position:absolute;
+    top:5vh;
+    z-index: 3;
+}
+.alertMessage{
+    background-color: #fff;
+    /* margin: auto; */
+    padding: 2vh;
+
+    width: 50vh;
+    /* height:50vh; */
+
+
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur( 30px );
+    border-radius: 1vh;
+
+    
+}
+.alertMessage h2 {
+    margin :0;
+    line-height: 2.5vh;
+}
+.alert-status-warning{
+    color: rgba(255, 0, 0,0.9);
+    background-color: rgba(255, 0, 0, 0.1) !important;
+    border: 0.1vh solid rgba( 255, 0, 0, 0.25) !important;
+    box-shadow: 0 0.5vh 1vh 0 rgba(255, 0, 0, 0.37);
+}
+.alert-status-success{
+    color: rgba(0, 128, 0, 0.9);
+    background-color: rgba(0, 128, 0, 0.1) !important;
+    border: 0.1vh solid rgba(0, 128, 0, 0.25) !important;
+    box-shadow: 0 0.5vh 1vh 0 rgba(2, 155, 2, 0.37);
+}
+
+
+#noResultId {
+    text-align: center;
+}
+#noResultImgId{
+    width:30%;
+}
+

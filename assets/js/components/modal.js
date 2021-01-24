@@ -117,6 +117,7 @@ export function Modal(){
         this.Forms.currentUser = this.currentUser;
         this.Forms.btnPressed = this.btnPressed;
         this.Forms.closeModal = this.closeModal.bind(this);
+        
         // this.Forms.updateAppDomData = this.updateAppDomData.bind(this);
 
         // Get the button element that closes the modal

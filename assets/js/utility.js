@@ -46,9 +46,9 @@ export function connectFormData(
                                 event, 
                                 actionFunction,
                                 formId, 
-                                alertBox,
-                                alertWarningText, 
-                                alertSuccessText,
+                                resetAlert,
+                                alertWarningfx, 
+                                alertSuccessfx,
                                 preventDefault = true,
                                 formReset = true){
     /*
@@ -65,13 +65,15 @@ export function connectFormData(
     };
 
     // reset
-    if (alertBox) { alertBox.classList.add("hidden")};
-    if (alertSuccessText) { alertSuccessText.innerText = ""};
-    if (alertWarningText) { alertWarningText.innerText = ""};
+    if (resetAlert) {resetAlert()}
 
     let form = document.forms[formId];
     const form_data = new FormData(form)
     let result = extractFormData(form_data);
+
+    console.log(resetAlert)
+    console.log(alertWarningfx)
+    console.log(alertSuccessfx)
 
     console.log(result)
 
@@ -79,17 +81,20 @@ export function connectFormData(
         let success_msg = actionFunction(result)
         // console.log(success_msg)
 
-        if (alertBox) { alertBox.classList.remove("hidden")};
-        if (alertSuccessText) { alertSuccessText.innerText = success_msg};
+        if (alertSuccessfx) {alertSuccessfx(success_msg)}
 
         // removes values in the inputs
         if (formReset == true ) { form.reset() }
+
+        return true
     }
         catch (error) {
         // console.log(error)
 
-        if (alertBox) { alertBox.classList.remove("hidden")};
-        if (alertWarningText) { alertWarningText.innerText = error.message};
+        if (alertWarningfx){alertWarningfx(error.message)}
+        // removes values in the inputs
+        if (formReset == true ) { form.reset() }
+        return false
     }
 
 }

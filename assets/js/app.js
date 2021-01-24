@@ -2,9 +2,10 @@
 import { Navigation } from './components/navigation.js';
 import { Authenticate } from './auth.js';
 import { AccountUserData } from './database/user_accounts_table.js';
-import { Forms } from './components/forms.js';
 import { Accordion } from './components/accordion.js';
 import { Modal } from './components/modal.js';
+import { Alert } from './components/alerts.js';
+
 // Function
 import { connectFormData, convertFloatNumberToString} from './utility.js';
 // Template 
@@ -140,7 +141,8 @@ export function Application() {
 
     // Initialize this application
     this.initialize = function() {
-
+        this.Alert = new Alert;
+        this.Alert.initialize();
         this.Auth = new Authenticate();
         this.currentUser = this.Auth.currentUser
 
@@ -171,6 +173,7 @@ export function Application() {
                 this.Modal = new Modal();
                 this.Modal.currentUser = this.currentUser.user_name;
                 this.Modal.updateAppDomData = this.updateAppDomData.bind(this)
+                
 
             }
         }
@@ -185,9 +188,9 @@ export function Application() {
             event,
             this.Auth.loginUser.bind(this.Auth),                                    
             "formLoginId",
-            document.getElementById("logAlert"),
-            document.getElementById("logErrorMessageId")
-            // document.getElementById("logSuccessMessageId")//left undefined
+            this.Alert.resetAlerts.bind(this.Alert),
+            this.Alert.showWarning.bind(this.Alert) ,
+            this.Alert.showSuccess.bind(this.Alert) ,
         )
            
         // update this.currentUser fr0m this.Auth.currentUser
@@ -205,11 +208,10 @@ export function Application() {
             event,
             this.Auth.registerUser.bind(this.Auth),                                    
             "formRegisterId",
-            document.getElementById("regAlert"),
-            document.getElementById("regErrorMessageId"),
-            document.getElementById("regSuccessMessageId")
+            this.Alert.resetAlerts.bind(this.Alert),
+            this.Alert.showWarning.bind(this.Alert) ,
+            this.Alert.showSuccess.bind(this.Alert) ,
         )
     }
-
 
 }
