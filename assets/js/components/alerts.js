@@ -39,9 +39,9 @@ export function Alert() {
 
     // Success
     this.showSuccess = function(success_msg) {
-        console.log(success_msg)
-        console.log(this.alertBox)
-        console.log(this.alertSuccess)
+        // console.log(success_msg)
+        // console.log(this.alertBox)
+        // console.log(this.alertSuccess)
         if (this.alertBox) { this.alertBox.classList.remove("hidden")};
         if (this.alertSuccess) { 
             this.alertSuccess.innerHTML = `<h2>${success_msg}</h2>`;

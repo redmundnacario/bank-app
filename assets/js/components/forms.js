@@ -91,12 +91,11 @@ export function Forms() {
         }
 
         // if img is present.. do something
-        // if (img){
-        //     console.log(img)
-        // } else {
-        //     console.log(img)
-        // }
-
+        if (img.name != ""){
+            console.log(img)
+            let imgElement = document.getElementById('profileImgId'); 
+            imgElement.src = URL.createObjectURL(img); 
+        }
         
         if (old_password == "" && password == "" && confirm_password == "" ){
             return `Profile picture was updated`

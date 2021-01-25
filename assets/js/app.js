@@ -5,12 +5,13 @@ import { AccountUserData } from './database/user_accounts_table.js';
 import { Accordion } from './components/accordion.js';
 import { Modal } from './components/modal.js';
 import { Alert } from './components/alerts.js';
+import { CopyButton } from './components/copy_button.js';
 
 
 // Function
 import { connectFormData, convertFloatNumberToString} from './utility.js';
 // Template 
-import { add_new_account_btn_html } from './components_html/app.js';
+import { add_new_account_btn_html, copy_btn_html, del_btn_html } from './components_html/app.js';
 
 
 
@@ -93,6 +94,8 @@ export function Application() {
             ))
             ctr++
         }
+        this.CopyButton = new CopyButton()
+        this.CopyButton.Alert = this.Alert
         
         let addAccountBtn = document.createElement("div")
         addAccountBtn.id = "addAccountId"
@@ -119,20 +122,39 @@ export function Application() {
     this.createUniqueAccountBox = function(account_id, balance, index){
         let container = document.createElement("div")
         container.classList.add("account-box")
+
         let h5_acc = document.createElement("h5")
         h5_acc.className = "account-number-h5"
         let h4 = document.createElement("h4")
         let h5 = document.createElement("h5")
         account_id = String(account_id)
-        account_id = "**** **** " + account_id.slice(8,12)
-
         h5_acc.innerText = "Account#"+index
-        h4.innerText = account_id
+        h4.innerText = "**** **** " + account_id.slice(8,12)
         h5.innerHTML = `<span class="php-sign">PHP </span>` + convertFloatNumberToString(balance.toFixed(2))
         h5.classList.add("unique-account-amount")
+
+        let copy_btn = document.createElement("button")
+        copy_btn.innerHTML = copy_btn_html
+        copy_btn.className = "copy-button"
+        // copy_btn.setAttribute("data-account", account_id)
+
+        // create input invisible
+        let input = document.createElement("input")
+        input.type = "text"
+        input.value = account_id
+        input.classList.add("target-input-copy")
+
+        // let del_btn = document.createElement("button")
+        // del_btn.innerHTML = del_btn_html
+        // del_btn.id = "delBtnId"
+        // del_btn.innerText = "✕"
+        // del_btn.setAttribute("data-account", account_id)
+
         container.appendChild(h5_acc)
         container.appendChild(h4)
         container.appendChild(h5)
+        container.appendChild(copy_btn)
+        container.appendChild(input)
         return container
     }
     
@@ -173,7 +195,7 @@ export function Application() {
                 // modal constructor is incharge od dynamic display of forms
                 this.Modal = new Modal();
                 this.Modal.currentUser = this.currentUser.user_name;
-                this.Modal.updateAppDomData = this.updateAppDomData.bind(this)
+                // this.Modal.updateAppDomData = this.updateAppDomData.bind(this)
                 this.Modal.Auth = this.Auth;
 
             }

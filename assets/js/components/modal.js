@@ -31,7 +31,7 @@ export function Modal(){
     // Window
     this.window = window;
     this.btnPressed;
-    this.updateAppDomData;
+    // this.updateAppDomData;
 
     // create modal
 
