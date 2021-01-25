@@ -198,7 +198,7 @@ export function Modal(){
                 break
             case "settingsBtnId":
                 this.form.appendChild(this.createInputText("img", 
-                                "inmg", 
+                                "img", 
                                 "Select Image",
                                 "Change Profile Picture", false))
 

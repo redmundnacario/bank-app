@@ -134,8 +134,25 @@ export const Authenticate = function() {
 
             // update localstorage
             this.state.updateLocalStorage();
+
+
+            // Preparation for auto log-in after successful registration
+            let existingUser = this.state.userAuthData.users[newUser.user_name];
+
+            this.currentUser = { 
+                user_name : existingUser.user_name,
+                user_level : existingUser.user_level
+            };
+
+            this.state.userAuthData.current_user = this.currentUser;
+            this.state.updateLocalStorage()
+
+            // console.log(this.currentUser)
+            return `Account with user name "${newUser.user_name}" was successfully created and logged in.`
+
+
             // return success
-            return `Successfully registered with user name: "${newUser.user_name}".`;
+            // return `Successfully registered with user name: "${newUser.user_name}".`;
         } else {
             throw Error(`Passwords do not match!`);
             // return `Passwords does not match!`;

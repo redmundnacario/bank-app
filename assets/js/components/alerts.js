@@ -53,7 +53,7 @@ export function Alert() {
 
     // warning
     this.showWarning = function(error_message) {
-        console.log(error_message)
+        // console.log(error_message)
         if (this.alertBox) { this.alertBox.classList.remove("hidden")};
         if (this.alertWarning) { 
             this.alertWarning.innerHTML = `<h2>${error_message}</h2>`;

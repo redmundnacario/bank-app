@@ -60,8 +60,14 @@ export const Navigation = function(){
 
     this.shiftPage = function(eventCurrentTarget){
         
+        let eventCurrentTargetId;
+        if (eventCurrentTarget.id === "registerToAppId"){
+            eventCurrentTargetId = "loginToAppId"
+        } else {
+            eventCurrentTargetId = eventCurrentTarget.id
+        }
 
-        let targetElementsShow = document.querySelectorAll(`[data-view=${eventCurrentTarget.id}]`);
+        let targetElementsShow = document.querySelectorAll(`[data-view=${eventCurrentTargetId}]`);
 
         targetElementsShow.forEach(value => {
             value.classList.remove("hidden");
@@ -73,7 +79,7 @@ export const Navigation = function(){
         })
 
         this.activeSectionPage = targetElementsShow[1];
-        this.activeId = eventCurrentTarget.id
+        this.activeId = eventCurrentTargetId
 
     }
 

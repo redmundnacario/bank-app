@@ -204,6 +204,8 @@ export function Application() {
     // After successfull registraion in authentication side...
     // Create new account in Application side.
     this.registerSeries = function(event){
+        event.preventDefault()
+        
         connectFormData(
             event,
             this.Auth.registerUser.bind(this.Auth),                                    
@@ -212,6 +214,13 @@ export function Application() {
             this.Alert.showWarning.bind(this.Alert) ,
             this.Alert.showSuccess.bind(this.Alert) ,
         )
+
+        // update this.currentUser fr0m this.Auth.currentUser
+        this.currentUser = this.Auth.currentUser
+        
+        // Will proceed to login and shift page if this.currentUser has value
+        this.loginInitialize()
+
     }
 
 }

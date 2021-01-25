@@ -65,10 +65,9 @@ export function Accordion() {
             
             // filter by transaction type
             if (inputObj && this.activeSelectTransactionValue != "All"){
-                console.log("here")
+               
                 historyAll = historyAll.map(value => {
                     if(value["action"] === this.activeSelectTransactionValue ){
-                        console.log("true")
                         return value
                     }
                 }).filter(Boolean)
@@ -81,6 +80,7 @@ export function Accordion() {
                 this.panel.appendChild(this.addTransactionInDom(value))
             }
             if (historyAll.length === 0){
+                this.panel.innerHTML = "";
                 let no_results = document.createElement("tr");
                 no_results.innerHTML = no_results_html;
                 this.panel.appendChild(no_results)

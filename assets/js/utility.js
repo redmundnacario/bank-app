@@ -71,10 +71,6 @@ export function connectFormData(
     const form_data = new FormData(form)
     let result = extractFormData(form_data);
 
-    console.log(resetAlert)
-    console.log(alertWarningfx)
-    console.log(alertSuccessfx)
-
     console.log(result)
 
     try {

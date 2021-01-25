@@ -8,6 +8,7 @@ import { detectCharacterStringOnly } from './utility.js'
 import { numMult100 } from './utility.js'
 import { numDiv100 } from './utility.js'
 import { generate12DigitAccountNumber } from './utility.js'
+import { strictAllInputValidator } from './utility.js'
 
 // Creates user
 export function create_user(first_name, last_name,
@@ -84,6 +85,9 @@ export function removeAccount(user_name, account_id){
 // Deposit
 export function deposit(inputObject){
 
+    strictAllInputValidator(inputObject,
+        "Transaction cannot proceed if inputs required are not complete.")
+
     let user_name;
     if (this.currentUser){
         user_name = this.currentUser 
@@ -97,9 +101,10 @@ export function deposit(inputObject){
     // access data in local storage
     let accountUser = new AccountUserData(user_name)
     let bank = new BankData(); 
+    
     //filter
     if (Object.keys(accountUser.accountUserData.accounts).includes(account_id) == false){
-        throw Error(`The wallet with id "${account_id}" does not exist.`)
+        throw Error(`The bank account No. "${account_id}" does not exist.`)
     } 
     if (amount <= 0){
         throw Error(`Amount less than and equal to zero is not allowed.`)
@@ -131,6 +136,10 @@ export function deposit(inputObject){
 
 // Withdraw
 export function withdraw(inputObject){
+
+    strictAllInputValidator(inputObject,
+        "Transaction cannot proceed if inputs required are not complete.")
+
     let user_name;
     if (this.currentUser){
         user_name = this.currentUser 
@@ -145,7 +154,7 @@ export function withdraw(inputObject){
 
     //filter
     if (Object.keys(accountUser.accountUserData.accounts).includes(account_id) == false){
-        throw Error(`The wallet with id "${account_id}" does not exist.`)
+        throw Error(`The bank account No. "${account_id}" does not exist.`)
     } 
 
     if (amount <= 0){
@@ -186,6 +195,9 @@ export function withdraw(inputObject){
 // Fund Transfer
 export function send(inputObject){
 
+    strictAllInputValidator(inputObject,
+        "Transaction cannot proceed if inputs required are not complete.")
+
     let from_user;
     if (this.currentUser){
         from_user = this.currentUser 
@@ -203,15 +215,19 @@ export function send(inputObject){
     console.log(AccountUsers)
     // let ToAccountUser = new AccountUserData(to_user)
     let bank = new BankData(); 
-
     
     //filter
     let ctr = 0;
     for (const value in AccountUsers.accountUserData) {
         if (Object.keys(AccountUsers.accountUserData[value].accounts).includes(userIdGroup[ctr]) == false){
-            throw Error(`The wallet with id "${userIdGroup[ctr]}" does not exist.`)
+            throw Error(`The bank account No. "${userIdGroup[ctr]}" does not exist.`)
         }
         ctr++
+    }
+
+     // check if from and to account no is the same.. if true... error
+    if (from_user_account_id === to_user_account_id){
+        throw Error ("Transaction cannot proceed. Cannot transfer to the same account no.")
     }
 
     if (amount <= 0){

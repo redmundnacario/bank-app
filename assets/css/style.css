@@ -198,7 +198,6 @@ nav>div{
 }
 
 #landingPageImgId{
-    margin-top:10vh;
     width:30vw;
     height: auto;
 }
@@ -813,6 +812,6 @@ input:active{
     text-align: center;
 }
 #noResultImgId{
-    width:30%;
+    width:20%;
 }
 

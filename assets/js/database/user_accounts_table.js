@@ -53,7 +53,7 @@ export function AccountUserData(user_name) {
                 if (Object.keys(bankData.users).includes(value)){
                     // do nothing
                 } else {
-                    throw Error ("Ebanko account does not exist.")
+                    throw Error (`Ebanko account with user name ${value} does not exist.`)
                 }
                 this.getLocalStorage(bankData)
             })
@@ -61,7 +61,7 @@ export function AccountUserData(user_name) {
             if (Object.keys(bankData.users).includes(this.current_user)){
                 this.getLocalStorage(bankData)
             } else {
-                throw Error ("Ebanko account does not exist.")
+                throw Error (`Ebanko account with user name ${this.current_user} does not exist.`)
             }
         }
     }
