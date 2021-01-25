@@ -8,7 +8,7 @@ import { UserAuthData } from '../database/user_auth_table.js';
 // functions
 import { passwordLengthInputValidator } from '../utility.js'
 import { passwordValueInputValidator } from '../utility.js'
-import { encrypt } from '../secure.js'
+import { encrypt, decrypt } from '../secure.js'
 
 
 export function Forms() {
@@ -16,15 +16,22 @@ export function Forms() {
 
     this.btnPressed;
     this.currentUser;
-    // this.updateAppDomData;
 
     //Dom Elements
     this.formId = "FormId"
-    this.submitBtn = document.getElementById("SubmitButtonId")
-    // this.cancelBtn = document.getElementById("CancelButtonId")
 
-    // Add event listeners =
-    this.submitBtn.onclick = (event) => {
+    /*
+        Methods.
+    */
+
+    this.addListeners = function(){
+        // Add event listeners =
+        this.submitBtn = document.getElementById("SubmitButtonId")
+        this.submitBtn.onclick = (event) => this.submitMethod(event);
+        console.log(this.Auth)
+    }
+    
+    this.submitMethod = function(event){
         // console.log(this.currentUser)
         let actionFunction;
         switch(this.btnPressed){
@@ -38,7 +45,7 @@ export function Forms() {
                 actionFunction = send.bind(this)
                 break
             case ("settingsBtnId"):
-                actionFunction = this.settingsFunction;
+                actionFunction = this.settingsFunction.bind(this.Auth);
                 break
             default:
                 //
@@ -69,46 +76,75 @@ export function Forms() {
     // Methods
 
     this.settingsFunction = function(inputObj) {
+        console.log(this)
         console.log(inputObj)
-        //check if password or confirm password is missing
-        passwordValueInputValidator(inputObj["password"],
-            `"Password" is required in order to proceed.`)
+    
+        let {
+            img,
+            old_password,
+            password, 
+            confirm_password
+        } = inputObj;
 
-        passwordValueInputValidator(inputObj["confirm-password"],
+        if (old_password == "" && password == "" && confirm_password == "" && img.name == ""){
+            return `No changes made.`
+        }
+
+        // if img is present.. do something
+        // if (img){
+        //     console.log(img)
+        // } else {
+        //     console.log(img)
+        // }
+
+        
+        if (old_password == "" && password == "" && confirm_password == "" ){
+            return `Profile picture was updated`
+        }
+        
+        //check if password or confirm password is missing
+        passwordValueInputValidator(inputObj["old_password"],
+            `"Old Password" is required in order to proceed.`)
+
+        passwordValueInputValidator(inputObj["password"],
+            `"New Password" is required in order to proceed.`)
+
+        passwordValueInputValidator(inputObj["confirm_password"],
             `"Confirm Password" is required in order to proceed.`)
 
         //Check if password is <8
         passwordLengthInputValidator(inputObj["password"], 8,
             `"Password" length must not be less than 8 characters.`)
 
-        let {
-            img, 
-            password, 
-            confirm_password
-        } = inputObj;
+
+        
+        let currentUser = this.state.userAuthData.current_user.user_name
+        let dbPassword = this.state.userAuthData.users[currentUser].password
+
+        const newDbPassword= decrypt("ebanko", String(dbPassword));
+
+        // check if old password is the same in the database
+        if (old_password != newDbPassword){
+            throw Error (`Old password does not match with existing credentials.`)
+        }
+
+        if (old_password === password ){
+            throw Error (`New password should not be the same with the old password.`)
+        }
 
         if (password === confirm_password){
 
-            // if img is present.. do something
-            if (img){
-                console.log(img)
-            } else {
-                console.log(img)
-            }
             
-            
-            let userAuth = new UserAuthData();
-            let currentUser = userAuth.userAuthData.current_user.user_name
             // encrypt password
             const newPassword = encrypt("ebanko", password);
 
             // Auth.userAuth
             // console.log( userAuth)
-            // console.log(userAuth.userAuthData.users[currentUser].password)
-            // console.log(newPassword)
+            // console.log( this.state.userAuthData.users[currentUser].password)
+            // console.log( newPassword)
             try {
-                userAuth.userAuthData.users[currentUser].password = newPassword;
-                userAuth.updateLocalStorage()
+                this.state.userAuthData.users[currentUser].password = newPassword;
+                this.state.updateLocalStorage()
 
             } catch (error) {
                 console.log(error.message)

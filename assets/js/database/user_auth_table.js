@@ -41,6 +41,7 @@ export function UserAuthData() {
     }
 
     this.updateLocalStorage = function() {
+        console.log("auth updated")
         localStorage.setItem("auth",JSON.stringify(this.userAuthData));
     }
 

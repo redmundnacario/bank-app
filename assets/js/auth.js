@@ -27,7 +27,6 @@ export const Authenticate = function() {
     // initialize Auth
     this.initialize = function() {
         this.state = new UserAuthData();
-        this.state.getLocalStorage();
         this.currentUser = this.state.userAuthData.current_user;
     }
 

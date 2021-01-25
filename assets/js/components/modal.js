@@ -5,6 +5,9 @@ import { Forms } from './forms.js'
 export function Modal(){
 
     this.currentUser;
+    this.Forms = new Forms();
+    // console.log(this.Auth)
+    // this.Forms.Auth = this.Auth
 
     this.action_requirements = {
         depositBtnId : {
@@ -82,7 +85,9 @@ export function Modal(){
 
         this.modal.style.visibility = "visible";
 
-        this.Forms = new Forms();
+        this.Forms.Auth = this.Auth
+        this.Forms.addListeners()
+        this.Forms.Auth = this.Auth
         this.Forms.currentUser = this.currentUser;
         this.Forms.btnPressed = this.btnPressed;
 
@@ -112,11 +117,13 @@ export function Modal(){
         this.actionButtonFx(this.btnPressed);
         this.modal.style.visibility = "visible";
 
-
-        this.Forms = new Forms();
+        this.Forms.Auth = this.Auth
+        this.Forms.addListeners()
         this.Forms.currentUser = this.currentUser;
         this.Forms.btnPressed = this.btnPressed;
         this.Forms.closeModal = this.closeModal.bind(this);
+        
+        console.log(this.Auth)
         
         // this.Forms.updateAppDomData = this.updateAppDomData.bind(this);
 
@@ -200,15 +207,24 @@ export function Modal(){
                 this.form.appendChild(this.createInputText("img", 
                                 "img", 
                                 "Select Image",
-                                "Change Profile Picture", false))
+                                "Change Profile Picture",
+                                false))
+
+                this.form.appendChild(this.createInputText("password", 
+                                "old_password", 
+                                "Old Password",
+                                "Change Password",
+                                false))
 
                 this.form.appendChild(this.createInputText("password", 
                                 "password", 
-                                "Password",
-                                "Change Password", false))
+                                "New Password",
+                                false,
+                                false))
                 this.form.appendChild(this.createInputText("password", 
                                 "confirm_password", 
-                                "Confirm Password", false))
+                                "Confirm Password", 
+                                false))
                 break
             default:
                 //

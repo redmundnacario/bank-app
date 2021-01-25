@@ -6,6 +6,7 @@ import { Accordion } from './components/accordion.js';
 import { Modal } from './components/modal.js';
 import { Alert } from './components/alerts.js';
 
+
 // Function
 import { connectFormData, convertFloatNumberToString} from './utility.js';
 // Template 
@@ -173,7 +174,7 @@ export function Application() {
                 this.Modal = new Modal();
                 this.Modal.currentUser = this.currentUser.user_name;
                 this.Modal.updateAppDomData = this.updateAppDomData.bind(this)
-                
+                this.Modal.Auth = this.Auth;
 
             }
         }
