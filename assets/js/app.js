@@ -47,6 +47,12 @@ export function Application() {
     this.getCurrentUser = function() {
         return this.userData.accountUserData.account_name
     }
+    this.getCurrentFullName = function() {
+        let {first_name , last_name} = this.userData.accountUserData
+        let fname = first_name.charAt(0).toUpperCase() + first_name.slice(1) + " " +
+                    last_name.charAt(0).toUpperCase() + last_name.slice(1)
+        return fname
+    }
     // account history and balance per account
     this.getAccounts = function(){
         return this.userData.accountUserData.accounts
@@ -84,7 +90,7 @@ export function Application() {
         this.Accordion.getHistoryAll()
         let historyAll = this.Accordion.historyAll
 
-        this.greetingsH1.innerText = `Hello ${this.getCurrentUser()}!`
+        this.greetingsH1.innerText = `Hello ${this.getCurrentFullName()}!`
         // account boxes and balance per box
 
         //resets the list of accounts in the dom

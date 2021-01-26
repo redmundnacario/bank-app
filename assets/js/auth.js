@@ -50,7 +50,7 @@ export const Authenticate = function() {
             // return "Current session is still active."
         }
 
-        let user_name = String(inputObj["log-username"]);
+        let user_name = String(inputObj["log-username"]).toLowerCase();
         let password = String(inputObj["log-password"]);
 
         // check if user name exist, check ifpoassword is correct , then login, return success
@@ -99,8 +99,8 @@ export const Authenticate = function() {
             `"Password" length must not be less than 8 characters.`)
 
 
-        let first_name = String(inputObj["reg-firstname"]);
-        let last_name = String(inputObj["reg-lastname"]);
+        let first_name = String(inputObj["reg-firstname"]).toLowerCase();
+        let last_name = String(inputObj["reg-lastname"]).toLowerCase();
         let password = String(inputObj["reg-password"]);
         let confirm_password = String(inputObj["reg-confirm-password"]);
 
