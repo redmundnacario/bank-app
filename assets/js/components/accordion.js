@@ -2,6 +2,7 @@ import { accordion_html, initial_tr_html, no_results_html } from '../components_
 import { connectFormData } from '../utility.js'
 import { convertFloatNumberToString } from '../utility.js';
 import { sortByDate } from '../utility.js';
+import { convertDateReadable } from '../utility.js';
 
 export function Accordion() {
 
@@ -135,8 +136,7 @@ export function Accordion() {
         th.innerText = inputObj["action"]
         let account_id = inputObj["account_number"]
         td.innerText =  "**** **** " + String(account_id).slice(8,12)
-        let dateObj = new Date(inputObj["date"]);
-        td1.innerText = days[dateObj.getDay()] + ", "+ dateObj.toLocaleDateString() +" at "+ dateObj.toLocaleTimeString();
+        td1.innerText = convertDateReadable(inputObj["date"])
         td2.innerHTML = convertFloatNumberToString(inputObj["amount"].toFixed(2))
         td3.innerHTML = convertFloatNumberToString(inputObj["remaining_balance"].toFixed(2))
         td2.className = "right-align"

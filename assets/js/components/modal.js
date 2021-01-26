@@ -5,6 +5,7 @@ import { Forms } from './forms.js'
 export function Modal(){
 
     this.currentUser;
+    this.accountList;
     this.Forms = new Forms();
     // console.log(this.Auth)
     // this.Forms.Auth = this.Auth
@@ -186,7 +187,11 @@ export function Modal(){
                                 "Sender",
                                 true,
                                 this.currentUser))
-                this.form.appendChild(this.createInputText("text", 
+                // this.form.appendChild(this.createInputText("text", 
+                //                 "sender_account_id", 
+                //                 "Account Id"))
+
+                this.form.appendChild(this.createInputText("select", 
                                 "sender_account_id", 
                                 "Account Id"))
 
@@ -247,10 +252,24 @@ export function Modal(){
             inputElement.name= inputId;
             inputElement.attributes["accept"]="image/*"
 
+        } else if (inputType == "select") { 
+            inputElement = document.createElement("select");;
+            inputElement.id = inputId;
+            inputElement.name= inputId;
+
+            console.log(this.accountList)
+            this.accountList.forEach(value => {
+                let choice = document.createElement("option")
+                choice.value = value
+                choice.innerText = "**** **** " + value.slice(8,12)
+                inputElement.appendChild(choice)
+            });
+
         } else {
             inputElement.type = inputType;
             inputElement.id = inputId;
             inputElement.name= inputId;
+            inputElement.setAttribute("autocomplete", "off")
             if (value) {
                 inputElement.value = value;
                 inputElement.disabled = true;

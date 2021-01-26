@@ -10,6 +10,7 @@ import { CopyButton } from './components/copy_button.js';
 
 // Function
 import { connectFormData, convertFloatNumberToString} from './utility.js';
+import { convertDateReadable } from './utility.js';
 // Template 
 import { add_new_account_btn_html, copy_btn_html, del_btn_html } from './components_html/app.js';
 
@@ -41,6 +42,7 @@ export function Application() {
     // other dom elements
     this.greetingsH1 = document.getElementById("greetingsH1Id")
     this.totalBalance = document.getElementById("totalBalanceId")
+    this.lastActivity = document.getElementById("lastActivityDateId")
     this.totalUniqueAccounts = document.getElementById("totalUniqueAccountsId")
     this.totalTransactions = document.getElementById("totalTransactionsId")
     this.perAccountsOverview = document.getElementsByClassName("per-accounts-overview")[0]
@@ -107,6 +109,7 @@ export function Application() {
         this.totalBalance.innerHTML = `<span class="php-sign">PHP </span>` + this.getTotalbalance()
         this.totalUniqueAccounts.innerText = Object.entries(uniqueAccounts).length
         this.totalTransactions.innerText = historyAll.length
+        this.lastActivity.innerText = convertDateReadable(historyAll[0].date)
 
         // Accordion
         this.Accordion.accountList = this.getAccountNumbers()
@@ -197,6 +200,7 @@ export function Application() {
                 this.Modal.currentUser = this.currentUser.user_name;
                 // this.Modal.updateAppDomData = this.updateAppDomData.bind(this)
                 this.Modal.Auth = this.Auth;
+                this.Modal.accountList = this.getAccountNumbers()
 
             }
         }

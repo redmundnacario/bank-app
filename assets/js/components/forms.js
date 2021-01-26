@@ -65,12 +65,12 @@ export function Forms() {
         )
 
         // Close modal , update dom thru refresh
-        // if (resultBool){
-        //     this.closeModal()
-        //     setTimeout(() => {
-        //         location.reload()
-        //     }, 2000)
-        // } 
+        if (resultBool){
+            this.closeModal()
+            setTimeout(() => {
+                location.reload()
+            }, 2000)
+        } 
     }
 
     // Methods

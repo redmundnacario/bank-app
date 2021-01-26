@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;700;900&family=Roboto:wght@400;700&display=swap');
 /* wght@700 */
+
+
 body {
     margin: 0;
     box-sizing: border-box;
@@ -9,7 +11,13 @@ body {
     /* font-family: 'Poppins', sans-serif; */
     /* font-family: 'Roboto', sans-serif; */
     position: relative;
+    /* background-color: #fbfcff; */
 }
+
+nav {
+    /* background-color: #fbfcff !important; */
+}
+
 /* 
     FONTS
 */
@@ -23,12 +31,12 @@ h2 {
 }
 
 h3 {
-    font: 700 1.5vh/1.2 "Poppins", sans-serif;
-    color: #cecdcd;
+    font: 400 1.5vh/1.2 "Poppins", sans-serif;
+    color: #b6b6b6;
 }
 
 h4 {
-    font: 700 1.2vh/1.2 "Poppins", sans-serif;
+    font: 400 1.2vh/1.2 "Poppins", sans-serif;
     text-transform: uppercase;
     letter-spacing: 0.1vh;
 }
@@ -37,7 +45,7 @@ h1, h2, h3, h4, h5, h6 {
     margin:0 0 1vh 0;
 }
 h5 {
-    font:100 3vh/1.2 'Poppins', sans-serif;
+    font:300 3vh/1.2 'Poppins', sans-serif;
     text-transform: uppercase;
 }
 h6 {
@@ -47,7 +55,7 @@ th {
     font: 700 1.2vh 'Roboto', sans-serif;
     /* text-transform: uppercase; */
 }
-p, td, input, label {
+p, td, input, label, option {
     font: 400 1.2vh 'Roboto', sans-serif;
     margin: 0;
 }
@@ -140,13 +148,22 @@ nav>div{
     cursor: pointer;
     border: 0.1vh solid #3e34ff;
     border-radius: 0.5vh;
+    background-color: #fff;
 
     transition: 0.4s;
+}
+
+.nav-in-app{
+    border :none;
+}
+.nav-in-app h3{
+    margin: 0;
 }
  
 .nav-buttons:focus, 
 .nav-buttons:hover,
-.nav-buttons.active {
+.nav-buttons.active,
+.nav-in-app h3:hover {
     background-color:  #3e34ff;
     color: #fff;
     /* border: #3e34ff solid 0.5vh; */
@@ -228,7 +245,7 @@ form {
     border: 0.2vh solid #f1f2ff;
     border-radius: 1vh;
 
-    box-shadow:  9px 9px 18px #d9d9d9,
+    box-shadow:  9px 9px 18px #94a9e4,
                 -9px -9px 18px #ffffff;
 
     /* position: relative; */
@@ -309,6 +326,7 @@ form {
 
     border: 0.1vh solid #3e34ff;
     border-radius: 0.5vh;
+    background-color: #fff;
 
     transition: 0.4s;
 }
@@ -356,6 +374,7 @@ form {
     color: #fff;
 
     border-radius: 1vh;
+    border: 0.1vh solid #0000ff;
 }
 
 
@@ -380,6 +399,7 @@ form {
     color:#000;
 
     border-radius: 1vh;
+    border : 0.1vh solid #b0b3f6;
     display: flex;
     flex-flow:column;
 
@@ -571,7 +591,7 @@ tbody {
 }
 tbody tr:first-child th{
     padding:1vh 2vh;
-    /* color:#b3b3b3; */
+    color:#bbbbbb;
 }
 table,tbody, th, td{
     border-collapse: collapse;
@@ -634,7 +654,7 @@ th, td {
 } */
 
 #accordionFormId h2{
-    color:#a8a8a8;
+    color:#b6b6b6;
 }
 #accordionFormId h2:not(:first-child){
     margin-left:2vh;
@@ -648,7 +668,7 @@ th, td {
 }
 #accordionFormId select{
     width:25%;
-    color:#9198ff;
+    color:#3e34ff;
 }
 
 #accordionSymbol{
@@ -741,8 +761,9 @@ th, td {
     margin-bottom : 3vh;
 }
 
-.input-container input {
-    width :70%;
+.input-container input,
+#sender_account_id {
+    width :70% !important;
 }
 
 .input-group-h2 {
@@ -754,12 +775,12 @@ th, td {
     font-size: 1.5vh;
 }
 #formId label {
-    font-weight: 700;
+    font-weight: 400;
+    color: #6e6e6e;
 }
 
 /* input, select and text area */
-input {
-    height: 4vh;
+input, #sender_account_id {
     border: 0.1vh solid #d1d3d4;
     width: 100%;
     padding: 12px;
@@ -768,10 +789,15 @@ input {
     color: #111;
     background: #fff;
 }
+input[type=submit]{
+    height: 4vh;
+}
 
 
 input:focus,
-input:active{
+input:active,
+#sender_account_id:focus,
+#sender_account_id:active{
     outline: none;
     border-radius: 0.5vh;
     border-color:  #3e34ff;

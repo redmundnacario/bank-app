@@ -148,3 +148,9 @@ export function sortByDate(a, b) {
     return 0;
 }
 
+export function convertDateReadable(dateStr){
+    let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    
+    let dateObj = new Date(dateStr);
+    return days[dateObj.getDay()] + ", "+ dateObj.toLocaleDateString() +" at "+ dateObj.toLocaleTimeString();
+}

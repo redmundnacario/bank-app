@@ -11,11 +11,10 @@ export const navigation_html = `
 </div>
 <div class="landing-nav-buttons hidden" data-view="loginToAppId">
     <!-- add profile picture here -->
-    <button id="logoutBtnId" class="nav-buttons"><h2>Logout</h2></button>
-    <button class="nav-buttons" id="settingsBtnId">
+    <button id="logoutBtnId" class="nav-buttons nav-in-app"><h3>Logout</h3></button>
+    <button class="nav-buttons nav-in-app" id="settingsBtnId">
         <div>
             <img id="settingsLogoId" src="/assets/img/settings.gif"/>
-
         </div>
     </button>
 </div>`
