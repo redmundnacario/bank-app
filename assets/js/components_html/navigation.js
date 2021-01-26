@@ -14,7 +14,7 @@ export const navigation_html = `
     <button id="logoutBtnId" class="nav-buttons nav-in-app"><h2>Logout</h2></button>
     <button class="nav-buttons nav-in-app" id="settingsBtnId">
         <div>
-            <img id="settingsLogoId" src="/assets/img/settings.gif"/>
+            <img id="settingsLogoId" src="./assets/img/settings.gif"/>
         </div>
     </button>
 </div>`
