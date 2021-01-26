@@ -6,16 +6,17 @@ body {
     margin: 0;
     box-sizing: border-box;
     min-height: 100vh;
-    background-color: #fff;
+    /* background-color: #fff; */
 
     /* font-family: 'Poppins', sans-serif; */
     /* font-family: 'Roboto', sans-serif; */
     position: relative;
-    /* background-color: #fbfcff; */
+    background-color: rgba(240, 240, 246, 0.3);
+    /* background-color: #efeff3; */
 }
 
 nav {
-    /* background-color: #fbfcff !important; */
+    background-color: transparent;
 }
 
 /* 
@@ -110,7 +111,7 @@ nav {
     /* position: fixed;
     top:0; */
 
-    background-color: #fff;
+    /* background-color: #fff; */
     height: 10vh;
     width:100%;
 
@@ -155,6 +156,7 @@ nav>div{
 
 .nav-in-app{
     border :none;
+    background-color: transparent;
 }
 .nav-in-app h3{
     margin: 0;
@@ -163,7 +165,7 @@ nav>div{
 .nav-buttons:focus, 
 .nav-buttons:hover,
 .nav-buttons.active,
-.nav-in-app h3:hover {
+.nav-in-app:hover {
     background-color:  #3e34ff;
     color: #fff;
     /* border: #3e34ff solid 0.5vh; */
@@ -426,7 +428,7 @@ form {
     justify-content: center;
     align-items: center;
 
-    border:#f1f2ff solid 0.5vh;
+    border:#dbdefd solid 0.5vh;
     border-radius: 1vh;
     width:4vh;
     height: 4vh;
@@ -434,7 +436,7 @@ form {
     font-size: 4vh;
     /* text-align: center; */
     /* line-height: 100%;  */
-    color:#f1f2ff;
+    color:#dbdefd;
 
     cursor: pointer;
     /* border: 0.1vh solid #3e34ff; */
@@ -445,7 +447,7 @@ form {
     cursor: pointer;
 
     content: '\FF0B';
-    color:#f1f2ff;
+    color:#dbdefd;
     font-size: 4vh;
 
     position: absolute;
