@@ -28,11 +28,13 @@ export function Forms() {
         // Add event listeners =
         this.submitBtn = document.getElementById("SubmitButtonId")
         this.submitBtn.onclick = (event) => this.submitMethod(event);
-        console.log(this.Auth)
+        // console.log(this.Auth)
     }
     
     this.submitMethod = function(event){
         // console.log(this.currentUser)
+        // console.log(this.App.currentUser)
+        console.log( this.updateAppDomData);
         let actionFunction;
         switch(this.btnPressed){
             case ("depositBtnId"):
@@ -67,17 +69,19 @@ export function Forms() {
         // Close modal , update dom thru refresh
         if (resultBool){
             this.closeModal()
-            setTimeout(() => {
-                location.reload()
-            }, 2000)
+            try{
+                this.App.updateAppDomDataReload()
+            } catch(error){
+                console.log(error.message)
+            }
         } 
     }
 
     // Methods
 
     this.settingsFunction = function(inputObj) {
-        console.log(this)
-        console.log(inputObj)
+        // console.log(this.App)
+        // console.log(inputObj)
     
         let {
             img,
@@ -92,7 +96,7 @@ export function Forms() {
 
         // if img is present.. do something
         if (img.name != ""){
-            console.log(img)
+            // console.log(img)
             let imgElement = document.getElementById('profileImgId'); 
             imgElement.src = URL.createObjectURL(img); 
         }

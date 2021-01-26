@@ -39,14 +39,6 @@ export function Application() {
                                          this.Nav.shiftPage(
                                             event.currentTarget)];
 
-    // other dom elements
-    this.greetingsH1 = document.getElementById("greetingsH1Id")
-    this.totalBalance = document.getElementById("totalBalanceId")
-    this.lastActivity = document.getElementById("lastActivityDateId")
-    this.totalUniqueAccounts = document.getElementById("totalUniqueAccountsId")
-    this.totalTransactions = document.getElementById("totalTransactionsId")
-    this.perAccountsOverview = document.getElementsByClassName("per-accounts-overview")[0]
-
     /*
         GETTERS
     */ 
@@ -75,6 +67,15 @@ export function Application() {
 
     this.updateAppDomData = function(){
         try {
+        
+
+        // other dom elements
+        this.greetingsH1 = document.getElementById("greetingsH1Id")
+        this.totalBalance = document.getElementById("totalBalanceId")
+        this.lastActivity = document.getElementById("lastActivityDateId")
+        this.totalUniqueAccounts = document.getElementById("totalUniqueAccountsId")
+        this.totalTransactions = document.getElementById("totalTransactionsId")
+        this.perAccountsOverview = document.getElementsByClassName("per-accounts-overview")[0]
 
         let uniqueAccounts = this.getAccounts()
 
@@ -198,12 +199,36 @@ export function Application() {
                 // modal constructor is incharge od dynamic display of forms
                 this.Modal = new Modal();
                 this.Modal.currentUser = this.currentUser.user_name;
-                // this.Modal.updateAppDomData = this.updateAppDomData.bind(this)
+                // this.Modal.updateAppDomData = this.updateAppDomData
+                this.Modal.App = this
                 this.Modal.Auth = this.Auth;
                 this.Modal.accountList = this.getAccountNumbers()
 
             }
         }
+    }
+
+    this.updateAppDomDataReload = function (){
+
+        // remove history, modal
+        document.querySelector(".table-container").remove()
+        document.getElementById("ModalId").remove()
+
+        // Get user data
+        this.userData = new AccountUserData(this.currentUser.user_name);
+        // setup the simple Accordion function
+        this.Accordion = new Accordion();
+
+        // update data in dom elements
+        this.updateAppDomData()
+
+        // modal constructor is incharge od dynamic display of forms
+        this.Modal = new Modal();
+        this.Modal.currentUser = this.currentUser.user_name;
+        // this.Modal.updateAppDomData = this.updateAppDomData
+        this.Modal.App = this
+        this.Modal.Auth = this.Auth;
+        this.Modal.accountList = this.getAccountNumbers()
     }
 
     // Fires when login button within the login form is pressed.

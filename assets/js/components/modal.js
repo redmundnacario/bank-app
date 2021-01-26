@@ -32,7 +32,7 @@ export function Modal(){
     // Window
     this.window = window;
     this.btnPressed;
-    // this.updateAppDomData;
+    this.updateAppDomData;
 
     // create modal
 
@@ -91,6 +91,7 @@ export function Modal(){
         this.Forms.Auth = this.Auth
         this.Forms.currentUser = this.currentUser;
         this.Forms.btnPressed = this.btnPressed;
+        this.Forms.App = this.App
 
         // Get the button element that closes the modal
         this.btnCancel = document.getElementById("CancelButtonId");
@@ -123,10 +124,9 @@ export function Modal(){
         this.Forms.currentUser = this.currentUser;
         this.Forms.btnPressed = this.btnPressed;
         this.Forms.closeModal = this.closeModal.bind(this);
+        this.Forms.App = this.App
         
-        console.log(this.Auth)
-        
-        // this.Forms.updateAppDomData = this.updateAppDomData.bind(this);
+        // this.Forms.updateAppDomData = this.updateAppDomData.bind(this.App);
 
         // Get the button element that closes the modal
         this.btnCancel = document.getElementById("CancelButtonId");
@@ -257,7 +257,7 @@ export function Modal(){
             inputElement.id = inputId;
             inputElement.name= inputId;
 
-            console.log(this.accountList)
+            // console.log(this.accountList)
             this.accountList.forEach(value => {
                 let choice = document.createElement("option")
                 choice.value = value
