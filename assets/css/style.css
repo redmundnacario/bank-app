@@ -241,9 +241,9 @@ form {
     align-self: center;
 
     background-color: #fff;
-    padding:3vh;
+    padding:2vh;
 
-    width:40vh;
+    width:30vh;
     border: 0.2vh solid #f1f2ff;
     border-radius: 1vh;
 
@@ -258,7 +258,7 @@ form {
 }
 #registerContainerId div,
 #loginContainerId div {
-    margin-top: 3vh;
+    margin-top: 2vh;
 }
 
 .login-reg-input-group-btn {
